@@ -1,2 +1,2 @@
 web: python src/manage.py runserver $PORT
-deploy: pipenv install
+deploy: python src/manage.py migrate
