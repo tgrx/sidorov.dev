@@ -8,7 +8,12 @@ SECRET_KEY = "217xi+v4o4^a6&g9d025b%w&a)7s05d1gtu8*3io$_&+tt#y2j"
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "sidorov-dot-dev.herokuapp.com",
+    "sidorov.dev",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
