@@ -1,2 +1,2 @@
-web: python -m http.server $PORT
+web: python src/manage.py runserver $PORT
 deploy: pipenv install
