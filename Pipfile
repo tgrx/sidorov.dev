@@ -8,3 +8,6 @@ black = "==19.10b0"
 
 [packages]
 django = "*"
+
+[requires]
+python_version = "3.8"
