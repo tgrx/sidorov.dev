@@ -10,4 +10,4 @@ black = "==19.10b0"
 django = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"
