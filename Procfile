@@ -1,2 +1,2 @@
-web: python src/manage.py runserver $PORT
-release: python src/manage.py migrate
+web: pipenv run python src/manage.py runserver $PORT
+release: pipenv run python src/manage.py migrate
