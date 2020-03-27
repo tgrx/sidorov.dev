@@ -8,6 +8,7 @@ black = "==19.10b0"
 
 [packages]
 django = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.8"
