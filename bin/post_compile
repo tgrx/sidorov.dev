@@ -2,3 +2,6 @@
 
 set -euo pipefail
 pipenv install
+echo $BUILD_DIR
+echo $CACHE_DIR
+
