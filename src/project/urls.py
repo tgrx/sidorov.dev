@@ -16,6 +16,8 @@ HTML_THOUGHTS: Path = settings.REPO_DIR / "thoughts.html"
 JPG_ME: Path = settings.REPO_DIR / "me.jpg"
 CSS_LIGHT: Path = settings.REPO_DIR / "style_light.css"
 CSS_DARK: Path = settings.REPO_DIR / "style_dark.css"
+CSS: Path = settings.REPO_DIR / "style.css"
+CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
 
 
 def view_index(*_args, **__kwargs):
@@ -43,10 +45,20 @@ def view_me_jpg(*_args, **__kwargs):
         return HttpResponse(src.read(), content_type="image/jpeg")
 
 
-def view_css(request, *_args, **__kwargs):
+def view_css_theme(request, *_args, **__kwargs):
     hour = get_user_hour(request)
     css = CSS_LIGHT if (9 <= hour <= 21) else CSS_DARK
     with css.open() as src:
+        return HttpResponse(src.read(), content_type="text/css")
+
+
+def view_css(*_args, **__kwargs):
+    with CSS.open() as src:
+        return HttpResponse(src.read(), content_type="text/css")
+
+
+def view_css_mob(*_args, **__kwargs):
+    with CSS_MOB.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
 
 
@@ -68,8 +80,10 @@ urlpatterns = [
     path("", view_index),
     path("admin/", admin.site.urls),
     path("css/", view_css),
+    path("css_mob/", view_css_mob),
     path("me/", view_me_jpg),
     path("projects/", view_projects),
     path("resume/", view_resume),
+    path("theme/", view_css_theme),
     path("thoughts/", view_thoughts),
 ]

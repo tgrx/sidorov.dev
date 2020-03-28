@@ -8,9 +8,13 @@ a {
 }
 
 a:visited {
-    color: darkred;
+    color: indianred;
 }
 
 a:hover {
-    color: red;
+    color: sandybrown;
+}
+
+img {
+    filter: sepia(1);
 }
