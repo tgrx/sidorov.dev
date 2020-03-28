@@ -2,6 +2,6 @@
 
 set -euo pipefail
 pipenv install
-echo $BUILD_DIR
-echo $CACHE_DIR
+pipenv run pip freeze
+pipenv run pip freeze > $BUILD_DIR/requirements.txt
 
