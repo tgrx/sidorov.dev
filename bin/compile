@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-pipenv install
-pipenv run pip freeze
-pipenv run pip freeze > $BUILD_DIR/requirements.txt
-
