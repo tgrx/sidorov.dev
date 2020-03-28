@@ -45,7 +45,7 @@ def view_me_jpg(*_args, **__kwargs):
 
 def view_css(request, *_args, **__kwargs):
     hour = get_user_hour(request)
-    css = CSS_LIGHT if (9 <= hour <= 17) else CSS_DARK
+    css = CSS_LIGHT if (9 <= hour <= 21) else CSS_DARK
     with css.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
 
