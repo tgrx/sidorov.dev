@@ -5,9 +5,14 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
+httpie = "*"
+ipython = "*"
+pudb = "*"
 
 [packages]
 django = "*"
+django-ipware = "*"
+requests = "*"
 whitenoise = "*"
 
 [requires]

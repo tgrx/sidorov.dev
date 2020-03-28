@@ -1,0 +1,16 @@
+body {
+    background-color: white;
+    color: black;
+}
+
+a {
+    color: darkred;
+}
+
+a:visited {
+    color: brown;
+}
+
+a:hover {
+    color: red;
+}
