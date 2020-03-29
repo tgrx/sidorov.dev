@@ -13,6 +13,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "sidorov-dev.herokuapp.com",
     "sidorov.dev",
+    "2f9a365e.ngrok.io",
 ]
 
 INSTALLED_APPS = [

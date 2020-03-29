@@ -11,34 +11,37 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
 
+CSS: Path = settings.REPO_DIR / "style.css"
+CSS_DARK: Path = settings.REPO_DIR / "style_dark.css"
+CSS_LIGHT: Path = settings.REPO_DIR / "style_light.css"
+CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
+FAVICON: Path = settings.REPO_DIR / "favicon.png"
 HTML_INDEX: Path = settings.REPO_DIR / "index.html"
 HTML_PROJECTS: Path = settings.REPO_DIR / "projects.html"
 HTML_RESUME: Path = settings.REPO_DIR / "resume.html"
 HTML_THOUGHTS: Path = settings.REPO_DIR / "thoughts.html"
 JPG_ME: Path = settings.REPO_DIR / "me.jpg"
-CSS_LIGHT: Path = settings.REPO_DIR / "style_light.css"
-CSS_DARK: Path = settings.REPO_DIR / "style_dark.css"
-CSS: Path = settings.REPO_DIR / "style.css"
-CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
-FAVICON: Path = settings.REPO_DIR / "favicon.png"
 
-CACHE_AGE_1D = 60 * 60 * 24
-CACHE_AGE_1M = CACHE_AGE_1D * 30
+CACHE_AGE_1MINUTE = 60
+CACHE_AGE_1HOUR = CACHE_AGE_1MINUTE * 60
+CACHE_AGE_1DAY = CACHE_AGE_1HOUR * 24
+CACHE_AGE_1MONTH = CACHE_AGE_1DAY * 30
+DAYLIGHT = range(9, 19)
 
 
-@cache_control(max_age=CACHE_AGE_1D)
+@cache_control(max_age=CACHE_AGE_1DAY)
 def view_index(*_args, **__kwargs):
     with HTML_INDEX.open() as src:
         return HttpResponse(src.read())
 
 
-@cache_control(max_age=CACHE_AGE_1D)
+@cache_control(max_age=CACHE_AGE_1DAY)
 def view_projects(*_args, **__kwargs):
     with HTML_PROJECTS.open() as src:
         return HttpResponse(src.read())
 
 
-@cache_control(max_age=CACHE_AGE_1D)
+@cache_control(max_age=CACHE_AGE_1DAY)
 def view_resume(*_args, **__kwargs):
     with HTML_RESUME.open() as src:
         return HttpResponse(src.read())
@@ -50,33 +53,33 @@ def view_thoughts(*_args, **__kwargs):
         return HttpResponse(src.read())
 
 
-@cache_control(max_age=CACHE_AGE_1M)
+@cache_control(max_age=CACHE_AGE_1MONTH)
 def view_me_jpg(*_args, **__kwargs):
     with JPG_ME.open("rb") as src:
         return HttpResponse(src.read(), content_type="image/jpeg")
 
 
-@cache_control(max_age=CACHE_AGE_1M)
+@cache_control(max_age=CACHE_AGE_1MONTH)
 def view_favicon(*_args, **__kwargs):
     with FAVICON.open("rb") as src:
         return HttpResponse(src.read(), content_type="image/png")
 
 
-@never_cache
+@cache_control(max_age=CACHE_AGE_1MINUTE * 10)
 def view_css_theme(request, *_args, **__kwargs):
     hour = get_user_hour(request)
-    css = CSS_LIGHT if (9 <= hour <= 21) else CSS_DARK
+    css = CSS_LIGHT if (hour in DAYLIGHT) else CSS_DARK
     with css.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
 
 
-@cache_control(max_age=CACHE_AGE_1D)
+@cache_control(max_age=CACHE_AGE_1DAY)
 def view_css(*_args, **__kwargs):
     with CSS.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
 
 
-@cache_control(max_age=CACHE_AGE_1D)
+@cache_control(max_age=CACHE_AGE_1DAY)
 def view_css_mob(*_args, **__kwargs):
     with CSS_MOB.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
