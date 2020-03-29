@@ -18,6 +18,7 @@ CSS_LIGHT: Path = settings.REPO_DIR / "style_light.css"
 CSS_DARK: Path = settings.REPO_DIR / "style_dark.css"
 CSS: Path = settings.REPO_DIR / "style.css"
 CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
+FAVICON: Path = settings.REPO_DIR / "favicon.png"
 
 
 def view_index(*_args, **__kwargs):
@@ -43,6 +44,11 @@ def view_thoughts(*_args, **__kwargs):
 def view_me_jpg(*_args, **__kwargs):
     with JPG_ME.open("rb") as src:
         return HttpResponse(src.read(), content_type="image/jpeg")
+
+
+def view_favicon(*_args, **__kwargs):
+    with FAVICON.open("rb") as src:
+        return HttpResponse(src.read(), content_type="image/png")
 
 
 def view_css_theme(request, *_args, **__kwargs):
@@ -81,6 +87,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("css/", view_css),
     path("css_mob/", view_css_mob),
+    path("favicon/", view_favicon),
     path("me/", view_me_jpg),
     path("projects/", view_projects),
     path("resume/", view_resume),
