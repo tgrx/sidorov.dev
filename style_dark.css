@@ -24,3 +24,8 @@ article {
     -webkit-box-shadow: 4px 4px 20px 0px rgba(300, 100, 100, 0.1);
     box-shadow: 4px 4px 20px 0px rgba(300, 100, 100, 0.1);
 }
+
+section {
+    border-color: rgb(50, 15, 15);
+    border-width: 4px 0 0 4px;
+}
