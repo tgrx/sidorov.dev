@@ -1,6 +1,19 @@
+:root {
+    --bg-color: white;
+    --font-color: black;
+}
+
 body {
-    background-color: white;
-    color: black;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+
+header {
+    border-bottom-color: var(--font-color);
+}
+
+nav * a:hover {
+    text-decoration-color: red;
 }
 
 a {
@@ -21,7 +34,21 @@ article {
     box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
-section {
-    border-color: lightgray;
-    border-width: 4px 0 0 4px;
+h1 {
+    border-left: 12px solid red;
+    padding-left: 10px;
+}
+
+h2 {
+    border-left: 6px solid red;
+    padding-left: 10px;
+}
+
+h3 {
+    border-left: 3px solid red;
+    padding-left: 10px;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.1);
 }

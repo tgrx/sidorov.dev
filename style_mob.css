@@ -5,6 +5,27 @@ https://yesviz.com/devices/iphone-11-pro/
 
 */
 
+@media only screen and (max-width: 960px) {
+    nav * li {
+        padding: 5px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    :root {
+        --header-height: 200px;
+    }
+
+    nav {
+        align-content: flex-start;
+    }
+
+    header > h1 {
+        flex-basis: 100%;
+    }
+
+}
+
 @media only screen and (max-width: 500px) {
 
     .gw {
@@ -29,9 +50,16 @@ https://yesviz.com/devices/iphone-11-pro/
 /* --------- iPhone 11 Pro --------- */
 @media only screen and (min-height: 812px) {
 
+    :root {
+        --header-height: 400px;
+        --font-size: 40px;
+    }
 
-    body {
-        font-size: 36px;
+    header > h1 {
+        flex-basis: 100%;
+    }
+
+    main {
         margin-left: 40px;
     }
 
@@ -50,5 +78,9 @@ https://yesviz.com/devices/iphone-11-pro/
     .gw > figure {
         grid-column: 1;
         grid-row: 1;
+    }
+
+    footer {
+        padding-left: 40px;
     }
 }
