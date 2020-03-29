@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path
+from django.views.decorators.cache import cache_control
+from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
 
 HTML_INDEX: Path = settings.REPO_DIR / "index.html"
@@ -20,37 +22,47 @@ CSS: Path = settings.REPO_DIR / "style.css"
 CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
 FAVICON: Path = settings.REPO_DIR / "favicon.png"
 
+CACHE_AGE_1D = 60 * 60 * 24
+CACHE_AGE_1M = CACHE_AGE_1D * 30
 
+
+@cache_control(max_age=CACHE_AGE_1D)
 def view_index(*_args, **__kwargs):
     with HTML_INDEX.open() as src:
         return HttpResponse(src.read())
 
 
+@cache_control(max_age=CACHE_AGE_1D)
 def view_projects(*_args, **__kwargs):
     with HTML_PROJECTS.open() as src:
         return HttpResponse(src.read())
 
 
+@cache_control(max_age=CACHE_AGE_1D)
 def view_resume(*_args, **__kwargs):
     with HTML_RESUME.open() as src:
         return HttpResponse(src.read())
 
 
+@never_cache
 def view_thoughts(*_args, **__kwargs):
     with HTML_THOUGHTS.open() as src:
         return HttpResponse(src.read())
 
 
+@cache_control(max_age=CACHE_AGE_1M)
 def view_me_jpg(*_args, **__kwargs):
     with JPG_ME.open("rb") as src:
         return HttpResponse(src.read(), content_type="image/jpeg")
 
 
+@cache_control(max_age=CACHE_AGE_1M)
 def view_favicon(*_args, **__kwargs):
     with FAVICON.open("rb") as src:
         return HttpResponse(src.read(), content_type="image/png")
 
 
+@never_cache
 def view_css_theme(request, *_args, **__kwargs):
     hour = get_user_hour(request)
     css = CSS_LIGHT if (9 <= hour <= 21) else CSS_DARK
@@ -58,11 +70,13 @@ def view_css_theme(request, *_args, **__kwargs):
         return HttpResponse(src.read(), content_type="text/css")
 
 
+@cache_control(max_age=CACHE_AGE_1D)
 def view_css(*_args, **__kwargs):
     with CSS.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
 
 
+@cache_control(max_age=CACHE_AGE_1D)
 def view_css_mob(*_args, **__kwargs):
     with CSS_MOB.open() as src:
         return HttpResponse(src.read(), content_type="text/css")
