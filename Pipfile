@@ -12,6 +12,7 @@ pudb = "*"
 [packages]
 django = "*"
 django-ipware = "*"
+gunicorn = "*"
 requests = "*"
 whitenoise = "*"
 
