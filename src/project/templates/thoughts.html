@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Thoughts of Alexander Sidorov{% endblock %}
+
+{% block header %}Thoughts{% endblock %}
+
+{% block main %}
+
+    <article>
+        <h2>Random Flow</h2>
+
+        <section>
+            <h3>Не важно кто</h3>
+            <p>Волк слабее тигра, но в цирке не выступает.</p>
+        </section>
+
+    </article>
+
+    <form>
+        <p>
+            <label for="comment">Есть что сказать?</label>
+            <textarea cols="100" id="comment" placeholder="КТО" rows="4"></textarea>
+        </p>
+        <p><input type="submit" value="Сказать"></p>
+    </form>
+
+{% endblock %}

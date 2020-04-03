@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Projects of Alexander Sidorov{% endblock %}
+
+{% block header %}Projects{% endblock %}
+
+{% block main %}
+
+    <article>
+        <p>You can find my projects on <a href="https://github.com/tgrx">GitHub</a> or <a
+                href="https://gitlab.com/tgrx">GitLab</a>.</p>
+        <p>Below is a list with some of them.</p>
+    </article>
+
+    <article>
+
+        <h2>Projects</h2>
+
+        <section>
+            <a href="https://benzak.herokuapp.com"><h3>Benzak</h3></a>
+            <p>Benzak was created as a study project. It collects and analyzes fuel prices in Belarus.</p>
+            <ul>
+                <li><a href="https://benzak.herokuapp.com">Website</a></li>
+                <li><a href="https://t.me/BenzakBot">@BenzakBot</a> in Telegram</li>
+                <li><a href="https://github.com/tgrx/benzak">Website GitHub</a></li>
+                <li><a href="https://github.com/tgrx/benzak-etl">ETL GitHub</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <a href="https://lappi.herokuapp.com"><h3>Lappi</h3></a>
+            <p>Lappi is a tool to build a travel route and get a schedule and costs of waypoints.</p>
+            <ul>
+                <li><a href="https://lappi.herokuapp.com">Website</a></li>
+                <li><a href="https://github.com/tgrx/lappi">Website GitHub</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <a href="https://gitlab.com/5783354/awokado"><h3>Awokado</h3></a>
+            <p>Awokado is a strict, flexible and fast API framework. I'm a co-author of architecture of this framework.
+               Ask Dmitry for proofs.</p>
+            <p>
+                <img alt="https://pypi.org/awokado" src="https://img.shields.io/pypi/v/awokado.svg">
+                <img alt="https://pypi.org/awokado" src="https://img.shields.io/pypi/wheel/awokado.svg">
+            </p>
+        </section>
+
+        <section>
+            <a href="https://gitlab.com/tgrx/bulky"><h3>bulky</h3></a>
+            <p>bulky is a Python library for fast inserts a lot of data into PostgreSQL.</p>
+            <p>
+                <img alt="https://pypi.org/bulky" src="https://img.shields.io/pypi/v/bulky.svg">
+                <img alt="https://pypi.org/bulky" src="https://img.shields.io/pypi/wheel/bulky.svg">
+            </p>
+        </section>
+
+        <section>
+            <a href="https://gitlab.com/tgrx/clavis"><h3>clavis</h3></a>
+            <p>clavis is a Python library for managing db transacion while using SqlAlchemy.</p>
+            <p>
+                <img alt="https://pypi.org/clavis" src="https://img.shields.io/pypi/v/clavis.svg">
+                <img alt="https://pypi.org/clavis" src="https://img.shields.io/pypi/wheel/clavis.svg">
+            </p>
+        </section>
+
+    </article>
+
+{% endblock %}

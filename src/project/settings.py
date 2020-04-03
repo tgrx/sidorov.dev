@@ -4,13 +4,13 @@ PROJECT_DIR = Path(__file__).parent.resolve()
 BASE_DIR = PROJECT_DIR.parent.resolve()
 REPO_DIR = BASE_DIR.parent.resolve()
 
-SECRET_KEY = "217xi+v4o4^a6&g9d025b%w&a)7s05d1gtu8*3io$_&+tt#y2j"
+SECRET_KEY = "1"
 
-DEBUG = True
+DEBUG = 1
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
     "localhost",
+    "127.0.0.1",
     "sidorov-dev.herokuapp.com",
     "sidorov.dev",
 ]
@@ -39,7 +39,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

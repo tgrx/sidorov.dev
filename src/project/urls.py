@@ -5,22 +5,13 @@ import pytz
 import requests
 from django.conf import settings
 from django.contrib import admin
+from django.http import Http404
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import path
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
-
-CSS: Path = settings.REPO_DIR / "style.css"
-CSS_DARK: Path = settings.REPO_DIR / "style_dark.css"
-CSS_LIGHT: Path = settings.REPO_DIR / "style_light.css"
-CSS_MOB: Path = settings.REPO_DIR / "style_mob.css"
-FAVICON: Path = settings.REPO_DIR / "favicon.png"
-HTML_INDEX: Path = settings.REPO_DIR / "index.html"
-HTML_PROJECTS: Path = settings.REPO_DIR / "projects.html"
-HTML_RESUME: Path = settings.REPO_DIR / "resume.html"
-HTML_THOUGHTS: Path = settings.REPO_DIR / "thoughts.html"
-JPG_ME: Path = settings.REPO_DIR / "me.jpg"
 
 CACHE_AGE_1MINUTE = 60
 CACHE_AGE_1HOUR = CACHE_AGE_1MINUTE * 60
@@ -30,59 +21,35 @@ DAYLIGHT = range(9, 21)
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_index(*_args, **__kwargs):
-    with HTML_INDEX.open() as src:
-        return HttpResponse(src.read())
+def view_index(request):
+    return render(request, "index.html")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_projects(*_args, **__kwargs):
-    with HTML_PROJECTS.open() as src:
-        return HttpResponse(src.read())
+def view_projects(request):
+    return render(request, "projects.html")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_resume(*_args, **__kwargs):
-    with HTML_RESUME.open() as src:
-        return HttpResponse(src.read())
+def view_resume(request):
+    return render(request, "resume.html")
 
 
 @never_cache
-def view_thoughts(*_args, **__kwargs):
-    with HTML_THOUGHTS.open() as src:
-        return HttpResponse(src.read())
+def view_thoughts(request):
+    return render(request, "thoughts.html")
 
 
-@cache_control(max_age=CACHE_AGE_1MONTH)
-def view_me_jpg(*_args, **__kwargs):
-    with JPG_ME.open("rb") as src:
-        return HttpResponse(src.read(), content_type="image/jpeg")
+def render_static(file_path: Path, content_type: str) -> HttpResponse:
+    if not file_path.is_file():
+        full_path = file_path.as_posix()
+        raise Http404(f"file '{full_path}' not found")
 
+    with file_path.open("rb") as fp:
+        content = fp.read()
 
-@cache_control(max_age=CACHE_AGE_1MONTH)
-def view_favicon(*_args, **__kwargs):
-    with FAVICON.open("rb") as src:
-        return HttpResponse(src.read(), content_type="image/png")
-
-
-@cache_control(max_age=CACHE_AGE_1MINUTE * 10)
-def view_css_theme(request, *_args, **__kwargs):
-    hour = get_user_hour(request)
-    css = CSS_LIGHT if (hour in DAYLIGHT) else CSS_DARK
-    with css.open() as src:
-        return HttpResponse(src.read(), content_type="text/css")
-
-
-@cache_control(max_age=CACHE_AGE_1DAY)
-def view_css(*_args, **__kwargs):
-    with CSS.open() as src:
-        return HttpResponse(src.read(), content_type="text/css")
-
-
-@cache_control(max_age=CACHE_AGE_1DAY)
-def view_css_mob(*_args, **__kwargs):
-    with CSS_MOB.open() as src:
-        return HttpResponse(src.read(), content_type="text/css")
+    response = HttpResponse(content, content_type=content_type)
+    return response
 
 
 def get_user_hour(request):
@@ -90,24 +57,66 @@ def get_user_hour(request):
     resp = requests.get(f"http://ip-api.com/json/{ip}")
     payload = resp.json()
     at_this_moment = datetime.now()
+
     if "timezone" not in payload:
         hour = at_this_moment.hour
     else:
         tz_name = payload["timezone"]
         tz = pytz.timezone(tz_name)
         hour = pytz.utc.localize(datetime.now()).astimezone(tz).hour
+
     return hour
 
 
+def get_theme_css(hour: int) -> Path:
+    css = "theme_light.css" if (hour in DAYLIGHT) else "theme_dark.css"
+    css_path = settings.PROJECT_DIR / "static" / "css" / css
+    return css_path
+
+
+@cache_control(max_age=CACHE_AGE_1MONTH)
+def view_me_jpg(_request):
+    return render_static(settings.PROJECT_DIR / "static" / "me.jpg", "image/jpeg")
+
+
+@cache_control(max_age=CACHE_AGE_1MONTH)
+def view_favicon(*_args, **__kwargs):
+    return render_static(settings.PROJECT_DIR / "static" / "favicon.png", "image/png")
+
+
+@cache_control(max_age=CACHE_AGE_1MINUTE * 10)
+def view_css_theme(request):
+    hour = get_user_hour(request)
+    css = get_theme_css(hour)
+    return render_static(css, "text/css")
+
+
+@cache_control(max_age=CACHE_AGE_1DAY)
+def view_css(_request):
+    return render_static(
+        settings.PROJECT_DIR / "static" / "css" / "base.css", "text/css"
+    )
+
+
+@cache_control(max_age=CACHE_AGE_1DAY)
+def view_css_mob(_request):
+    return render_static(
+        settings.PROJECT_DIR / "static" / "css" / "responsive.css", "text/css"
+    )
+
+
 urlpatterns = [
-    path("", view_index),
+    # --- admin urls ---
     path("admin/", admin.site.urls),
+    # --- static views ---
     path("css/", view_css),
     path("css_mob/", view_css_mob),
     path("favicon/", view_favicon),
     path("me/", view_me_jpg),
-    path("projects/", view_projects),
-    path("resume/", view_resume),
     path("theme/", view_css_theme),
-    path("thoughts/", view_thoughts),
+    # --- pages ---
+    path("", view_index, name="index"),
+    path("projects/", view_projects, name="projects"),
+    path("resume/", view_resume, name="resume"),
+    path("thoughts/", view_thoughts, name="thoughts"),
 ]
