@@ -6,12 +6,15 @@ import requests
 from django.conf import settings
 from django.contrib import admin
 from django.http import Http404
+from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import path
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
+
+STATIC_DIR = settings.PROJECT_DIR / "static"
 
 CACHE_AGE_1MINUTE = 60
 CACHE_AGE_1HOUR = CACHE_AGE_1MINUTE * 60
@@ -21,22 +24,22 @@ DAYLIGHT = range(9, 21)
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_index(request):
+def view_index(request: HttpRequest) -> HttpResponse:
     return render(request, "index.html")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_projects(request):
+def view_projects(request: HttpRequest) -> HttpResponse:
     return render(request, "projects.html")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_resume(request):
+def view_resume(request: HttpRequest) -> HttpResponse:
     return render(request, "resume.html")
 
 
 @never_cache
-def view_thoughts(request):
+def view_thoughts(request: HttpRequest) -> HttpResponse:
     return render(request, "thoughts.html")
 
 
@@ -52,7 +55,7 @@ def render_static(file_path: Path, content_type: str) -> HttpResponse:
     return response
 
 
-def get_user_hour(request):
+def get_user_hour(request: HttpRequest) -> int:
     ip = get_client_ip(request)[0]
     resp = requests.get(f"http://ip-api.com/json/{ip}")
     payload = resp.json()
@@ -70,39 +73,35 @@ def get_user_hour(request):
 
 def get_theme_css(hour: int) -> Path:
     css = "theme_light.css" if (hour in DAYLIGHT) else "theme_dark.css"
-    css_path = settings.PROJECT_DIR / "static" / "css" / css
+    css_path = STATIC_DIR / "css" / css
     return css_path
 
 
 @cache_control(max_age=CACHE_AGE_1MONTH)
-def view_me_jpg(_request):
-    return render_static(settings.PROJECT_DIR / "static" / "me.jpg", "image/jpeg")
+def view_me_jpg(_request: HttpRequest) -> HttpResponse:
+    return render_static(STATIC_DIR / "me.jpg", "image/jpeg")
 
 
 @cache_control(max_age=CACHE_AGE_1MONTH)
-def view_favicon(*_args, **__kwargs):
-    return render_static(settings.PROJECT_DIR / "static" / "favicon.png", "image/png")
+def view_favicon(_request: HttpRequest) -> HttpResponse:
+    return render_static(STATIC_DIR / "favicon.png", "image/png")
 
 
 @cache_control(max_age=CACHE_AGE_1MINUTE * 10)
-def view_css_theme(request):
+def view_css_theme(request: HttpRequest) -> HttpResponse:
     hour = get_user_hour(request)
     css = get_theme_css(hour)
     return render_static(css, "text/css")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_css(_request):
-    return render_static(
-        settings.PROJECT_DIR / "static" / "css" / "base.css", "text/css"
-    )
+def view_css(_request: HttpRequest) -> HttpResponse:
+    return render_static(STATIC_DIR / "css" / "base.css", "text/css")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
-def view_css_mob(_request):
-    return render_static(
-        settings.PROJECT_DIR / "static" / "css" / "responsive.css", "text/css"
-    )
+def view_css_mob(_request: HttpRequest) -> HttpResponse:
+    return render_static(STATIC_DIR / "css" / "responsive.css", "text/css")
 
 
 urlpatterns = [
