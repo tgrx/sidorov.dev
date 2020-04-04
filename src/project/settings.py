@@ -6,7 +6,7 @@ REPO_DIR = BASE_DIR.parent.resolve()
 
 SECRET_KEY = "1"
 
-DEBUG = 1
+DEBUG = 0
 
 ALLOWED_HOSTS = [
     "localhost",
