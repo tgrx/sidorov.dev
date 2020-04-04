@@ -1,7 +1,7 @@
 language: python
-install: "make"
-script:
+install:
   - make init
+script:
   - make test
 cache: pip
 jobs:
