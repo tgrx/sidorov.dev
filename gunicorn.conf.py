@@ -1,4 +1,3 @@
-import multiprocessing
 from os import getenv
 from pathlib import Path
 
@@ -20,4 +19,4 @@ pythonpath = _src_dir.as_posix()
 reload = False  # TODO: dynaconf
 timeout = 30
 worker_class = "uvicorn.workers.UvicornWorker"
-workers = multiprocessing.cpu_count() * 2 + 1
+workers = 4  # FIXME: investigate how much workers is ok for Heroku (memory)
