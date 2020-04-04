@@ -1,12 +1,6 @@
-**/.DS_Store
-.idea/
-Pipfile.lock
-
-
 #####################
-
-
 *$py.class
+**/.DS_Store
 *.cover
 *.egg
 *.egg-info/
@@ -26,6 +20,7 @@ Pipfile.lock
 .dmypy.json
 .eggs/
 .hypothesis/
+.idea/
 .installed.cfg
 .ipynb_checkpoints
 .mypy_cache/
@@ -37,12 +32,14 @@ Pipfile.lock
 .scrapy
 .spyderproject
 .spyproject
+.static/
 .tox/
 .venv
 .webassets-cache
 /site
 ENV/
 MANIFEST
+Pipfile.lock
 __pycache__/
 __pypackages__/
 build/
