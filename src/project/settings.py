@@ -88,5 +88,3 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = REPO_DIR / ".static"
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
