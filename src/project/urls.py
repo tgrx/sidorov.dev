@@ -77,16 +77,6 @@ def get_theme_css(hour: int) -> Path:
     return css_path
 
 
-@cache_control(max_age=CACHE_AGE_1MONTH)
-def view_me_jpg(_request: HttpRequest) -> HttpResponse:
-    return render_static(STATIC_DIR / "me.jpg", "image/jpeg")
-
-
-@cache_control(max_age=CACHE_AGE_1MONTH)
-def view_favicon(_request: HttpRequest) -> HttpResponse:
-    return render_static(STATIC_DIR / "favicon.png", "image/png")
-
-
 @cache_control(max_age=CACHE_AGE_1MINUTE * 10)
 def view_css_theme(request: HttpRequest) -> HttpResponse:
     hour = get_user_hour(request)
@@ -94,25 +84,11 @@ def view_css_theme(request: HttpRequest) -> HttpResponse:
     return render_static(css, "text/css")
 
 
-@cache_control(max_age=CACHE_AGE_1DAY)
-def view_css(_request: HttpRequest) -> HttpResponse:
-    return render_static(STATIC_DIR / "css" / "base.css", "text/css")
-
-
-@cache_control(max_age=CACHE_AGE_1DAY)
-def view_css_mob(_request: HttpRequest) -> HttpResponse:
-    return render_static(STATIC_DIR / "css" / "responsive.css", "text/css")
-
-
 urlpatterns = [
     # --- admin urls ---
     path("admin/", admin.site.urls),
     # --- static views ---
-    path("css/", view_css),
-    path("css_mob/", view_css_mob),
-    path("favicon/", view_favicon),
-    path("me/", view_me_jpg),
-    path("theme/", view_css_theme),
+    path("theme/", view_css_theme, name="theme"),
     # --- pages ---
     path("", view_index, name="index"),
     path("projects/", view_projects, name="projects"),

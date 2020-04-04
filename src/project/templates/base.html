@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,10 +56,10 @@
     <!-- END Global site tag (gtag.js) - Google Analytics -->
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
-    <link href="/css/" rel="stylesheet" type="text/css">
-    <link href="/css_mob/" rel="stylesheet" type="text/css">
-    <link href="/theme/" rel="stylesheet" type="text/css">
-    <link href="/favicon/" rel="shortcut icon" type="image/png"/>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% url 'theme' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'favicon.png' %}" rel="shortcut icon" type="image/png"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
 

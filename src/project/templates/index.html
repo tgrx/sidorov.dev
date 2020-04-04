@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Alexander Sidorov personal website{% endblock %}
 
@@ -8,7 +9,7 @@
 
     <div class="gw">
 
-        <figure><img alt="it's me" src="/me/"></figure>
+        <figure><img alt="it's me" src="{% static 'me.jpg' %}"></figure>
 
         <article>
             <p>Hi!</p>
