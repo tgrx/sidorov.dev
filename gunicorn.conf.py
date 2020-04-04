@@ -1,3 +1,20 @@
+"""
+Config file for Gunicorn
+
+For details, see:
+https://devcenter.heroku.com/articles/python-gunicorn
+
+Workers on Heroku:
+https://devcenter.heroku.com/articles/optimizing-dyno-usage#basic-methodology-for-optimizing-memory
+
+Gunicorn max requests:
+http://docs.gunicorn.org/en/latest/settings.html#max-requests
+
+Gunicorn timeout:
+# http://docs.gunicorn.org/en/latest/settings.html#timeout
+
+"""
+
 from os import getenv
 from pathlib import Path
 
@@ -19,4 +36,4 @@ pythonpath = _src_dir.as_posix()
 reload = False  # TODO: dynaconf
 timeout = 30
 worker_class = "uvicorn.workers.UvicornWorker"
-workers = 4  # FIXME: investigate how much workers is ok for Heroku (memory)
+workers = int(getenv("WEB_CONCURRENCY", "4"))
