@@ -14,14 +14,11 @@ from django.urls import path
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
+from project.utils.consts import CACHE_AGE_1DAY
+from project.utils.consts import CACHE_AGE_1MINUTE
+from project.utils.consts import DAYLIGHT
 
 STATIC_DIR = settings.PROJECT_DIR / "static"
-
-CACHE_AGE_1MINUTE = 60
-CACHE_AGE_1HOUR = CACHE_AGE_1MINUTE * 60
-CACHE_AGE_1DAY = CACHE_AGE_1HOUR * 24
-CACHE_AGE_1MONTH = CACHE_AGE_1DAY * 30
-DAYLIGHT = range(9, 21)
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
