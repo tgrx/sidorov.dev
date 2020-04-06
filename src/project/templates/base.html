@@ -79,8 +79,7 @@
             {% with request.resolver_match.url_name as url_name %}
                 <li><a class="{% if url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Target</a></li>
                 <li><a class="{% if url_name == 'resume' %}active{% endif %}" href="{% url 'resume' %}">Resume</a></li>
-                <li><a class="{% if url_name == 'projects' %}active{% endif %}" href="{% url 'projects' %}">Projects</a>
-                </li>
+                <li><a class="{% if url_name == 'portfolio' %}active{% endif %}" href="{% url 'portfolio' %}">Portfolio</a></li>
                 <li><a class="{% if url_name == 'thoughts' %}active{% endif %}" href="{% url 'thoughts' %}">Thoughts</a>
                 </li>
             {% endwith %}

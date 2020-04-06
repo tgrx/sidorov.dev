@@ -1,3 +1,9 @@
+from django.http import HttpRequest
+from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.cache import never_cache
 
-# Create your views here.
+
+@never_cache
+def view_thoughts(request: HttpRequest) -> HttpResponse:
+    return render(request, "thoughts/index.html")
