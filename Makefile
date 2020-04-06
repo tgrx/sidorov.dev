@@ -1,5 +1,5 @@
 test:
-	pipenv run python src/manage.py test -v3 project
+	pipenv run python src/manage.py test -v1 project
 
 
 init:

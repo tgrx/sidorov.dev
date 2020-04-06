@@ -9,6 +9,7 @@ from django.http import Http404
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import include
 from django.urls import path
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
@@ -21,11 +22,6 @@ CACHE_AGE_1HOUR = CACHE_AGE_1MINUTE * 60
 CACHE_AGE_1DAY = CACHE_AGE_1HOUR * 24
 CACHE_AGE_1MONTH = CACHE_AGE_1DAY * 30
 DAYLIGHT = range(9, 21)
-
-
-@cache_control(max_age=CACHE_AGE_1DAY)
-def view_index(request: HttpRequest) -> HttpResponse:
-    return render(request, "index.html")
 
 
 @cache_control(max_age=CACHE_AGE_1DAY)
@@ -90,7 +86,7 @@ urlpatterns = [
     # --- static views ---
     path("theme/", view_css_theme, name="theme"),
     # --- pages ---
-    path("", view_index, name="index"),
+    path("", include("apps.index.urls")),
     path("projects/", view_projects, name="projects"),
     path("resume/", view_resume, name="resume"),
     path("thoughts/", view_thoughts, name="thoughts"),
