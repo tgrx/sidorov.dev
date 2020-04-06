@@ -1,6 +1,7 @@
 language: python
 install:
-  - make init
+  - pip install pipenv --upgrade
+  - make install static
 script:
   - make test
 cache: pip
