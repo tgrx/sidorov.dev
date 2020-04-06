@@ -19,7 +19,8 @@ static:
 
 
 test:
-	pipenv run python src/manage.py test -v2 project
+	pipenv run python src/manage.py test -v2 project apps
+
 
 deploy: clean
 	@echo 'test branch...'
