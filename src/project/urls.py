@@ -14,19 +14,17 @@ from django.urls import path
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import never_cache
 from ipware import get_client_ip
-from project.utils.consts import AGE_1DAY
-from project.utils.consts import AGE_1MINUTE
-from project.utils.consts import DAYLIGHT
+from project.utils import consts
 
 STATIC_DIR = settings.PROJECT_DIR / "static"
 
 
-@cache_control(max_age=AGE_1DAY)
+@cache_control(max_age=consts.AGE_1DAY)
 def view_projects(request: HttpRequest) -> HttpResponse:
     return render(request, "projects.html")
 
 
-@cache_control(max_age=AGE_1DAY)
+@cache_control(max_age=consts.AGE_1DAY)
 def view_resume(request: HttpRequest) -> HttpResponse:
     return render(request, "resume.html")
 
@@ -65,12 +63,12 @@ def get_user_hour(request: HttpRequest) -> int:
 
 
 def get_theme_css(hour: int) -> Path:
-    css = "theme_light.css" if (hour in DAYLIGHT) else "theme_dark.css"
+    css = "theme_light.css" if (hour in consts.DAYLIGHT) else "theme_dark.css"
     css_path = STATIC_DIR / "css" / css
     return css_path
 
 
-@cache_control(max_age=AGE_1MINUTE * 10)
+@cache_control(max_age=consts.AGE_1MINUTE * 10)
 def view_css_theme(request: HttpRequest) -> HttpResponse:
     hour = get_user_hour(request)
     css = get_theme_css(hour)
