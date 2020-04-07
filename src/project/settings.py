@@ -10,10 +10,11 @@ SECRET_KEY = "1"
 DEBUG = getenv('DJANGO_DEBUG', "") == "TRUE"
 
 ALLOWED_HOSTS = [
-    "localhost",
     "127.0.0.1",
+    "localhost",
     "sidorov-dev.herokuapp.com",
     "sidorov.dev",
+    "www.sidorov.dev",
 ]
 
 INTERNAL_IPS = [
