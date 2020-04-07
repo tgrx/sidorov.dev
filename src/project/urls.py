@@ -10,8 +10,8 @@ urlpatterns = [
     # --- static views ---
     path("theme/", view_css_theme, name="theme"),
     # --- pages ---
-    path("", include("apps.index.urls", namespace="index")),
-    path("portfolio/", include("apps.portfolio.urls", namespace="portfolio")),
-    path("resume/", include("apps.resume.urls", namespace="resume")),
-    path("thoughts/", include("apps.thoughts.urls", namespace="thoughts")),
+    path("", include("apps.target.urls")),
+    path("portfolio/", include("apps.portfolio.urls")),
+    path("resume/", include("apps.resume.urls")),
+    path("thoughts/", include("apps.thoughts.urls")),
 ]
