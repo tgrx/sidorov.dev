@@ -1,3 +1,4 @@
+from os import getenv
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).parent.resolve()
@@ -6,13 +7,17 @@ REPO_DIR = BASE_DIR.parent.resolve()
 
 SECRET_KEY = "1"
 
-DEBUG = 0
+DEBUG = getenv('DJANGO_DEBUG', "") == "TRUE"
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "sidorov-dev.herokuapp.com",
     "sidorov.dev",
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 INSTALLED_APPS = [
@@ -22,7 +27,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.index",
+    # --- my apps ---
+    "apps.portfolio",
+    "apps.resume",
+    "apps.target",
+    "apps.thoughts",
 ]
 
 MIDDLEWARE = [
