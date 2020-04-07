@@ -1,7 +1,7 @@
 from django.test import Client
 from django.test import TestCase
 
-from apps.thoughts.views import view_thoughts
+from apps.thoughts.views import view_index
 
 
 class Test(TestCase):
@@ -15,4 +15,4 @@ class Test(TestCase):
         self.assertEqual(
             [_t.name for _t in resp.templates], ["thoughts/index.html", "base.html"]
         )
-        self.assertEqual(resp.resolver_match.func, view_thoughts)
+        self.assertEqual(resp.resolver_match.func, view_index)

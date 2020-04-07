@@ -3,11 +3,9 @@ BRANCH := $(shell git branch --quiet --no-color | grep '*' | sed -e 's/^\*\ //g'
 UNTRACKED := $(shell git status --short | grep -e '^[ ?]' | wc -l | sed -e 's/\ *//g')
 UNTRACKED2 := $(shell git status --short | awk '{print substr($$0, 2, 2)}' | grep -e '\w\+' | wc -l | sed -e 's/\ *//g')
 
-xxx:
-	echo ${NOW}
 
 run: static
-	pipenv run python src/manage.py runserver
+	DJANGO_DEBUG=TRUE pipenv run python src/manage.py runserver
 
 
 runa: static
@@ -15,11 +13,11 @@ runa: static
 
 
 static:
-	pipenv run python src/manage.py collectstatic --noinput --clear -v0
+	DJANGO_DEBUG=TRUE pipenv run python src/manage.py collectstatic --noinput --clear -v0
 
 
 test:
-	pipenv run python src/manage.py test -v2 project apps
+	DJANGO_DEBUG=TRUE pipenv run python src/manage.py test -v2 project apps
 
 
 deploy: clean

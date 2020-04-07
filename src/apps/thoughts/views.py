@@ -5,5 +5,5 @@ from django.views.decorators.cache import never_cache
 
 
 @never_cache
-def view_thoughts(request: HttpRequest) -> HttpResponse:
+def view_index(request: HttpRequest) -> HttpResponse:
     return render(request, "thoughts/index.html")

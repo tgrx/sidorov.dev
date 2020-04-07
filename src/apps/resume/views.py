@@ -7,5 +7,5 @@ from project.utils import consts
 
 
 @cache_control(max_age=consts.AGE_1DAY)
-def view_resume(request: HttpRequest) -> HttpResponse:
+def view_index(request: HttpRequest) -> HttpResponse:
     return render(request, "resume/index.html")
