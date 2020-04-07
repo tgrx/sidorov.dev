@@ -9,6 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # --- static views ---
     path("theme/", view_css_theme, name="theme"),
+    path("favicon.ico", view_css_theme, name="favicon"),
     # --- pages ---
     path("", include("apps.target.urls")),
     path("portfolio/", include("apps.portfolio.urls")),

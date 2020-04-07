@@ -25,3 +25,7 @@ def get_theme_css(hour: int) -> Path:
     css = "theme_light.css" if (hour in consts.DAYLIGHT) else "theme_dark.css"
     css_path = STATIC_DIR / "css" / css
     return css_path
+
+
+def get_favicon() -> Path:
+    return STATIC_DIR / "favicon.png"
