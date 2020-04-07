@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Alexander Sidorov personal website{% endblock %}
+
+{% block header %}Alexander Sidorov{% endblock %}
+
+{% block main %}
+
+    <div class="gw">
+
+        <figure><img alt="it's me" src="{% static 'target/me.jpg' %}"></figure>
+
+        <article>
+            <p>Hi!</p>
+            <p>I'm Alexander, Alex for short. Here is my site with some professional info about me.</p>
+            <p>I create some software stuff using Python.</p>
+        </article>
+
+    </div>
+
+    <article>
+        <h2>Timeline</h2>
+
+        <section>
+            <h3>Slack workspace for my TMS students</h3>
+            <h4>24 March 2020</h4>
+            <p>There is a <a href="https://alex-tms.slack.com">Slack workspace</a> for all my TeachMeSkills students.
+            </p>
+            <p>If you are one of them and are still not there, feel free to ask me for invite.</p>
+            <p>There is a lot of information about courses and FAQ about technical details.</p>
+        </section>
+
+        <section>
+            <h3>Interview with me @ НАТИВ</h3>
+            <h4>4 Feb 2020</h4>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/qec3zdr_F-s" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </section>
+    </article>
+
+{% endblock %}

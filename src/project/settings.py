@@ -23,9 +23,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # --- my apps ---
-    "apps.index",
     "apps.portfolio",
     "apps.resume",
+    "apps.target",
     "apps.thoughts",
 ]
 
