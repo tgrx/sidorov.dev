@@ -8,7 +8,6 @@ script:
   - make test
 
 after_success:
-  - pip install coverage==4.5.4  # https://github.com/creare-com/podpac/issues/347
   - coveralls
 
 cache: pip
