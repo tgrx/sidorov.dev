@@ -5,8 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
+coverage = "*"
+freezegun = "*"
 httpie = "*"
 ipython = "*"
+isort = "*"
 pudb = "*"
 
 [packages]

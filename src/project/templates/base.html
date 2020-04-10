@@ -61,7 +61,14 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% url 'theme' %}" rel="stylesheet" type="text/css">
+
+    <link href="
+    {% if user_hour in daylight_hours %}
+    {% static 'css/theme_light.css' %}
+    {% else %}
+    {% static 'css/theme_dark.css' %}
+    {% endif %}" rel="stylesheet" type="text/css">
+
     <link href="{% url 'favicon' %}" rel="shortcut icon" type="image/png"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
