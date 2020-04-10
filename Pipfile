@@ -11,6 +11,7 @@ httpie = "*"
 ipython = "*"
 isort = "*"
 pudb = "*"
+python-coveralls = "*"
 
 [packages]
 django = "*"
