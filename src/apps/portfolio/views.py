@@ -1,11 +1,10 @@
-from django.http import HttpRequest
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
+from django.views.generic import TemplateView
 
 from project.utils import consts
 
 
-@cache_control(max_age=consts.AGE_1DAY)
-def view_index(request: HttpRequest) -> HttpResponse:
-    return render(request, "portfolio/index.html")
+@method_decorator(cache_control(max_age=consts.AGE_1DAY), name="get")
+class IndexView(TemplateView):
+    template_name = "portfolio/index.html"
