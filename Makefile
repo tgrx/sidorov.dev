@@ -47,7 +47,7 @@ deploy: format test clean
 	git push origin master
 
 
-install: clean
+install:
 	pipenv update --dev
 
 
