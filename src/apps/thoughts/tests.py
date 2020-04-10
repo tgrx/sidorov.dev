@@ -18,3 +18,5 @@ class Test(TestCase):
         self.assertEqual(
             resp.resolver_match.func.__name__, IndexView.as_view().__name__
         )
+        self.assertTrue(resp.has_header("Cache-Control"))
+        self.assertIn("max-age=0", resp.get("Cache-Control"))
