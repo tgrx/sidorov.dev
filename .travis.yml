@@ -1,13 +1,18 @@
 language: python
+
 install:
   - pip install pipenv --upgrade
   - make install static
+
 script:
   - make test
+
+after_success:
+  - coveralls
+
 cache: pip
+
 jobs:
   include:
-    - stage: test
-      python: '3.7'
     - stage: test
       python: '3.8'

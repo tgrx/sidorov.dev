@@ -61,7 +61,14 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% url 'theme' %}" rel="stylesheet" type="text/css">
+
+    <link href="
+    {% if user_hour in daylight_hours %}
+    {% static 'css/theme_light.css' %}
+    {% else %}
+    {% static 'css/theme_dark.css' %}
+    {% endif %}" rel="stylesheet" type="text/css">
+
     <link href="{% url 'favicon' %}" rel="shortcut icon" type="image/png"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -84,7 +91,8 @@
             <ul>
                 <li><a class="{% if ns == 'target' %}active{% endif %}" href="{% url 'target:index' %}">Target</a></li>
                 <li><a class="{% if ns == 'resume' %}active{% endif %}" href="{% url 'resume:index' %}">Resume</a></li>
-                <li><a class="{% if ns == 'portfolio' %}active{% endif %}" href="{% url 'portfolio:index' %}">Portfolio</a></li>
+                <li><a class="{% if ns == 'portfolio' %}active{% endif %}"
+                       href="{% url 'portfolio:index' %}">Portfolio</a></li>
                 <li><a class="{% if ns == 'thoughts' %}active{% endif %}" href="{% url 'thoughts:index' %}">Thoughts</a>
                 </li>
             </ul>

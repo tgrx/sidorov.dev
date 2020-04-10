@@ -1,10 +1,10 @@
 from django.urls import path
 
 from apps.portfolio.apps import PortfolioConfig
-from apps.portfolio.views import view_index
+from apps.portfolio.views import IndexView
 
 app_name = PortfolioConfig.name
 
 urlpatterns = [
-    path("", view_index, name="index"),
+    path("", IndexView.as_view(), name="index"),
 ]

@@ -5,9 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
+coverage = "==4.5.4"  # https://github.com/creare-com/podpac/issues/347
+freezegun = "*"
 httpie = "*"
 ipython = "*"
+isort = "*"
 pudb = "*"
+python-coveralls = "*"
 
 [packages]
 django = "*"
