@@ -1,9 +1,8 @@
-from django.http import HttpRequest
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.views.generic import TemplateView
 
 
-@never_cache
-def view_index(request: HttpRequest) -> HttpResponse:
-    return render(request, "thoughts/index.html")
+@method_decorator(never_cache, name="get")
+class IndexView(TemplateView):
+    template_name = "thoughts/index.html"
