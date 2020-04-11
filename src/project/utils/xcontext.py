@@ -16,7 +16,7 @@ def user_hour(request: HttpRequest) -> Dict[str, int]:
     return ctx
 
 
-def bigbrother(_request: HttpRequest) -> Dict[str, str]:
+def big_brother(_request: HttpRequest) -> Dict[str, str]:
     return {
         "google_analytics": consts.SCRIPT_GOOGLE_ANALYTICS,
         "google_tag_manager": consts.SCRIPT_GOOGLE_TAG_MANAGER,
