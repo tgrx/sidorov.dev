@@ -41,10 +41,15 @@
                 <li><a class="{% if ns == 'resume' %}active{% endif %}" href="{% url 'resume:index' %}">Resume</a></li>
                 <li><a class="{% if ns == 'portfolio' %}active{% endif %}"
                        href="{% url 'portfolio:index' %}">Portfolio</a></li>
-                <li><a class="{% if ns == 'thoughts' %}active{% endif %}" href="{% url 'thoughts:index' %}">Thoughts</a>
+                <li><a class="{% if ns == 'meta' %}active{% endif %}" href="{% url 'meta:index' %}">Metadata</a>
                 </li>
             </ul>
         {% endwith %}
+    </nav>
+    <nav class="sub-nav">
+        <ul>
+            {% block subnav %}{% endblock %}
+        </ul>
     </nav>
 </header>
 

@@ -11,7 +11,7 @@ urlpatterns = [
     path("favicon.ico", view_favicon, name="favicon"),
     # --- apps ---
     path("", include("apps.target.urls")),
+    path("meta/", include("apps.meta.urls")),
     path("portfolio/", include("apps.portfolio.urls")),
     path("resume/", include("apps.resume.urls")),
-    path("thoughts/", include("apps.thoughts.urls")),
 ]

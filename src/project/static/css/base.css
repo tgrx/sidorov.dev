@@ -39,6 +39,10 @@ nav {
     padding-right: 40px;
 }
 
+nav.sub-nav {
+    font-size: calc(var(--font-size) * 0.8);
+}
+
 nav * li {
     padding: 20px;
 }
