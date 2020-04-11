@@ -48,7 +48,7 @@ deploy: format test clean
 
 
 install:
-	pipenv update --dev
+	pipenv install --dev
 
 
 clean:
