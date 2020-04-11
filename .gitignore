@@ -1,4 +1,3 @@
-#####################
 *$py.class
 **/.DS_Store
 *.cover
@@ -39,7 +38,6 @@
 /site
 ENV/
 MANIFEST
-Pipfile.lock
 __pycache__/
 __pypackages__/
 build/
