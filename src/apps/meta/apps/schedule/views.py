@@ -14,7 +14,6 @@ from icalevents import icalevents
 
 from apps.meta.apps.schedule.models import Calendar
 from project.utils.consts import AGE_1MINUTE
-from project.utils.xdatetime import get_user_tz
 
 
 class DateRange(NamedTuple):
@@ -53,9 +52,6 @@ class IndexView(TemplateView):
 
         schedule = self.get_schedule()
         ctx["schedule"] = schedule
-
-        utz = get_user_tz(self.request)
-        ctx["utz"] = utz
 
         return ctx
 

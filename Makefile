@@ -79,6 +79,5 @@ install:
 clean:
 	pipenv run coverage erase
 	find . -type d -name "__pycache__" | xargs rm -rf
-	rm -rf Pipfile.lock
 	rm -rf ./.static/
 

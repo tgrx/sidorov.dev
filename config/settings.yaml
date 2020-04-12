@@ -9,10 +9,10 @@ development:
 
 heroku:
   ALLOWED_HOSTS:
+    - .sidorov-dev.herokuapp.com
+    - .sidorov.dev
     - 127.0.0.1
     - localhost
-    - sidorov-dev.herokuapp.com
-    - sidorov.dev
   DEBUG: false
 
 travis:
