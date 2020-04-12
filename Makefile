@@ -52,6 +52,12 @@ test:
 	pipenv run isort --virtual-env ${VENV} --recursive --check-only ${HERE}
 
 
+.PHONY: report
+report:
+	pipenv run coverage html --directory=${HERE}/htmlcov --fail-under=0
+	open "${HERE}/htmlcov/index.html"
+
+
 .PHONY: deploy
 deploy: format test clean
 	@echo 'test branch...'

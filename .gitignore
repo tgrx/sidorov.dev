@@ -13,6 +13,7 @@
 *.so
 *.spec
 .cache
+.cache
 .coverage
 .coverage.*
 .dmypy.json

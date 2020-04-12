@@ -26,6 +26,7 @@ psycopg2 = "*"
 requests = "*"
 uvicorn = "*"
 whitenoise = "*"
+icalevents = "*"
 
 [requires]
 python_version = "3.8"

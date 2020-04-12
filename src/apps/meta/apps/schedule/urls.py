@@ -7,5 +7,4 @@ app_name = ScheduleConfig.label
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
-    path("ocb/", views.OAuth2CallbackView.as_view()),
 ]
