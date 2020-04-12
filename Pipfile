@@ -14,12 +14,15 @@ pudb = "*"
 python-coveralls = "*"
 
 [packages]
+dj-database-url = "*"
 django = "*"
 django-ipware = "*"
+dynaconf = {extras = ["yaml"],version = "*"}
 google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
 gunicorn = "*"
+psycopg2 = "*"
 requests = "*"
 uvicorn = "*"
 whitenoise = "*"

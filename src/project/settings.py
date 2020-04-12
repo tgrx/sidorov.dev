@@ -1,21 +1,18 @@
 from os import getenv
 from pathlib import Path
 
+import dj_database_url
+from dynaconf import settings as _settings
+
 PROJECT_DIR = Path(__file__).parent.resolve()
 BASE_DIR = PROJECT_DIR.parent.resolve()
 REPO_DIR = BASE_DIR.parent.resolve()
 
-SECRET_KEY = "1"
+SECRET_KEY = _settings.SECRET_KEY
 
-DEBUG = getenv("DJANGO_DEBUG", "") == "TRUE"
+DEBUG = _settings.DEBUG
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "sidorov-dev.herokuapp.com",
-    "sidorov.dev",
-    "www.sidorov.dev",
-]
+ALLOWED_HOSTS = _settings.ALLOWED_HOSTS
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -52,7 +49,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates",],
+        "DIRS": [PROJECT_DIR / "templates", ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -63,27 +60,28 @@ TEMPLATES = [
                 "project.utils.xcontext.user_hour",
                 "project.utils.xcontext.big_brother",
             ],
-            "libraries": {"project_tags": "project.templatetags",},
+            "libraries": {"project_tags": "project.templatetags", },
         },
     },
 ]
 
 WSGI_APPLICATION = "project.wsgi.application"
 
+_db_url = _settings.DATABASE_URL
+if _settings.ENV_FOR_DYNACONF == "heroku":
+    _db_url = getenv("DATABASE_URL")
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": (BASE_DIR / "db.sqlite3").as_posix(),
-    }
+    "default": dj_database_url.parse(_db_url, conn_max_age=600),
 }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 LANGUAGE_CODE = "en-us"
