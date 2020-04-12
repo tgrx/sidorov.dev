@@ -1,4 +1,7 @@
 :root {
+    --brightness: 50%;
+    --hue: 10;
+    --saturation: 100%;
     --bg-color: white;
     --font-color: black;
 }

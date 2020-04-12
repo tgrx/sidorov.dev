@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class TargetConfig(AppConfig):
-    name = "target"
+    name = "apps.target"
+    label = "target"

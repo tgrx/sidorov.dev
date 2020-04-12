@@ -29,7 +29,6 @@ header * {
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-around;
-
 }
 
 nav {
@@ -37,6 +36,10 @@ nav {
     display: flex;
     flex-wrap: wrap;
     padding-right: 40px;
+}
+
+nav.sub-nav {
+    font-size: calc(var(--font-size) * 0.8);
 }
 
 nav * li {

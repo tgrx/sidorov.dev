@@ -14,9 +14,13 @@ pudb = "*"
 python-coveralls = "*"
 
 [packages]
+dj-database-url = "*"
 django = "*"
 django-ipware = "*"
+dynaconf = {extras = ["yaml"],version = "*"}
 gunicorn = "*"
+icalevents = "*"
+psycopg2 = "*"
 requests = "*"
 uvicorn = "*"
 whitenoise = "*"
