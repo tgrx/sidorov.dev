@@ -25,6 +25,8 @@
 
         <link href="{% url 'favicon' %}" rel="shortcut icon" type="image/png"/>
         <title>{% block title %}{% endblock %}</title>
+
+        {% block head %}{% endblock %}
     </head>
 
     <body>

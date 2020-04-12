@@ -11,8 +11,10 @@ class CalendarModelAdminForm(forms.ModelForm):
         model = Calendar
         fields = "__all__"
         widgets = {
-            a(Calendar.ical): forms.Textarea(attrs={"rows": 3, "cols": 100}),
-            a(Calendar.description): forms.Textarea(attrs={"rows": 3, "cols": 100}),
+            a(Calendar.ical): forms.Textarea(
+                attrs={"cols": 100, "disabled": 1, "rows": 3,}
+            ),
+            a(Calendar.description): forms.Textarea(attrs={"cols": 100, "rows": 3,}),
         }
 
 
@@ -20,4 +22,3 @@ class CalendarModelAdminForm(forms.ModelForm):
 class CalendarModelAdmin(admin.ModelAdmin):
     form = CalendarModelAdminForm
     formfield_overrides = {models.TextField: {"widget": forms.TextInput}}
-    readonly_fields = [a(f) for f in (Calendar.ical,)]

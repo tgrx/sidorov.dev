@@ -20,6 +20,7 @@ class Calendar(m.Model):
 
     class Meta:
         verbose_name_plural = "Calendars"
+        ordering = ("name",)
 
     def sync(self, force: bool = False) -> None:
         """Synchronizes the calendar content, if needed"""
