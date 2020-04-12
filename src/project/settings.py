@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # --- my apps ---
     "apps.meta.apps.MetaConfig",
+    "apps.meta.apps.schedule.apps.ScheduleConfig",
     "apps.portfolio.apps.PortfolioConfig",
     "apps.resume.apps.ResumeConfig",
     "apps.target.apps.TargetConfig",
@@ -62,6 +63,7 @@ TEMPLATES = [
                 "project.utils.xcontext.user_hour",
                 "project.utils.xcontext.big_brother",
             ],
+            "libraries": {"project_tags": "project.templatetags",},
         },
     },
 ]
