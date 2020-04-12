@@ -6,12 +6,4 @@
 
 {% block main %}
 
-    {% if request.user.is_superuser %}
-        <p>Hello, {{ request.user }}</p>
-        <p>{{ creds }}</p>
-        <form action="">
-        <button type="submit">Get tokens from Google</button>
-        </form>
-    {% endif %}
-
 {% endblock %}
