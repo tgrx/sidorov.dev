@@ -1,4 +1,7 @@
 :root {
+    --brightness: 20%;
+    --hue: 10;
+    --saturation: 60%;
     --bg-color: rgb(30, 10, 10);
     --font-color: coral;
 }

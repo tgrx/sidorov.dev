@@ -1,9 +1,5 @@
-:root {
-    --cch: 215;
-}
-
 .calendar-widget {
-    border: 1px solid hsl(var(--cch), 50%, 50%);
+    border: 1px solid hsl(var(--hue), 100%, var(--brightness));
     display: grid;
     grid-column-gap: 1px;
     grid-row-gap: 1px;
@@ -13,9 +9,9 @@
 }
 
 .calendar-widget > p {
-    background-color: hsl(var(--cch), 100%, 90%);
-    border: 1px solid hsl(var(--cch), 100%, 50%);
-    color: hsl(var(--cch), 20%, 20%);
+    background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 1.7));
+    border: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
+    color: hsl(var(--hue), 5%, calc(var(--brightness) / 2));
     font-size: calc(var(--font-size) * 0.6);
     font-style: oblique;
     margin: 1px;
@@ -25,8 +21,8 @@
 }
 
 .calendar-widget > p.header {
-    background-color: hsl(var(--cch), 100%, 75%);
-    border-bottom: 2px solid hsl(var(--cch), 100%, 50%);
+    background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 2));
+    border-bottom: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
     font-style: normal;
     text-align: center;
 }
