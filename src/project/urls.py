@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.urls import re_path
 
 from project.views import view_favicon
 
@@ -15,3 +17,6 @@ urlpatterns = [
     path("portfolio/", include("apps.portfolio.urls")),
     path("resume/", include("apps.resume.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns.append(re_path(r"^silk/", include("silk.urls", namespace="silk")))

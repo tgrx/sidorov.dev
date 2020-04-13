@@ -18,38 +18,48 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+INSTALLED_APPS_ORDERED = {
+    0: "django.contrib.admin",
+    10: "django.contrib.auth",
+    20: "django.contrib.contenttypes",
+    30: "django.contrib.sessions",
+    40: "django.contrib.messages",
+    50: "django.contrib.staticfiles",
     # --- my apps ---
-    "apps.meta.apps.MetaConfig",
-    "apps.meta.apps.schedule.apps.ScheduleConfig",
-    "apps.portfolio.apps.PortfolioConfig",
-    "apps.resume.apps.ResumeConfig",
-    "apps.target.apps.TargetConfig",
-]
+    1000: "apps.meta.apps.MetaConfig",
+    2000: "apps.meta.apps.schedule.apps.ScheduleConfig",
+    3000: "apps.portfolio.apps.PortfolioConfig",
+    4000: "apps.resume.apps.ResumeConfig",
+    5000: "apps.target.apps.TargetConfig",
+}
 
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
+if DEBUG:
+    INSTALLED_APPS_ORDERED[41] = "silk"
+
+INSTALLED_APPS = [app for _, app in sorted(INSTALLED_APPS_ORDERED.items())]
+
+MIDDLEWARE_ORDERED = {
+    0: "django.middleware.security.SecurityMiddleware",
+    10: "whitenoise.middleware.WhiteNoiseMiddleware",
+    20: "django.contrib.sessions.middleware.SessionMiddleware",
+    30: "django.middleware.common.CommonMiddleware",
+    40: "django.middleware.csrf.CsrfViewMiddleware",
+    50: "django.contrib.auth.middleware.AuthenticationMiddleware",
+    60: "django.contrib.messages.middleware.MessageMiddleware",
+    70: "django.middleware.clickjacking.XFrameOptionsMiddleware",
+}
+
+if DEBUG:
+    MIDDLEWARE_ORDERED[80] = "silk.middleware.SilkyMiddleware"
+
+MIDDLEWARE = [mw for _, mw in sorted(MIDDLEWARE_ORDERED.items())]
 
 ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates",],
+        "DIRS": [PROJECT_DIR / "templates", ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -60,7 +70,7 @@ TEMPLATES = [
                 "project.utils.xcontext.user_hour",
                 "project.utils.xcontext.big_brother",
             ],
-            "libraries": {"project_tags": "project.templatetags",},
+            "libraries": {"project_tags": "project.templatetags", },
         },
     },
 ]
@@ -79,9 +89,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 LANGUAGE_CODE = "en-us"
@@ -114,3 +124,7 @@ if not DEBUG:
         integrations=[DjangoIntegration()],
         send_default_pii=True,
     )
+
+if DEBUG:
+    SILKY_PYTHON_PROFILER = True
+    SILKY_PYTHON_PROFILER_BINARY = True
