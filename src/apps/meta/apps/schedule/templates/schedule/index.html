@@ -21,9 +21,9 @@
                 <p class="header" style="grid-row: 1; grid-column: {{ day.number }}">{{ day.date|date:"D, j M" }}</p>
                 {% for event in day.events %}
                     <p style="grid-row: {{ event.slot0 }} / {{ event.slot1 }}; grid-column: {{ day.number }}">
-                        {{ event.start|time:"H" }}
+                        {{ event.start|time:"H:i" }}
                         ~
-                        {{ event.end|time:"H" }}
+                        {{ event.end|time:"H:i" }}
                         {% if request.user.is_superuser %}
                             <br>
                             {{ event.summary|truncatewords:4 }}

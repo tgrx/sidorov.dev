@@ -1,6 +1,7 @@
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
+from math import ceil
 from typing import Collection
 from typing import NamedTuple
 from typing import Text
@@ -82,6 +83,7 @@ class IndexView(TemplateView):
     def collect_events(
         self, calendars: Collection[Calendar], dates: DateRange
     ) -> Tuple[Event]:
+        minsk = pytz.timezone("Europe/Minsk")
         all_events = []
         populated_calendars = filter(lambda calendar: calendar.ical, calendars)
         for calendar in populated_calendars:
@@ -93,10 +95,11 @@ class IndexView(TemplateView):
                 Event(
                     calendar=calendar,
                     end=event.end,
-                    slot0=(event.start).astimezone(pytz.timezone("Europe/Minsk")).hour
-                    - 9
-                    + 2,  # FIXME: magic
-                    slot1=(event.end).astimezone(pytz.timezone("Europe/Minsk")).hour
+                    slot0=(event.start).astimezone(minsk).hour - 9 + 2,  # FIXME: magic
+                    slot1=ceil(
+                        (event.end).astimezone(minsk).hour
+                        + (event.end).astimezone(minsk).minute / 60
+                    )
                     - 9
                     + 2,  # FIXME: magic
                     start=event.start,
