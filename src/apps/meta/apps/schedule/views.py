@@ -9,7 +9,7 @@ from typing import Tuple
 
 import pytz
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_control
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from icalevents import icalevents
 
@@ -44,7 +44,7 @@ class Schedule(NamedTuple):
     start: date
 
 
-@method_decorator(cache_control(max_age=AGE_1MINUTE * 5), name="get")
+@method_decorator(cache_page(AGE_1MINUTE * 15), name="get")
 class IndexView(TemplateView):
     template_name = "schedule/index.html"
 
