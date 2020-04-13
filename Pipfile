@@ -22,6 +22,7 @@ gunicorn = "*"
 icalevents = "*"
 psycopg2 = "*"
 requests = "*"
+sentry-sdk = "*"
 uvicorn = "*"
 whitenoise = "*"
 
