@@ -5,7 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
-coverage = "==4.5.4"  # https://github.com/creare-com/podpac/issues/347
+codecov = "*"
+coverage = "*"
 django-silk = "*"
 freezegun = "*"
 httpie = "*"
@@ -13,7 +14,6 @@ ipython = "*"
 isort = "*"
 line-profiler = "*"
 pudb = "*"
-python-coveralls = "*"
 
 [packages]
 dj-database-url = "*"

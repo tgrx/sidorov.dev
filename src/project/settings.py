@@ -11,6 +11,7 @@ REPO_DIR = BASE_DIR.parent.resolve()
 SECRET_KEY = _settings.SECRET_KEY
 
 DEBUG = _settings.DEBUG
+PROFILING = _settings.PROFILING
 
 ALLOWED_HOSTS = _settings.ALLOWED_HOSTS
 
@@ -33,7 +34,7 @@ INSTALLED_APPS_ORDERED = {
     5000: "apps.target.apps.TargetConfig",
 }
 
-if DEBUG:
+if DEBUG and PROFILING:
     INSTALLED_APPS_ORDERED[41] = "silk"
 
 INSTALLED_APPS = [app for _, app in sorted(INSTALLED_APPS_ORDERED.items())]
@@ -49,7 +50,7 @@ MIDDLEWARE_ORDERED = {
     70: "django.middleware.clickjacking.XFrameOptionsMiddleware",
 }
 
-if DEBUG:
+if DEBUG and PROFILING:
     MIDDLEWARE_ORDERED[80] = "silk.middleware.SilkyMiddleware"
 
 MIDDLEWARE = [mw for _, mw in sorted(MIDDLEWARE_ORDERED.items())]
@@ -59,7 +60,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates", ],
+        "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -70,7 +71,7 @@ TEMPLATES = [
                 "project.utils.xcontext.user_hour",
                 "project.utils.xcontext.big_brother",
             ],
-            "libraries": {"project_tags": "project.templatetags", },
+            "libraries": {"project_tags": "project.templatetags",},
         },
     },
 ]
@@ -89,9 +90,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 LANGUAGE_CODE = "en-us"
@@ -125,6 +126,6 @@ if not DEBUG:
         send_default_pii=True,
     )
 
-if DEBUG:
+if DEBUG and PROFILING:
     SILKY_PYTHON_PROFILER = True
     SILKY_PYTHON_PROFILER_BINARY = True

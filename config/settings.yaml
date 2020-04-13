@@ -2,6 +2,7 @@ default:
   ALLOWED_HOSTS: []
   DATABASE_URL: ""
   DEBUG: true
+  PROFILING: false
   SECRET_KEY: ""
   SENTRY_DSN: ""
 
