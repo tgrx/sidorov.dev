@@ -18,11 +18,13 @@ pudb = "*"
 [packages]
 dj-database-url = "*"
 django = "*"
+django-bmemcached = "*"
 django-ipware = "*"
 dynaconf = {extras = ["yaml"],version = "*"}
 gunicorn = "*"
 icalevents = "*"
 psycopg2 = "*"
+python-binary-memcached = "*"
 requests = "*"
 sentry-sdk = "*"
 uvicorn = "*"

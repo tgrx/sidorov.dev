@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "70abe38edc0eddb4a425ce865d9507130072b9c5bf576a9c8baca111821fee52"
+            "sha256": "770e858774d4ebc5427dabad11e435aefe04058fb1058230a8648b3051e490c8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -66,6 +66,13 @@
             ],
             "index": "pypi",
             "version": "==3.0.5"
+        },
+        "django-bmemcached": {
+            "hashes": [
+                "sha256:4e4b7d97216dbae331c1de10e699ca22804b94ec3a90d2762dd5d146e6986a8a"
+            ],
+            "index": "pypi",
+            "version": "==0.3.0"
         },
         "django-ipware": {
             "hashes": [
@@ -165,6 +172,13 @@
             "index": "pypi",
             "version": "==2.8.5"
         },
+        "python-binary-memcached": {
+            "hashes": [
+                "sha256:c7d6949cb5988ffe27a44dbd45d14464910087a13404991f3c4bb284cbd096b0"
+            ],
+            "index": "pypi",
+            "version": "==0.29.0"
+        },
         "python-box": {
             "hashes": [
                 "sha256:694a7555e3ff9fbbce734bbaef3aad92b8e4ed0659d3ed04d56b6a0a0eff26a9",
@@ -245,6 +259,12 @@
                 "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
             ],
             "version": "==0.10.0"
+        },
+        "uhashring": {
+            "hashes": [
+                "sha256:7bedeef34a0e1df21f7d4396c6657f9a2a0cfb0ce9f77bc18e06df7e28eecebe"
+            ],
+            "version": "==1.1"
         },
         "urllib3": {
             "hashes": [
