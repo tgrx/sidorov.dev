@@ -1,5 +1,6 @@
 BRANCH := $(shell git branch --quiet --no-color | grep '*' | sed -e 's/^\*\ //g')
 HERE := $(shell pwd)
+TEST_ENV := "test"
 UNTRACKED := $(shell git status --short | grep -e '^[ ?]' | wc -l | sed -e 's/\ *//g')
 UNTRACKED2 := $(shell git status --short | awk '{print substr($$0, 2, 2)}' | grep -e '\w\+' | wc -l | sed -e 's/\ *//g')
 VENV := $(shell pipenv --venv)
@@ -43,7 +44,7 @@ su:
 
 .PHONY: test
 test:
-	ENV_FOR_DYNACONF=test \
+	ENV_FOR_DYNACONF=${TEST_ENV} \
 	pipenv run \
 		coverage run \
 			src/manage.py test -v2 \
@@ -52,6 +53,11 @@ test:
 
 	pipenv run coverage report
 	pipenv run isort --virtual-env ${VENV} --recursive --check-only ${HERE}
+
+
+.PHONY: travis
+travis: TEST_ENV=travis
+travis: test
 
 
 .PHONY: report
