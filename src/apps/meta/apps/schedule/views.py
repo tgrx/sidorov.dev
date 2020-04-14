@@ -68,20 +68,23 @@ class IndexView(TemplateView):
         )
         return schedule
 
-    def get_date_range(self) -> DateRange:
+    @staticmethod
+    def get_date_range() -> DateRange:
         reset_time_args = dict(hour=0, microsecond=0, minute=0, second=0,)
         start = datetime.utcnow().replace(**reset_time_args).astimezone(pytz.UTC).date()
         end = start + timedelta(days=8)  # FIXME: magic
         return DateRange(end=end, start=start)
 
-    def get_calendars(self) -> Tuple[Calendar]:
+    @staticmethod
+    def get_calendars() -> Tuple[Calendar]:
         calendars = tuple(Calendar.objects.all())
         for calendar in calendars:
             calendar.sync()
         return calendars
 
+    @staticmethod
     def collect_events(
-        self, calendars: Collection[Calendar], dates: DateRange
+        calendars: Collection[Calendar], dates: DateRange
     ) -> Tuple[Event]:
         minsk = pytz.timezone("Europe/Minsk")
         all_events = []
@@ -111,7 +114,8 @@ class IndexView(TemplateView):
 
         return tuple(all_events)
 
-    def group_days(self, events: Collection[Event], dates: DateRange) -> Tuple[Day]:
+    @staticmethod
+    def group_days(events: Collection[Event], dates: DateRange) -> Tuple[Day]:
         groups = {}
         this_day = dates.start
         while this_day < dates.end:

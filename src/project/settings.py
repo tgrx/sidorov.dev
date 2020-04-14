@@ -5,6 +5,7 @@ import dj_database_url
 from dynaconf import settings as _settings
 
 from project.utils.consts import AGE_1DAY
+from project.utils.consts import AGE_1MINUTE
 
 PROJECT_DIR = Path(__file__).parent.resolve()
 BASE_DIR = PROJECT_DIR.parent.resolve()
@@ -38,7 +39,7 @@ INSTALLED_APPS_ORDERED = {
 }
 
 if PROFILING:
-    INSTALLED_APPS_ORDERED[41] = "silk"
+    INSTALLED_APPS_ORDERED[49] = "silk"
 
 INSTALLED_APPS = [app for _, app in sorted(INSTALLED_APPS_ORDERED.items())]
 
@@ -54,7 +55,7 @@ MIDDLEWARE_ORDERED = {
 }
 
 if PROFILING:
-    MIDDLEWARE_ORDERED[80] = "silk.middleware.SilkyMiddleware"
+    MIDDLEWARE_ORDERED[71] = "silk.middleware.SilkyMiddleware"
     SILKY_PYTHON_PROFILER = True
     SILKY_PYTHON_PROFILER_BINARY = True
 
@@ -87,26 +88,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
-_db_url = _settings.DATABASE_URL
+DATABASE_URL = _settings.DATABASE_URL
 if _settings.ENV_FOR_DYNACONF == "heroku":
-    _db_url = getenv("DATABASE_URL")
+    DATABASE_URL = getenv("DATABASE_URL")
 
 DATABASES = {
-    "default": dj_database_url.parse(_db_url, conn_max_age=600),
+    "default": dj_database_url.parse(DATABASE_URL, conn_max_age=AGE_1MINUTE * 10),
 }
 
 if CACHING:
     CACHE_MIDDLEWARE_SECONDS = AGE_1DAY
-    CACHES = {
-        "default": {
-            "BACKEND": "django_bmemcached.memcached.BMemcached",
-            "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS").split(","),
-            "OPTIONS": {
-                "username": getenv("MEMCACHEDCLOUD_USERNAME"),
-                "password": getenv("MEMCACHEDCLOUD_PASSWORD"),
-            },
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}}
+
+    if not DEBUG:
+        CACHES = {
+            "default": {
+                "BACKEND": "django_bmemcached.memcached.BMemcached",
+                "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS").split(","),
+                "OPTIONS": {
+                    "username": getenv("MEMCACHEDCLOUD_USERNAME"),
+                    "password": getenv("MEMCACHEDCLOUD_PASSWORD"),
+                },
+            }
         }
-    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

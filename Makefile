@@ -4,6 +4,7 @@ UNTRACKED := $(shell git status --short | grep -e '^[ ?]' | wc -l | sed -e 's/\ 
 UNTRACKED2 := $(shell git status --short | awk '{print substr($$0, 2, 2)}' | grep -e '\w\+' | wc -l | sed -e 's/\ *//g')
 VENV := $(shell pipenv --venv)
 
+
 .PHONY: format
 format:
 	pipenv run isort --virtual-env ${VENV} --recursive --apply ${HERE}
@@ -42,6 +43,7 @@ su:
 
 .PHONY: test
 test:
+	ENV_FOR_DYNACONF=test \
 	pipenv run \
 		coverage run \
 			src/manage.py test -v2 \
