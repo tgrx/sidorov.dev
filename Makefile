@@ -85,6 +85,8 @@ install:
 .PHONY: clean
 clean:
 	pipenv run coverage erase
+	rm -rf htmlcov
 	find . -type d -name "__pycache__" | xargs rm -rf
 	rm -rf ./.static/
+
 

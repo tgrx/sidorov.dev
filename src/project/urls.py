@@ -18,5 +18,5 @@ urlpatterns = [
     path("resume/", include("apps.resume.urls")),
 ]
 
-if settings.DEBUG and settings.PROFILING:
+if settings.DEBUG and settings.PROFILING:  # pragma: no cover
     urlpatterns.append(re_path(r"^silk/", include("silk.urls", namespace="silk")))
