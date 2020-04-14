@@ -13,7 +13,7 @@ install:
   - make install static
 
 before_script:
-  - psql -c 'create database sd;' -U postgres
+  - psql -c 'create database test;' -U postgres
 
 script:
   - make test

@@ -1,7 +1,6 @@
 from django.test import Client
 from django.test import TestCase
-
-from apps.target.views import IndexView
+from django.views.generic import TemplateView
 
 
 class Test(TestCase):
@@ -16,7 +15,7 @@ class Test(TestCase):
             [_t.name for _t in resp.templates], ["target/index.html", "base.html"]
         )
         self.assertEqual(
-            resp.resolver_match.func.__name__, IndexView.as_view().__name__
+            resp.resolver_match.func.__name__, TemplateView.as_view().__name__
         )
         self.assertTrue(resp.has_header("Cache-Control"))
         self.assertEqual(resp.get("Cache-Control"), f"max-age={60 * 60 * 24}")

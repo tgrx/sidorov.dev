@@ -28,7 +28,7 @@ class Test(TestCase):
             resp.resolver_match.func.__name__, IndexView.as_view().__name__
         )
         self.assertTrue(resp.has_header("Cache-Control"))
-        self.assertIn(f"max-age={60 * 5}", resp.get("Cache-Control"))
+        self.assertIn(f"max-age={60 * 15}", resp.get("Cache-Control"))
 
     @patch.object(requests, requests.get.__name__)
     def test_calendar_model(self, mock_requests_get):
