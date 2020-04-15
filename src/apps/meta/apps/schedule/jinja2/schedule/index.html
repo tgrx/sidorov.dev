@@ -1,6 +1,6 @@
 {% extends "meta/index.html" %}
 
-{% block head %}
+{% block custom_styles %}
     <link href="{{ static('schedule/style.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -30,7 +30,7 @@
     </div>
 
     {% with lu = schedule.last_update %}
-        <p>Last update: {{ lu.strftime("%d %m at %H:%M") if lu else "not yet" }}</p>
+        <p>Last update: {{ lu.strftime("%B %m at %H:%M") if lu else "not yet" }}</p>
     {% endwith %}
 
 {% endblock %}
