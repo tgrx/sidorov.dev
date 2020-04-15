@@ -19,19 +19,19 @@ class Test(TestCase):
     def test_get(self):
         resp = self.cli.get("/meta/schedule/")
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(resp.templates), 3)
-        self.assertEqual(
-            [_t.name for _t in resp.templates],
-            ["schedule/index.html", "meta/index.html", "base.html"],
-        )
+        self.assertTrue(resp.has_header("Cache-Control"))
+        self.assertEqual(resp.get("Cache-Control"), f"max-age={60 * 15}")
+
+        self.assertEqual(resp.resolver_match.app_name, "meta:schedule")
+        self.assertEqual(resp.resolver_match.url_name, "index")
+        self.assertEqual(resp.resolver_match.view_name, "meta:schedule:index")
         self.assertEqual(
             resp.resolver_match.func.__name__, IndexView.as_view().__name__
         )
-        self.assertTrue(resp.has_header("Cache-Control"))
-        self.assertIn(f"max-age={60 * 15}", resp.get("Cache-Control"))
 
-    @patch.object(requests, requests.get.__name__)
-    def test_calendar_model(self, mock_requests_get):
+        self.assertEqual(resp.template_name, ["schedule/index.html"])
+
+    def test_calendar_model(self):
         data = {"name": "calendar", "ical_url": "http://xxx.xxx"}
 
         cal = Calendar(**data)

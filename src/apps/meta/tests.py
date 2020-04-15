@@ -10,12 +10,14 @@ class Test(TestCase):
     def test_get(self):
         resp = self.cli.get("/meta/")
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(resp.templates), 2)
-        self.assertEqual(
-            [_t.name for _t in resp.templates], ["meta/index.html", "base.html"]
-        )
+        self.assertTrue(resp.has_header("Cache-Control"))
+        self.assertEqual(resp.get("Cache-Control"), f"max-age={60 * 60 * 24}")
+
+        self.assertEqual(resp.resolver_match.app_name, "meta")
+        self.assertEqual(resp.resolver_match.url_name, "index")
+        self.assertEqual(resp.resolver_match.view_name, "meta:index")
         self.assertEqual(
             resp.resolver_match.func.__name__, TemplateView.as_view().__name__
         )
-        self.assertTrue(resp.has_header("Cache-Control"))
-        self.assertEqual(resp.get("Cache-Control"), f"max-age={60 * 60 * 24}")
+
+        self.assertEqual(resp.template_name, ["meta/index.html"])

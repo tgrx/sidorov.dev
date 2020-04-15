@@ -36,8 +36,14 @@ def big_brother(_request: Optional[HttpRequest] = None) -> Dict[str, str]:
 def build_jinja2_environment(**options) -> Environment:
     opts = options.copy()
 
-    opts["undefined"] = (
-        jinja2.DebugUndefined if settings.DEBUG else jinja2.ChainableUndefined
+    opts.update(
+        {
+            "auto_reload": True,
+            # "enable_async": True,
+            "undefined": (
+                jinja2.DebugUndefined if settings.DEBUG else jinja2.ChainableUndefined
+            ),
+        }
     )
 
     env = Environment(**opts)

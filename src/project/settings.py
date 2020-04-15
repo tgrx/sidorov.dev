@@ -70,7 +70,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
-        "DIRS": [PROJECT_DIR / "jinja2", ],
+        "DIRS": [PROJECT_DIR / "jinja2",],
         "APP_DIRS": True,
         "OPTIONS": {
             "environment": "project.utils.xtemplates.build_jinja2_environment",
@@ -86,8 +86,8 @@ TEMPLATES = [
     },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates", ],
-        "APP_DIRS": False,
+        "DIRS": [PROJECT_DIR / "templates",],
+        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -111,7 +111,7 @@ DATABASES = {
 
 if CACHING:
     CACHE_MIDDLEWARE_SECONDS = AGE_1DAY
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache", }}
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}}
 
     if not DEBUG:
         CACHES = {
@@ -129,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 LANGUAGE_CODE = "en-us"

@@ -72,7 +72,7 @@ class IndexView(TemplateView):
     def get_date_range() -> DateRange:
         reset_time_args = dict(hour=0, microsecond=0, minute=0, second=0,)
         start = datetime.utcnow().replace(**reset_time_args).astimezone(pytz.UTC).date()
-        end = start + timedelta(days=8)  # FIXME: magic
+        end = start + timedelta(days=16)  # FIXME: magic
         return DateRange(end=end, start=start)
 
     @staticmethod

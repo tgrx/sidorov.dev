@@ -16,6 +16,7 @@ line-profiler = "*"
 pudb = "*"
 
 [packages]
+delorean = "*"
 dj-database-url = "*"
 django = "*"
 django-bmemcached = "*"
