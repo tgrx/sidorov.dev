@@ -17,7 +17,7 @@ DEBUG = _settings.MODE_DEBUG
 CACHING = _settings.MODE_CACHING
 PROFILING = _settings.MODE_PROFILING
 
-ALLOWED_HOSTS = _settings.ALLOWED_HOSTS
+ALLOWED_HOSTS = _settings.ALLOWED_HOSTS + ["localhost", "127.0.0.1"]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -69,19 +69,32 @@ ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates",],
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [PROJECT_DIR / "jinja2", ],
         "APP_DIRS": True,
+        "OPTIONS": {
+            "environment": "project.utils.xtemplates.build_jinja2_environment",
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "project.utils.xtemplates.user_hour",
+                "project.utils.xtemplates.big_brother",
+            ],
+        },
+    },
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [PROJECT_DIR / "templates", ],
+        "APP_DIRS": False,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "project.utils.xcontext.user_hour",
-                "project.utils.xcontext.big_brother",
             ],
-            "libraries": {"project_tags": "project.templatetags",},
         },
     },
 ]
@@ -98,7 +111,7 @@ DATABASES = {
 
 if CACHING:
     CACHE_MIDDLEWARE_SECONDS = AGE_1DAY
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}}
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache", }}
 
     if not DEBUG:
         CACHES = {
@@ -116,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 LANGUAGE_CODE = "en-us"

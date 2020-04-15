@@ -23,6 +23,7 @@ django-ipware = "*"
 dynaconf = {extras = ["yaml"],version = "*"}
 gunicorn = "*"
 icalevents = "*"
+jinja2 = "*"
 psycopg2 = "*"
 python-binary-memcached = "*"
 requests = "*"
