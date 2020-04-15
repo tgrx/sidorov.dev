@@ -73,7 +73,7 @@ deploy: format test clean
 	test "${UNTRACKED}" = "0"
 	@echo 'test untracked 2...'
 	test "${UNTRACKED2}" = "0"
-	git commit --message "autodeploy" --edit
+	git commit --gpg-sign --signoff --message "autodeploy" --edit
 	git push origin master
 
 
