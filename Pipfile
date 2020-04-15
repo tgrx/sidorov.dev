@@ -16,6 +16,7 @@ line-profiler = "*"
 pudb = "*"
 
 [packages]
+delorean = "*"
 dj-database-url = "*"
 django = "*"
 django-bmemcached = "*"
@@ -23,6 +24,7 @@ django-ipware = "*"
 dynaconf = {extras = ["yaml"],version = "*"}
 gunicorn = "*"
 icalevents = "*"
+jinja2 = "*"
 psycopg2 = "*"
 python-binary-memcached = "*"
 requests = "*"

@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load static %}
-
 {% block title %}Resume of Alexander Sidorov{% endblock %}
 
 {% block header %}Resume{% endblock %}
@@ -18,7 +16,7 @@
            which meet customers’ requests
            without increasing technical debt and support costs.</p>
         <p>Recommendations may be provided upon request.</p>
-        <p><a href="{% static 'resume/cv.pdf' %}">[ PDF ]</a></p>
+        <p><a href="{{ static('resume/cv.pdf') }}">[ PDF ]</a></p>
     </article>
 
     <article>

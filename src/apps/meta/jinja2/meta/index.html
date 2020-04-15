@@ -5,9 +5,9 @@
 {% block header %}Metadata{% endblock %}
 
 {% block subnav %}
-    {% with request.resolver_match.namespace as ns %}
+    {% with ns = request.resolver_match.namespace %}
         <li><a class="{% if ns == 'meta:schedule' %}active{% endif %}"
-               href="{% url 'meta:schedule:index' %}">Schedule</a></li>
+               href="{{ url('meta:schedule:index') }}">Schedule</a></li>
         <li><a class="{% if ns == 'meta:thoughts' %}active{% endif %}" href="#">Thoughts</a></li>
     {% endwith %}
 {% endblock %}

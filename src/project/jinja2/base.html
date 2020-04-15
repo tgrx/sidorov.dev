@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% if not debug %}
+        {{ yandex_metrika | safe }}
+        {{ google_analytics | safe }}
+        {{ google_tag_manager.head | safe }}
+    {% endif %}
+
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link href="{{ static('css/base.css') }}" rel="stylesheet" type="text/css">
+    {% block custom_styles %}{% endblock %}
+
+    <link href="{{ static('css/responsive.css') }}" rel="stylesheet" type="text/css">
+    <link href="
+        {% if user_hour in daylight_hours %}
+        {{ static('css/theme_light.css') }}
+        {% else %}
+        {{ static('css/theme_dark.css') }}
+        {% endif %}" rel="stylesheet" type="text/css">
+
+    <link href="{{ url('favicon') }}" rel="shortcut icon" type="image/png"/>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+{% if not debug %}
+    {{ google_tag_manager_body | safe }}
+{% endif %}
+
+<header>
+    <h1>{% block header %}{% endblock %}</h1>
+    <nav>
+        {% with ns = request.resolver_match.namespace %}
+            <ul>
+                <li><a class="{% if ns.startswith('target') %}active{% endif %}"
+                       href="{{ url('target:index') }}">Target</a>
+                </li>
+                <li><a class="{% if ns.startswith('resume') %}active{% endif %}"
+                       href="{{ url('resume:index') }}">Resume</a>
+                </li>
+                <li><a class="{% if ns.startswith('portfolio') %}active{% endif %}"
+                       href="{{ url('portfolio:index') }}">Portfolio</a></li>
+                <li><a class="{% if ns.startswith('meta') %}active{% endif %}"
+                       href="{{ url('meta:index') }}">Metadata</a>
+                </li>
+            </ul>
+        {% endwith %}
+    </nav>
+    <nav class="sub-nav">
+        <ul>
+            {% block subnav %}{% endblock %}
+        </ul>
+    </nav>
+</header>
+
+<main>
+    {% block main %}{% endblock %}
+</main>
+
+<footer>
+    <p>(C) Alexander Sidorov 2020</p>
+    <p><a href="mailto:a375296648709@gmail.com">email</a></p>
+    <p><a href="https://t.me/alexander.sidorov">telegram</a></p>
+    <p><a href="https://www.linkedin.com/in/alexnsidorov/">linkedin</a></p>
+</footer>
+
+</body>
+
+</html>
+

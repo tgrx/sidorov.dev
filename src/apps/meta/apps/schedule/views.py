@@ -7,7 +7,7 @@ from typing import NamedTuple
 from typing import Text
 from typing import Tuple
 
-import pytz
+from delorean import Delorean
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
@@ -15,11 +15,12 @@ from icalevents import icalevents
 
 from apps.meta.apps.schedule.models import Calendar
 from project.utils.consts import AGE_1MINUTE
+from project.utils.consts import MSQ
 
 
 class DateRange(NamedTuple):
-    end: date
-    start: date
+    end: datetime
+    start: datetime
 
 
 class Event(NamedTuple):
@@ -59,20 +60,24 @@ class IndexView(TemplateView):
     def get_schedule(self) -> Schedule:
         dates = self.get_date_range()
         calendars = self.get_calendars()
-        last_update = min([calendar.synced_at for calendar in calendars] or [None])
+        last_update = Delorean(
+            min([calendar.synced_at for calendar in calendars] or [None])
+        ).shift(MSQ)
         events = self.collect_events(calendars, dates)
         days = self.group_days(events, dates)
 
         schedule = Schedule(
-            days=days, end=dates.end, last_update=last_update, start=dates.start,
+            days=days,
+            end=dates.end,
+            last_update=last_update.datetime,
+            start=dates.start,
         )
         return schedule
 
     @staticmethod
     def get_date_range() -> DateRange:
-        reset_time_args = dict(hour=0, microsecond=0, minute=0, second=0,)
-        start = datetime.utcnow().replace(**reset_time_args).astimezone(pytz.UTC).date()
-        end = start + timedelta(days=8)  # FIXME: magic
+        start = Delorean().shift(MSQ).midnight
+        end = start + timedelta(days=16)  # FIXME: magic
         return DateRange(end=end, start=start)
 
     @staticmethod
@@ -86,47 +91,45 @@ class IndexView(TemplateView):
     def collect_events(
         calendars: Collection[Calendar], dates: DateRange
     ) -> Tuple[Event]:
-        minsk = pytz.timezone("Europe/Minsk")
         all_events = []
-        populated_calendars = filter(lambda calendar: calendar.ical, calendars)
+        populated_calendars = filter(lambda _c: _c.ical, calendars)
+
         for calendar in populated_calendars:
-            calendar_events = icalevents.events(
-                end=dates.end, start=dates.start, string_content=calendar.ical.encode(),
+            ical = calendar.ical.encode()
+            events_parsed = icalevents.events(
+                end=dates.end, start=dates.start, string_content=ical,
             )
-            urgent_events = filter(lambda event: not event.all_day, calendar_events)
-            events = [
-                Event(
+            events_urgent = filter(lambda _e: not _e.all_day, events_parsed)
+
+            for iev in events_urgent:
+                start = Delorean(iev.start).shift(MSQ).datetime
+                end = Delorean(iev.end).shift(MSQ).datetime
+
+                event = Event(
                     calendar=calendar,
-                    end=event.end,
-                    slot0=(event.start).astimezone(minsk).hour - 9 + 2,  # FIXME: magic
-                    slot1=ceil(
-                        (event.end).astimezone(minsk).hour
-                        + (event.end).astimezone(minsk).minute / 60
-                    )
-                    - 9
-                    + 2,  # FIXME: magic
-                    start=event.start,
-                    summary=event.summary,
+                    end=end,
+                    slot0=start.hour - 9 + 2,  # FIXME: magic
+                    slot1=ceil(end.hour + end.minute / 60) - 9 + 2,  # FIXME: magic
+                    start=start,
+                    summary=iev.summary,
                 )
-                for event in urgent_events
-            ]
-            all_events.extend(events)
+                all_events.append(event)
 
         return tuple(all_events)
 
     @staticmethod
     def group_days(events: Collection[Event], dates: DateRange) -> Tuple[Day]:
         groups = {}
-        this_day = dates.start
-        while this_day < dates.end:
-            next_day = this_day + timedelta(days=1)
-            groups[this_day] = tuple(
-                event for event in events if this_day <= event.start.date() < next_day
-            )
-            this_day = next_day
+        atm = dates.start
+        while atm < dates.end:
+            day = atm.date()
+            atm += timedelta(days=1)
+            groups[day] = tuple(_e for _e in events if _e.start.date() == day)
 
+        day = dates.start.date()
         days = tuple(
-            Day(date=day, number=(day - dates.start).days + 1, events=events)
-            for day, events in groups.items()
+            Day(date=_d, number=(_d - day).days + 1, events=_e)
+            for _d, _e in groups.items()
         )
+
         return days

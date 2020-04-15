@@ -1,0 +1,36 @@
+{% extends "meta/index.html" %}
+
+{% block custom_styles %}
+    <link href="{{ static('schedule/style.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block title %}Schedule of Alexander Sidorov{% endblock %}
+
+{% block subheader %}Schedule{% endblock %}
+
+{% block main %}
+    <p>Schedule: {{ schedule.start.strftime("%A, %B %-d") }} ~ {{ schedule.end.strftime("%A, %B %-d") }}</p>
+
+    <div class="calendar-widget">
+        {% for day in schedule.days %}
+            <p class="header"
+               style="grid-row: 1; grid-column: {{ day.number }}">{{ day.date.strftime("%a %-d") }}</p>
+            {% for event in day.events %}
+                <p style="grid-row: {{ event.slot0 }} / {{ event.slot1 }}; grid-column: {{ day.number }}">
+                    {{ event.start.strftime("%H:%M") }}
+                    ~
+                    {{ event.end.strftime("%H:%M") }}
+                    {% if request.user.is_superuser %}
+                        <br>
+                        {{ event.summary }}
+                    {% endif %}
+                </p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {% with lu = schedule.last_update %}
+        <p>Last update: {{ lu.strftime("%B %m at %H:%M") if lu else "not yet" }}</p>
+    {% endwith %}
+
+{% endblock %}

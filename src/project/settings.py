@@ -17,7 +17,7 @@ DEBUG = _settings.MODE_DEBUG
 CACHING = _settings.MODE_CACHING
 PROFILING = _settings.MODE_PROFILING
 
-ALLOWED_HOSTS = _settings.ALLOWED_HOSTS
+ALLOWED_HOSTS = _settings.ALLOWED_HOSTS + ["localhost", "127.0.0.1"]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -69,6 +69,22 @@ ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [PROJECT_DIR / "jinja2",],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "environment": "project.utils.xtemplates.build_jinja2_environment",
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "project.utils.xtemplates.user_hour",
+                "project.utils.xtemplates.big_brother",
+            ],
+        },
+    },
+    {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
@@ -78,10 +94,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "project.utils.xcontext.user_hour",
-                "project.utils.xcontext.big_brother",
             ],
-            "libraries": {"project_tags": "project.templatetags",},
         },
     },
 ]
