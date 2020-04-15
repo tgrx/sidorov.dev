@@ -20,7 +20,6 @@
                     {{ event.start.strftime("%H:%M") }}
                     ~
                     {{ event.end.strftime("%H:%M") }}
-                    {{ request.user.is_superuser }}
                 </p>
             {% endfor %}
         {% endfor %}
