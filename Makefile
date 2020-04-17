@@ -15,6 +15,9 @@ format:
 	pipenv run isort --virtual-env ${VENV} --recursive --apply ${HERE}
 	pipenv run black ${HERE}
 
+.PHONY: run
+sh:
+	pipenv run python src/manage.py shell
 
 .PHONY: run
 run: static
