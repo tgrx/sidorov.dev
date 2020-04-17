@@ -8,8 +8,6 @@ class IndexView(DetailView):
     model = UserInfo
 
     def get_object(self, queryset=None):
-        if not queryset:
-            obj = UserInfo.objects.first()
-        else:
-            obj = queryset.first()
+        qs = queryset or UserInfo.objects
+        obj = qs.first()
         return obj

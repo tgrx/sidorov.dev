@@ -10,4 +10,4 @@ class UserInfo(m.Model):
         verbose_name_plural = "User Info"
 
     def __str__(self):
-        return f"UserInfo(id={self.pk}, name={self.name!r})"
+        return f"{self.__class__.__name__}(id={self.pk}, name={self.name!r})"
