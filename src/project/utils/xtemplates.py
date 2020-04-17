@@ -39,7 +39,6 @@ def build_jinja2_environment(**options) -> Environment:
     opts.update(
         {
             "auto_reload": True,
-            # "enable_async": True,
             "undefined": (
                 jinja2.DebugUndefined if settings.DEBUG else jinja2.ChainableUndefined
             ),
