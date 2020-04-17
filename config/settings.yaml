@@ -34,7 +34,6 @@ test:
 
 
 travis:
-  DATABASE_URL: "postgresql://postgres@localhost:5432/test"
   MODE_CACHING: true
   MODE_DEBUG: true
   MODE_PROFILING: false
