@@ -76,8 +76,8 @@ report:
 	open "${HERE}/htmlcov/index.html"
 
 
-.PHONY: install
-install:
+.PHONY: venv
+venv:
 	pipenv install --dev
 
 
