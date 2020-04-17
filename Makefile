@@ -60,6 +60,7 @@ test:
 
 	pipenv run coverage report
 	pipenv run isort --virtual-env ${VENV} --recursive --check-only ${HERE}
+	pipenv run black --check ${HERE}
 
 
 .PHONY: report
