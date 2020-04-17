@@ -30,12 +30,12 @@ INSTALLED_APPS_ORDERED = {
     30: "django.contrib.sessions",
     40: "django.contrib.messages",
     50: "django.contrib.staticfiles",
-    # --- my apps ---
-    1000: "apps.meta.apps.MetaConfig",
-    2000: "apps.meta.apps.schedule.apps.ScheduleConfig",
-    3000: "apps.portfolio.apps.PortfolioConfig",
-    4000: "apps.resume.apps.ResumeConfig",
-    5000: "apps.target.apps.TargetConfig",
+    # --- my applications ---
+    1000: "applications.meta.apps.MetaConfig",
+    2000: "applications.meta.applications.schedule.apps.ScheduleConfig",
+    3000: "applications.portfolio.apps.PortfolioConfig",
+    4000: "applications.resume.apps.ResumeConfig",
+    5000: "applications.target.apps.TargetConfig",
 }
 
 if PROFILING:
@@ -86,7 +86,6 @@ TEMPLATES = [
     },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [PROJECT_DIR / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db import models
 
-from apps.meta.apps.schedule.models import Calendar
+from applications.meta.applications.schedule.models import Calendar
 from project.utils.xmodels import a
 
 

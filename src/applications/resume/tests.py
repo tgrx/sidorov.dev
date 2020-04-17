@@ -1,6 +1,7 @@
 from django.test import Client
 from django.test import TestCase
-from django.views.generic import TemplateView
+
+from applications.resume.views import IndexView
 
 
 class Test(TestCase):
@@ -17,7 +18,7 @@ class Test(TestCase):
         self.assertEqual(resp.resolver_match.url_name, "index")
         self.assertEqual(resp.resolver_match.view_name, "resume:index")
         self.assertEqual(
-            resp.resolver_match.func.__name__, TemplateView.as_view().__name__
+            resp.resolver_match.func.__name__, IndexView.as_view().__name__
         )
 
         self.assertEqual(resp.template_name, ["resume/index.html"])

@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from icalevents import icalevents
 
-from apps.meta.apps.schedule.models import Calendar
+from applications.meta.applications.schedule.models import Calendar
 from project.utils.consts import AGE_1MINUTE
 from project.utils.consts import MSQ
 

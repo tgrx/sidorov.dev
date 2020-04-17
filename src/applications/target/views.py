@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from apps.target.models import UserInfo
+from applications.target.models import UserInfo
 
 
 class IndexView(TemplateView):

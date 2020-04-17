@@ -11,11 +11,11 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # --- static views ---
     path("favicon.ico", view_favicon, name="favicon"),
-    # --- apps ---
-    path("", include("apps.target.urls")),
-    path("meta/", include("apps.meta.urls")),
-    path("portfolio/", include("apps.portfolio.urls")),
-    path("resume/", include("apps.resume.urls")),
+    # --- applications ---
+    path("", include("applications.target.urls")),
+    path("meta/", include("applications.meta.urls")),
+    path("portfolio/", include("applications.portfolio.urls")),
+    path("resume/", include("applications.resume.urls")),
 ]
 
 if settings.DEBUG and settings.PROFILING:  # pragma: no cover

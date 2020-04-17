@@ -1,8 +1,8 @@
 from django.test import Client
 from django.test import TestCase
 
-from apps.target.models import UserInfo
-from apps.target.views import IndexView
+from applications.target.models import UserInfo
+from applications.target.views import IndexView
 
 
 class Test(TestCase):

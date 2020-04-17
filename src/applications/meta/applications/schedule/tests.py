@@ -8,8 +8,8 @@ from django.db import IntegrityError
 from django.test import Client
 from django.test import TestCase
 
-from apps.meta.apps.schedule.models import Calendar
-from apps.meta.apps.schedule.views import IndexView
+from applications.meta.applications.schedule.models import Calendar
+from applications.meta.applications.schedule.views import IndexView
 
 
 class Test(TestCase):
