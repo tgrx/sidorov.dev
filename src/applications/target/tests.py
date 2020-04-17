@@ -1,7 +1,6 @@
 from django.test import Client
 from django.test import TestCase
 
-from applications.target.models import UserInfo
 from applications.target.views import IndexView
 
 
@@ -10,9 +9,6 @@ class Test(TestCase):
         self.cli = Client()
 
     def test_get(self):
-        info = UserInfo(name="xxx")
-        info.save()
-
         resp = self.cli.get("/")
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.has_header("Cache-Control"))

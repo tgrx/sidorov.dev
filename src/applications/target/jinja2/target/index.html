@@ -2,7 +2,7 @@
 
 {% block title %}Alexander Sidorov personal website{% endblock %}
 
-{% block header %}{{ name }}{% endblock %}
+{% block header %}{{ object.name }}{% endblock %}
 
 {% block main %}
 
@@ -11,7 +11,7 @@
         <figure><img alt="it's me" src="{{ static('target/me.jpg') }}"></figure>
 
         <article>
-            {{ greeting | safe }}
+            {{ object.greeting | safe }}
         </article>
 
     </div>

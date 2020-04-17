@@ -1,17 +1,15 @@
-from django.views.generic import TemplateView
+from django.views.generic import DetailView
 
 from applications.target.models import UserInfo
 
 
-class IndexView(TemplateView):
+class IndexView(DetailView):
     template_name = "target/index.html"
+    model = UserInfo
 
-    def get_context_data(self, **kwargs):
-        parent_ctx = super().get_context_data(**kwargs)
-
-        info = UserInfo.objects.first()
-        ctx = {"name": info.name, "greeting": info.greeting}
-
-        ctx.update(parent_ctx)
-
-        return ctx
+    def get_object(self, queryset=None):
+        if not queryset:
+            obj = UserInfo.objects.first()
+        else:
+            obj = queryset.first()
+        return obj
