@@ -22,114 +22,20 @@
     <article>
         <h2>Employment history</h2>
 
-        <section>
-            <h3>from 08/2019 till now: in TeachMeSkills</h3>
-            <p>Teacher of "Web development using Python" course</p>
-            <p>Responsibilities:</p>
-            <ul>
-                <li>Mentoring and supervision</li>
-            </ul>
-            <p>Framework:</p>
-            <ul>
-                <li>PyCharm, vim</li>
-                <li>Python 3</li>
-                <li>Heroku, AWS</li>
-                <li>Git</li>
-                <li>Django, Flask, Telegram</li>
-            </ul>
-        </section>
+        {% for project in projects %}
 
-        <section>
-            <h3>from 10/2013 till now: in Upsilon IT</h3>
-            <p>Back-end engineer on various projects</p>
-            <p>Responsibilities:</p>
-            <ul>
-                <li>Mentoring and supervision</li>
-                <li>Architectural design of back-end platforms</li>
-                <li>Database schema design</li>
-                <li>Data analytics solutions based on OLAP approach</li>
-                <li>Design and development of authentication & authorization subsystems
-                    to help customers manage access and share data
-                    either to other users or via email/direct links.
-                    Security has been tested and approved by third-party audit
-                </li>
-                <li>Development of OAuth2 provider, used for sign-up in side projects and for internal resources</li>
-                <li>Design and development of subscriptions and payments subsystem</li>
-                <li>Design and development of data importer to handle customers’ large data collections</li>
-                <li>Consulting and performing code profiling and logic and queries optimizations</li>
-                <li>Small project management experience, gained when implementing subscription plans & payments tracking
-                    subsystem
-                </li>
-                <li>Conducting of technical interviews, mentoring</li>
-                <li>Implementing adapters for intercommunication with third-party & customers’ APIs</li>
-                <li>Support of legacy version of back-end written using Django</li>
-                <li>Python 2to3 upgrade on several projects</li>
-            </ul>
-            <p>Framework:</p>
-            <ul>
-                <li>AWS stack: Lambda, S3, API Gateway, EC2, RDS, Cognito</li>
-                <li>GCP, Firebase</li>
-                <li>Python: from 2.6 to 3.8</li>
-                <li>PostgreSQL, AWS Redschift, AWS DynamoDB, Druid, MySQL</li>
-                <li>Django, SQLAlchemy</li>
-            </ul>
-        </section>
+            <section>
+                <h3>from {{ project.started_at }} till {{ project.finished_at }}: in XXX</h3>
+                <p>{{ project.summary }}</p>
+                <p>Framework:</p>
+                <ul>
+                    {% for technology in project.technologies.all() %}
+                        <li>{{ technology.name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
 
-        <section>
-            <h3>from 6/2013 till 10/2013: in IASO</h3>
-            <p>Software Engineer of IASO Backup product</p>
-            <p>Responsibilities:</p>
-            <ul>
-                <li>Development of cloud management tools of backup platform</li>
-                <li>Integration with side financial management systems using SOAP</li>
-            </ul>
-            <p>Framework:</p>
-            <ul>
-                <li>MS Visual Studio</li>
-                <li>GCC</li>
-                <li>CMake</li>
-                <li>Qt, Boost</li>
-                <li>soapUI</li>
-            </ul>
-        </section>
-
-        <section>
-            <h3>from 2/2011 till 5/2013: in EPAM</h3>
-            <p>Software engineer on Infoblox project</p>
-            <p>Responsibilities:</p>
-            <ul>
-                <li>Development of IF-MAP server - a network metadata collection solution</li>
-                <li>Development a number of features for Infoblox DNS and DHCP solutions</li>
-                <li>Development of Nginx module using in Infoblox solutions</li>
-                <li>Development of AMQP management system and integration in for customers product</li>
-                <li>Development of reporting system based on ElasticSearch and integration in customers product</li>
-            </ul>
-            <p>Framework:</p>
-            <ul>
-                <li>Python/C API</li>
-                <li>ISC BIND; ISC DHCP</li>
-                <li>Nginx, Apache</li>
-                <li>AMQP</li>
-                <li>ElasticSearch</li>
-            </ul>
-        </section>
-
-        <section>
-            <h3>from 2/2010 till 2/2011: in Softeq Development</h3>
-            <p>Software engineer on Sandisk project</p>
-            <p>Responsibilities:</p>
-            <ul>
-                <li>Development of test automation framework for testing of SD/USB firmware</li>
-                <li>Firmware failure analysis</li>
-            </ul>
-            <p>Framework:</p>
-            <ul>
-                <li>Python, Boost::Python</li>
-                <li>MS Visual Studio</li>
-                <li>Eclipse</li>
-                <li>Python 2.3</li>
-            </ul>
-        </section>
+        {% endfor %}
 
     </article>
 
