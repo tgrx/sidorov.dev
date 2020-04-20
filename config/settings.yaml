@@ -1,6 +1,7 @@
 default:
   ALLOWED_HOSTS: []
   DATABASE_URL: ""
+  LOCAL_TIME_ZONE: "UTC"
   MODE_CACHING: false
   MODE_DEBUG: false
   MODE_PROFILING: false

@@ -1,44 +1,10 @@
-from datetime import date
 from typing import Iterable
-from typing import NamedTuple
-from typing import Optional
 
-from delorean import Delorean
 from django.db import models
 from django.db.models import F
 
-
-def _now():
-    return Delorean().datetime
-
-
-class DateDelta(NamedTuple):
-    years: int
-    months: int
-
-    def __str__(self):
-        parts = []
-
-        if self.years:
-            suffix = "s" if (self.years % 10) != 1 else ""
-            parts.append(f"{self.years} y{suffix}")
-
-        if self.months:
-            suffix = "s" if (self.months % 10) != 1 else ""
-            parts.append(f"{self.months} mo{suffix}")
-
-        if not any((self.years, self.months)):
-            parts.append("<1 mo")
-
-        return " ".join(parts)
-
-    @classmethod
-    def build(cls, start: date, finish: Optional[date] = None) -> "DateDelta":
-        finish = finish or _now().date
-        delta = finish - start
-        years, days = divmod(delta.days, 365)
-        months = days // 30
-        return DateDelta(years=years, months=months)
+from project.utils.xdatetime import DateDelta
+from project.utils.xdatetime import utcnow
 
 
 class Project(models.Model):
@@ -52,7 +18,7 @@ class Project(models.Model):
         null=True, blank=True, verbose_name="Organization Name under NDA"
     )
     position = models.TextField(null=True, blank=True)
-    started_at = models.DateField(default=_now)
+    started_at = models.DateField(default=utcnow)
     finished_at = models.DateField(null=True, blank=True)
     link = models.TextField(null=True, blank=True)
     summary = models.TextField(null=True, blank=True)
