@@ -19,24 +19,49 @@
         <p><a href="{{ static('resume/cv.pdf') }}">[ PDF ]</a></p>
     </article>
 
-    <article>
-        <h2>Employment history</h2>
+    <h2>Employment history</h2>
 
-        {% for project in projects %}
-
+    {% for project in object_list %}
+        <article>
+            <h3>{% if project.on_air %}🔥 {% endif -%} {{ project.actual_name }}</h3>
             <section>
-                <h3>from {{ project.started_at }} till {{ project.finished_at }}: in XXX</h3>
+                <p>from {{ project.started_at.strftime('%b %Y') }}
+                   till {{ project.finished_at.strftime('%b %Y') if project.finished_at else 'now' }}
+                   ({{ project.duration }})</p>
+                <p>At {{ project.organization.name }}</p>
                 <p>{{ project.summary }}</p>
-                <p>Framework:</p>
-                <ul>
-                    {% for technology in project.technologies.all() %}
-                        <li>{{ technology.name }}</li>
-                    {% endfor %}
-                </ul>
             </section>
-
-        {% endfor %}
-
-    </article>
+            {% if project.responsibilities %}
+                <section>
+                    <h4>Responsibilities:</h4>
+                    <ul>
+                        {% for resp in project.responsibilities %}
+                            <li>{{ resp }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+            {% if project.achievements %}
+                <section>
+                    <h4>Achievements:</h4>
+                    <ul>
+                        {% for achievka in project.achievements %}
+                            <li>{{ achievka }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+            {% if project.frameworks.count() %}
+                <section>
+                    <h4>Frameworks:</h4>
+                    <ul>
+                        {% for framework in project.frameworks.all() %}
+                            <li>{{ framework }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+        </article>
+    {% endfor %}
 
 {% endblock %}
