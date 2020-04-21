@@ -1,13 +1,5 @@
-from django.views.generic import DetailView
-
-from applications.target.models import UserInfo
+from django.views.generic import TemplateView
 
 
-class IndexView(DetailView):
+class IndexView(TemplateView):
     template_name = "target/index.html"
-    model = UserInfo
-
-    def get_object(self, queryset=None):
-        qs = queryset or UserInfo.objects
-        obj = qs.first()
-        return obj
