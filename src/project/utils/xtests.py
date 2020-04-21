@@ -12,18 +12,18 @@ User = get_user_model()
 
 class ResponseTestMixin:
     def validate_response(
-            self,
-            *,
-            url: str,
-            expected_view_name: str,
-            expected_view: type,
-            expected_template: str,
-            method: Optional[str] = "get",
-            form_data: Optional[Dict] = None,
-            expected_status_code: Optional[int] = 200,
-            content_filters: Optional[Collection[Callable[[bytes], bool]]] = None,
-            expected_redirect_chain: Optional[List] = None,
-            client: Optional = None,
+        self,
+        *,
+        url: str,
+        expected_view_name: str,
+        expected_view: type,
+        expected_template: str,
+        method: Optional[str] = "get",
+        form_data: Optional[Dict] = None,
+        expected_status_code: Optional[int] = 200,
+        content_filters: Optional[Collection[Callable[[bytes], bool]]] = None,
+        expected_redirect_chain: Optional[List] = None,
+        client: Optional = None,
     ):
         cli = client if client else Client()
         meth = getattr(cli, method)

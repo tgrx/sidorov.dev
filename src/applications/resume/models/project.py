@@ -47,12 +47,14 @@ class Project(models.Model):
 
     @property
     def achievements(self) -> Iterable[str]:
-        return tuple(_r.strip() for _r in (self.achievements_text or "").split("\n"))
+        return filter(
+            bool, (_r.strip() for _r in (self.achievements_text or "").split("\n"))
+        )
 
     @property
     def responsibilities(self) -> Iterable[str]:
-        return tuple(
-            _r.strip() for _r in (self.responsibilities_text or "").split("\n")
+        return filter(
+            bool, (_r.strip() for _r in (self.responsibilities_text or "").split("\n"))
         )
 
     def __str__(self):
