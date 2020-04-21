@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 import pytz
 import requests
+from delorean import Delorean
 from django.http import HttpRequest
 from freezegun import freeze_time
 
@@ -130,3 +131,10 @@ class Test(TestCase):
         self.assertEqual(delta.years, 2)
         self.assertEqual(delta.months, 2)
         self.assertEqual(str(delta), "2 ys 2 mos")
+
+        delta = DateDelta.build(start=y20m1d1)
+        delta_expected = Delorean().date - y20m1d1
+        years_expected, _days = divmod(delta_expected.days, 365)
+        months_expected = _days // 30
+        self.assertEqual(delta.years, years_expected)
+        self.assertEqual(delta.months, months_expected)

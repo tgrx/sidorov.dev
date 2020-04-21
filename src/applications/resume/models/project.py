@@ -14,9 +14,6 @@ class Project(models.Model):
         null=False, default=False, verbose_name="Under NDA?"
     )
     nda_name = models.TextField(null=True, blank=True, verbose_name="Name under NDA")
-    nda_organization_name = models.TextField(
-        null=True, blank=True, verbose_name="Organization Name under NDA"
-    )
     position = models.TextField(null=True, blank=True)
     started_at = models.DateField(default=utcnow)
     finished_at = models.DateField(null=True, blank=True)
@@ -28,7 +25,9 @@ class Project(models.Model):
     organization = models.ForeignKey(
         "Organization", on_delete=models.CASCADE, related_name="projects"
     )
-    frameworks = models.ManyToManyField("Framework", related_name="projects")
+    frameworks = models.ManyToManyField(
+        "Framework", related_name="projects", blank=True
+    )
 
     @property
     def actual_name(self):
@@ -47,14 +46,19 @@ class Project(models.Model):
 
     @property
     def achievements(self) -> Iterable[str]:
-        return filter(
-            bool, (_r.strip() for _r in (self.achievements_text or "").split("\n"))
+        return tuple(
+            filter(
+                bool, (_r.strip() for _r in (self.achievements_text or "").split("\n"))
+            )
         )
 
     @property
     def responsibilities(self) -> Iterable[str]:
-        return filter(
-            bool, (_r.strip() for _r in (self.responsibilities_text or "").split("\n"))
+        return tuple(
+            filter(
+                bool,
+                (_r.strip() for _r in (self.responsibilities_text or "").split("\n")),
+            )
         )
 
     def __str__(self):

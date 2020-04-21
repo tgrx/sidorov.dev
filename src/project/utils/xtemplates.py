@@ -49,6 +49,7 @@ def build_jinja2_environment(**options) -> Environment:
 
     global_names = {
         "debug": settings.DEBUG,
+        "repr": repr,
         "static": static,
         "url": reverse,
         "user_hour": user_hour,

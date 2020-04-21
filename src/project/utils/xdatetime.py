@@ -63,7 +63,7 @@ class DateDelta(NamedTuple):
 
     @classmethod
     def build(cls, start: date, finish: Optional[date] = None) -> "DateDelta":
-        finish = finish or utcnow().date
+        finish = finish or utcnow().date()
         delta = finish - start
         years, days = divmod(delta.days, 365)
         months = days // 30
