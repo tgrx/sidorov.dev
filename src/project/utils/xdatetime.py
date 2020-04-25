@@ -43,6 +43,9 @@ def get_user_tz(request: HttpRequest) -> Union[pytz.BaseTzInfo, None]:
 @safe
 def retrieve_tz(ip: str):
     resp = requests.get(f"http://ip-api.com/json/{ip}")
+    if resp.status_code != 200:
+        return None
+
     payload = resp.json()
     tz_name = payload.get("timezone")
     return tz_name

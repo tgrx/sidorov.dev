@@ -16,11 +16,16 @@ from project.utils.xdatetime import utcnow
 
 
 class MockRequestsResponse:
-    def __init__(self, json):
+    def __init__(self, json, status_code=200):
         self.__json = json
+        self.__status_code = status_code
 
     def json(self):
         return self.__json
+
+    @property
+    def status_code(self):
+        return self.__status_code
 
 
 class Test(TestCase):
@@ -46,6 +51,10 @@ class Test(TestCase):
         self.assertEqual(ret, pytz.timezone("UTC"))
 
         mock_requests_get.return_value = MockRequestsResponse({})
+        ret = get_user_tz(HttpRequest())
+        self.assertIsNone(ret)
+
+        mock_requests_get.return_value = MockRequestsResponse({"timezone": "UTC"}, 429)
         ret = get_user_tz(HttpRequest())
         self.assertIsNone(ret)
 
