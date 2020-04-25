@@ -34,15 +34,11 @@ def big_brother(_request: Optional[HttpRequest] = None) -> Dict[str, str]:
 
 
 def build_jinja2_environment(**options) -> Environment:
-    opts = options.copy()
+    undefined_cls = (jinja2.ChainableUndefined, jinja2.DebugUndefined)[settings.DEBUG]
 
+    opts = options.copy()
     opts.update(
-        {
-            "auto_reload": True,
-            "undefined": (
-                jinja2.DebugUndefined if settings.DEBUG else jinja2.ChainableUndefined
-            ),
-        }
+        {"auto_reload": True, "undefined": undefined_cls,}
     )
 
     env = Environment(**opts)

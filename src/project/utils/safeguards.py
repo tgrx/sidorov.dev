@@ -9,7 +9,7 @@ def safe(func):
         return func
 
     @functools.wraps(func)
-    def _safe_func(*args, **kwargs):
+    def _func_with_safeguard(*args, **kwargs):
         result = None
         try:
             result = func(*args, **kwargs)
@@ -18,4 +18,4 @@ def safe(func):
 
         return result
 
-    return _safe_func
+    return _func_with_safeguard

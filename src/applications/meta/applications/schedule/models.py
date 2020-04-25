@@ -6,6 +6,8 @@ import pytz
 import requests
 from django.db import models as m
 
+from project.utils.safeguards import safe
+
 
 class Calendar(m.Model):
     name = m.TextField(unique=True)
@@ -23,7 +25,6 @@ class Calendar(m.Model):
         ordering = ("name",)
 
     def sync(self, force: bool = False) -> None:
-        """Synchronizes the calendar content, if needed"""
         if not self.ical_url:
             self.synced = False
             self.save()
@@ -52,6 +53,7 @@ class Calendar(m.Model):
             return self.synced_at + timedelta(minutes=5)  # FIXME: magic
         return datetime.utcnow().astimezone(pytz.UTC)
 
+    @safe
     def download_ical(self) -> Union[str, None]:
         if not self.ical_url:
             return None

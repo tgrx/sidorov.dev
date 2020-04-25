@@ -25,7 +25,7 @@ class ResponseTestMixin:
         expected_redirect_chain: Optional[List] = None,
         client: Optional = None,
     ):
-        cli = client if client else Client()
+        cli = client or Client()
         meth = getattr(cli, method)
 
         meth_args = []
