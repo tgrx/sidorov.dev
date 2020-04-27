@@ -9,4 +9,5 @@ app_name = MetaConfig.label
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("schedule/", include("applications.meta.applications.schedule.urls")),
+    path("blog/", include("applications.meta.applications.blog.urls")),
 ]

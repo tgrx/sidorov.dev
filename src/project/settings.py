@@ -36,6 +36,7 @@ INSTALLED_APPS_ORDERED = {
     3000: "applications.portfolio.apps.PortfolioConfig",
     4000: "applications.resume.apps.ResumeConfig",
     5000: "applications.target.apps.TargetConfig",
+    6000: "applications.meta.applications.blog.apps.BlogConfig",
 }
 
 if PROFILING:
