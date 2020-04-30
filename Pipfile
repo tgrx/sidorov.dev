@@ -31,6 +31,10 @@ requests = "*"
 sentry-sdk = "*"
 uvicorn = "*"
 whitenoise = "*"
+djangorestframework = "*"
+drf-yasg = {extras = ["validation"],version = "*"}
+markdown = "*"
+celery = {extras = ["redis"],version = "*"}
 
 [requires]
 python_version = "3.8"
