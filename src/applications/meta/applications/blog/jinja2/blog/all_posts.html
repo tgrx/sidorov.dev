@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Posts</title>
-</head>
-<body>
+{% extends "meta/_meta.html" %}
 
+{% block title %}Blog of Alexander Sidorov{% endblock %}
 
-{% for post in object_list %}
+{% block header %}Blog{% endblock %}
 
-    <a href="{{ post.get_absolute_url() }}">
-        <h1>{{ post.pk }} - {{ post.title }}</h1>
-    </a>
+{% block main %}
 
-{% endfor %}
+    {% for post in object_list %}
+        <article>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content|truncate(200, end='') }} <a href="{{ post.get_absolute_url() }}">...</a></p>
+        </article>
+    {% endfor %}
 
-
-</body>
-</html>
+{% endblock %}

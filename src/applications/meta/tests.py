@@ -21,4 +21,4 @@ class Test(TestCase):
             resp.resolver_match.func.__name__, IndexView.as_view().__name__
         )
 
-        self.assertEqual(resp.template_name, ["meta/index.html"])
+        self.assertEqual(resp.template_name, ["meta/_meta.html"])

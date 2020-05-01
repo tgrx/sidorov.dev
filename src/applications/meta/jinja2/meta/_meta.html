@@ -8,7 +8,8 @@
     {% with ns = request.resolver_match.namespace %}
         <li><a class="{% if ns == 'meta:schedule' %}active{% endif %}"
                href="{{ url('meta:schedule:index') }}">Schedule</a></li>
-        <li><a class="{% if ns == 'meta:thoughts' %}active{% endif %}" href="#">Thoughts</a></li>
+        <li><a class="{% if ns == 'meta:blog' %}active{% endif %}"
+               href="{{ url('meta:blog:all_posts') }}">Blog</a></li>
     {% endwith %}
 {% endblock %}
 

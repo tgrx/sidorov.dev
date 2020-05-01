@@ -32,5 +32,21 @@ class Post(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    nr_likes = models.IntegerField(null=True, blank=True)
+    nr_dislikes = models.IntegerField(null=True, blank=True)
 
     message = models.TextField()
+
+    def upvote(self):
+        if self.nr_likes is None:
+            self.nr_likes = 0
+
+        self.nr_likes += 1
+        self.save()
+
+    def downvote(self):
+        if self.nr_dislikes is None:
+            self.nr_dislikes = 0
+
+        self.nr_dislikes += 1
+        self.save()
