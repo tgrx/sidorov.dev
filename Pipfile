@@ -35,6 +35,7 @@ djangorestframework = "*"
 drf-yasg = {extras = ["validation"],version = "*"}
 markdown = "*"
 celery = {extras = ["redis"],version = "*"}
+bcrypt = "*"
 
 [requires]
 python_version = "3.8"

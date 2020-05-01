@@ -11,11 +11,11 @@ from project.utils.safeguards import safe
 
 @safe
 def send_email(
-        email_to: str,
-        subject: str,
-        mail_template_name: str,
-        context: Optional[Dict] = None,
-        request: Optional[HttpRequest] = None,
+    email_to: str,
+    subject: str,
+    mail_template_name: str,
+    context: Optional[Dict] = None,
+    request: Optional[HttpRequest] = None,
 ):
     request = request or HttpRequest()
     template_txt = get_template(f"mail/txt/{mail_template_name}.txt")

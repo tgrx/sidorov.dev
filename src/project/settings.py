@@ -33,12 +33,13 @@ INSTALLED_APPS_ORDERED = {
     50: "django.contrib.staticfiles",
     60: "django.contrib.sites",
     # --- my applications ---
-    1000: "applications.meta.apps.MetaConfig",
-    2000: "applications.meta.applications.schedule.apps.ScheduleConfig",
-    3000: "applications.portfolio.apps.PortfolioConfig",
-    4000: "applications.resume.apps.ResumeConfig",
-    5000: "applications.target.apps.TargetConfig",
-    6000: "applications.meta.applications.blog.apps.BlogConfig",
+    1000: "applications.onboarding.apps.OnboardingConfig",
+    2000: "applications.meta.apps.MetaConfig",
+    3000: "applications.meta.applications.schedule.apps.ScheduleConfig",
+    4000: "applications.portfolio.apps.PortfolioConfig",
+    5000: "applications.resume.apps.ResumeConfig",
+    6000: "applications.target.apps.TargetConfig",
+    7000: "applications.meta.applications.blog.apps.BlogConfig",
 }
 
 if PROFILING:
@@ -55,6 +56,7 @@ MIDDLEWARE_ORDERED = {
     50: "django.contrib.auth.middleware.AuthenticationMiddleware",
     60: "django.contrib.messages.middleware.MessageMiddleware",
     70: "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    80: "django.contrib.sites.middleware.CurrentSiteMiddleware",
 }
 
 if PROFILING:
@@ -175,7 +177,7 @@ if not DEBUG:
     )
 
 LOGIN_URL = reverse_lazy("onboarding:sign_in")
-LOGIN_REDIRECT_URL = reverse_lazy("meta:blog:all_posts")
+LOGIN_REDIRECT_URL = reverse_lazy("onboarding:me")
 
 SITE_ID = _settings.SITE_ID
 
