@@ -1,2 +1,3 @@
-web: ./runserver_heroku.sh
-release: python src/manage.py migrate
+release: make migrate
+web: ./run-gunicorn.sh
+worker: make beat
