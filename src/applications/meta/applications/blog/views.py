@@ -1,6 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 from django.views.generic import DetailView
-from django.views.generic import FormView
 from django.views.generic import ListView
 
 from applications.meta.applications.blog.forms import CommentForm
@@ -26,17 +27,12 @@ class BlogPostView(DetailView):
         return ctx
 
 
-class CommentView(FormView):
+class CommentView(LoginRequiredMixin, CreateView):
     form_class = CommentForm
     http_method_names = ["post"]
+    template_name = "blog/post.html"
 
     def get_success_url(self):
         url = reverse_lazy("meta:blog:post", kwargs={"pk": self.kwargs["pk"]})
 
         return url
-
-    def form_valid(self, form):
-        form.save()
-        self.__post = form.instance.post
-
-        return super().form_valid(form)

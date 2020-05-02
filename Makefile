@@ -11,7 +11,7 @@ endif
 
 ifeq ($(ENV_FOR_DYNACONF), travis)
 	RUN :=
-	TEST_PARAMS := --failfast --keepdb --verbosity 0 --pythonpath ${PYTHONPATH}
+	TEST_PARAMS := --failfast --keepdb --verbosity 1 --pythonpath ${PYTHONPATH}
 	PSQL_PARAMS := --host=localhost --username=postgres --no-password
 else ifeq ($(ENV_FOR_DYNACONF), heroku)
 	RUN :=
@@ -82,9 +82,9 @@ test:
 	ENV_FOR_DYNACONF=test \
 	${RUN} coverage run \
 		src/manage.py test ${TEST_PARAMS} \
-			applications \
-			periodic \
-			project \
+			applications.meta.applications.blog \
+#			periodic \
+#			project \
 
 	${RUN} coverage report
 	${RUN} isort --virtual-env ${VENV} --recursive --check-only ${HERE}

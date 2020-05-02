@@ -9,7 +9,7 @@
     {% for post in object_list %}
         <article>
             <h3>{{ post.title }}</h3>
-            <p>{{ post.content|truncate(200, end='') }} <a href="{{ post.get_absolute_url() }}">...</a></p>
+            <p>{{ (post.content or '')|truncate(200, end='') }} <a href="{{ post.get_absolute_url() }}">...</a></p>
         </article>
     {% endfor %}
 

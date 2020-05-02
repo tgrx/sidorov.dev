@@ -101,25 +101,38 @@ class TemplateResponseTestMixin:
             meth_args.append(form_data)
 
         resp = meth(url, *meth_args, follow=True)
-        self.assertEqual(expected_status_code, resp.status_code)
+        self.assertEqual(expected_status_code, resp.status_code, f"bad status code")
 
         if expected_redirect_chain is not None:
-            self.assertEqual(expected_redirect_chain, resp.redirect_chain)
+            self.assertEqual(
+                expected_redirect_chain, resp.redirect_chain, f"bad redirect chain"
+            )
 
         good_resolver_codes = {
             200,
         }
 
         if expected_status_code in good_resolver_codes:
-            self.assertEqual(expected_view_name, resp.resolver_match.view_name)
             self.assertEqual(
-                expected_view.as_view().__name__, resp.resolver_match.func.__name__,
+                expected_view_name, resp.resolver_match.view_name, f"bad view name",
+            )
+            self.assertEqual(
+                expected_view.as_view().__name__,
+                resp.resolver_match.func.__name__,
+                "bad view class/function name",
             )
 
-            self.assertIn(expected_template, resp.template_name)
+            if expected_template is not None:
+                self.assertIn(
+                    expected_template, resp.template_name, f"bad template",
+                )
 
         for content_filter in content_filters or []:
-            self.assertTrue(content_filter(resp.content))
+            content = resp.content
+            self.assertTrue(
+                content_filter(content),
+                f"content filter {content_filter} failed: content=`{content}`",
+            )
 
 
 class ApiTestMixin:

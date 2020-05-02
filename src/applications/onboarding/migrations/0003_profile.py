@@ -7,7 +7,6 @@ from django.db import models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("auth", "0011_update_proxy_permissions"),
         ("onboarding", "0002_auto_20200426_2311"),
