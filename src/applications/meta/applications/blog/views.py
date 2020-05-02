@@ -30,7 +30,6 @@ class BlogPostView(DetailView):
 class CommentView(LoginRequiredMixin, CreateView):
     form_class = CommentForm
     http_method_names = ["post"]
-    template_name = "blog/post.html"
 
     def get_success_url(self):
         url = reverse_lazy("meta:blog:post", kwargs={"pk": self.kwargs["pk"]})

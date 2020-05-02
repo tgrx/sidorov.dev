@@ -82,9 +82,9 @@ test:
 	ENV_FOR_DYNACONF=test \
 	${RUN} coverage run \
 		src/manage.py test ${TEST_PARAMS} \
-			applications.meta.applications.blog \
-#			periodic \
-#			project \
+			applications \
+			periodic \
+			project \
 
 	${RUN} coverage report
 	${RUN} isort --virtual-env ${VENV} --recursive --check-only ${HERE}
