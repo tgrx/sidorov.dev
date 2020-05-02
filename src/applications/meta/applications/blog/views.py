@@ -19,7 +19,9 @@ class BlogPostView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            ctx['form'] = CommentForm(initial={"post": self.object, "author": self.request.user})
+            ctx["form"] = CommentForm(
+                initial={"post": self.object, "author": self.request.user}
+            )
 
         return ctx
 

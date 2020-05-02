@@ -16,7 +16,7 @@ def send_email(
     mail_template_name: str,
     context: Optional[Dict] = None,
     request: Optional[HttpRequest] = None,
-):
+):  # pragma: no cover
     request = request or HttpRequest()
     template_txt = get_template(f"mail/txt/{mail_template_name}.txt")
     template_html = get_template(f"mail/html/{mail_template_name}.html")
