@@ -9,7 +9,6 @@ import project.utils.xdatetime
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []

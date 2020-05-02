@@ -2,6 +2,7 @@ from typing import Dict
 from typing import Optional
 
 import jinja2
+from delorean import Delorean
 from django.conf import settings
 from django.http import HttpRequest
 from django.templatetags.static import static
@@ -45,6 +46,8 @@ def build_jinja2_environment(**options) -> Environment:
 
     global_names = {
         "debug": settings.DEBUG,
+        "Delorean": Delorean,
+        "project_name": consts.PROJECT_NAME.lower(),
         "repr": repr,
         "static": static,
         "url": reverse,

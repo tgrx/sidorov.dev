@@ -14,6 +14,7 @@ urlpatterns = [
     # --- applications ---
     path("", include("applications.target.urls")),
     path("meta/", include("applications.meta.urls")),
+    path("o/", include("applications.onboarding.urls")),
     path("portfolio/", include("applications.portfolio.urls")),
     path("resume/", include("applications.resume.urls")),
 ]

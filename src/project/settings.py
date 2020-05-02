@@ -2,6 +2,7 @@ from os import getenv
 from pathlib import Path
 
 import dj_database_url
+from django.urls import reverse_lazy
 from dynaconf import settings as _settings
 
 from project.utils.consts import AGE_1DAY
@@ -30,12 +31,15 @@ INSTALLED_APPS_ORDERED = {
     30: "django.contrib.sessions",
     40: "django.contrib.messages",
     50: "django.contrib.staticfiles",
+    60: "django.contrib.sites",
     # --- my applications ---
-    1000: "applications.meta.apps.MetaConfig",
-    2000: "applications.meta.applications.schedule.apps.ScheduleConfig",
-    3000: "applications.portfolio.apps.PortfolioConfig",
-    4000: "applications.resume.apps.ResumeConfig",
-    5000: "applications.target.apps.TargetConfig",
+    1000: "applications.onboarding.apps.OnboardingConfig",
+    2000: "applications.meta.apps.MetaConfig",
+    3000: "applications.meta.applications.schedule.apps.ScheduleConfig",
+    4000: "applications.portfolio.apps.PortfolioConfig",
+    5000: "applications.resume.apps.ResumeConfig",
+    6000: "applications.target.apps.TargetConfig",
+    7000: "applications.meta.applications.blog.apps.BlogConfig",
 }
 
 if PROFILING:
@@ -52,6 +56,7 @@ MIDDLEWARE_ORDERED = {
     50: "django.contrib.auth.middleware.AuthenticationMiddleware",
     60: "django.contrib.messages.middleware.MessageMiddleware",
     70: "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    80: "django.contrib.sites.middleware.CurrentSiteMiddleware",
 }
 
 if PROFILING:
@@ -133,10 +138,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+]
+
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"  # XXX: DO NOT EVER THINK ABOUT TOUCHING THIS
-LOCAL_TIME_ZONE = _settings.LOCAL_TIME_ZONE
+TIME_ZONE = _settings.TIME_ZONE
 
 USE_I18N = True
 
@@ -164,3 +175,17 @@ if not DEBUG:
         integrations=[DjangoIntegration()],
         send_default_pii=True,
     )
+
+LOGIN_URL = reverse_lazy("onboarding:sign_in")
+LOGIN_REDIRECT_URL = reverse_lazy("onboarding:me")
+
+SITE_ID = _settings.SITE_ID
+
+EMAIL_HOST = _settings.EMAIL_HOST
+EMAIL_HOST_PASSWORD = _settings.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = _settings.EMAIL_HOST_USER
+EMAIL_PORT = _settings.EMAIL_PORT
+EMAIL_USE_SSL = _settings.EMAIL_USE_SSL
+EMAIL_USE_TLS = _settings.EMAIL_USE_TLS
+
+EMAIL_FROM = _settings.EMAIL_FROM

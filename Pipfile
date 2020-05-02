@@ -16,15 +16,19 @@ line-profiler = "*"
 pudb = "*"
 
 [packages]
+celery = {extras = ["redis"],version = "*"}
 delorean = "*"
 dj-database-url = "*"
-django = "*"
+django = {extras = ["bcrypt"],version = "*"}
 django-bmemcached = "*"
 django-ipware = "*"
+djangorestframework = "*"
+drf-yasg = {extras = ["validation"],version = "*"}
 dynaconf = {extras = ["yaml"],version = "*"}
 gunicorn = "*"
 icalevents = "*"
 jinja2 = "*"
+markdown = "*"
 psycopg2 = "*"
 python-binary-memcached = "*"
 requests = "*"

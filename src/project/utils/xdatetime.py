@@ -19,7 +19,7 @@ def utcnow() -> datetime:
 
 
 def now(timezone: Optional[str] = None) -> datetime:
-    tz = timezone or settings.LOCAL_TIME_ZONE
+    tz = timezone or settings.TIME_ZONE
     return Delorean().shift(tz).datetime
 
 
