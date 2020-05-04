@@ -1,7 +1,7 @@
 HERE := $(shell pwd)
 VENV := $(shell pipenv --venv)
 PYTHONPATH := ${HERE}/src
-TEST_PARAMS := --verbosity 2 --pythonpath ${PYTHONPATH}
+TEST_PARAMS := --verbosity 2 --pythonpath "${PYTHONPATH}"
 PSQL_PARAMS := --host=localhost --username=alex --password
 
 
