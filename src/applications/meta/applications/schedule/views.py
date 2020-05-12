@@ -46,7 +46,7 @@ class Schedule(NamedTuple):
 
 
 @method_decorator(cache_page(AGE_1MINUTE * 15), name="get")
-class IndexView(TemplateView):
+class IndexView(TemplateView):  # pragma: no cover
     template_name = "schedule/index.html"
 
     def get_context_data(self, **kwargs):
