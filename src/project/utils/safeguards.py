@@ -4,7 +4,7 @@ from django.conf import settings
 from sentry_sdk import capture_exception
 
 
-def safe(func):  # pragma: no cover
+def safe(func):
     if settings.DEBUG:
         return func
 

@@ -23,6 +23,11 @@ def now(timezone: Optional[str] = None) -> datetime:
     return Delorean().shift(tz).datetime
 
 
+def near(dt1: datetime, dt2: datetime, interval=0):
+    delta = abs(dt1 - dt2)
+    return delta.total_seconds() <= interval
+
+
 def get_user_hour(request: HttpRequest) -> int:
     atm = now()
     hour = atm.hour

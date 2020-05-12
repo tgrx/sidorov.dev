@@ -1,7 +1,6 @@
-from os import urandom
+from secrets import token_urlsafe
 from typing import Union
 
-from delorean import Delorean
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from django.contrib.sites.models import Site
@@ -9,12 +8,14 @@ from django.http import HttpRequest
 
 from applications.onboarding.models import AuthProfile
 from applications.onboarding.utils.profile import setup_profile
+from project.utils import consts
+from project.utils.xdatetime import utcnow
 
 User = get_user_model()
 
 
 def setup_auth_profile(user: User, site: Site) -> AuthProfile:
-    code = urandom(16).hex()  # FIXME: magic; not secure
+    code = token_urlsafe(consts.LEN_AUTH_CODE)
     auth = AuthProfile(user=user, site=site, verification_code=code)
     auth.save()
     return auth
@@ -42,7 +43,7 @@ def finalize_verification(request: HttpRequest, code: Union[str, None]) -> bool:
     if auth.is_verified:
         return True
 
-    auth.verified_at = Delorean().datetime
+    auth.verified_at = utcnow()
     auth.save()
     auth.user.is_active = True
     auth.user.save()

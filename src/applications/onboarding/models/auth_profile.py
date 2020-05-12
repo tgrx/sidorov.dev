@@ -11,7 +11,9 @@ User = get_user_model()
 
 
 class AuthProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True, related_name="auth_profile"
+    )
     verification_code = models.CharField(max_length=255, unique=True)
     verified_at = models.DateTimeField(null=True, blank=True)
     notified_at = models.DateTimeField(null=True, blank=True)
@@ -26,7 +28,7 @@ class AuthProfile(models.Model):
 
     @property
     def link(self) -> Optional[str]:
-        if not self.site:
+        if not self.site or not self.verification_code:
             return None
 
         domain = self.site.domain
@@ -40,16 +42,6 @@ class AuthProfile(models.Model):
         return reverse_lazy(
             "onboarding:sign_in_verified", kwargs={"code": self.verification_code}
         )
-
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__} #{self.pk} for {self.user.email!r}"
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True, related_name="profile"
-    )
-    name = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} #{self.pk} for {self.user.email!r}"

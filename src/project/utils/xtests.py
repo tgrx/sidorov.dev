@@ -59,7 +59,9 @@ class UserTestMixin:
         profile.save()
         return profile
 
-    def create_auth_token(self, user, client: Optional[Client] = None) -> str:
+    def create_auth_token(
+        self, user, client: Optional[Client] = None
+    ) -> str:  # pragma: no cover
         cli = client or self.client
 
         credentials = {"username": user.username, "password": user.username}
@@ -135,7 +137,7 @@ class TemplateResponseTestMixin:
             )
 
 
-class ApiTestMixin:
+class ApiTestMixin:  # pragma: no cover
     def validate_response(
         self,
         url: str,
