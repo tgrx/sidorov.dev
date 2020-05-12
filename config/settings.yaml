@@ -50,6 +50,7 @@ test:
 
 
 travis:
+  DATABASE_URL: "postgresql://postgres@localhost:5432/sidorov-dev"
   EMAIL_FROM: "test@test.name"
   MODE_CACHING: 1
   MODE_DEBUG: 1

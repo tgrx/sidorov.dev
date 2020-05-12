@@ -21,7 +21,7 @@ def gen_textinput_admin_form(
     :return a ModelForm class
     """
 
-    size = text_input_size or 100
+    size = text_input_size or 100  # XXX: arbitrary size
     fields = (a(_field) for _field in model_fields)
     widgets = {
         _field: forms.TextInput(attrs={"text_input_size": str(size)})

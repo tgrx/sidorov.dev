@@ -7,7 +7,6 @@ services:
 env:
   global:
     - ENV_FOR_DYNACONF=travis
-    - DYNACONF_DATABASE_URL="postgresql://postgres@localhost:5432/test"
 
 install:
   - pip install pipenv --upgrade

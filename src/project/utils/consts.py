@@ -9,6 +9,8 @@ MSQ = "Europe/Minsk"
 
 DAYLIGHT = range(9, 21)
 
+LEN_AUTH_CODE = 16
+
 SCRIPT_GOOGLE_ANALYTICS = """
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162140419-1"></script>
