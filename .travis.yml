@@ -7,6 +7,7 @@ services:
 env:
   global:
     - ENV_FOR_DYNACONF=travis
+    - DYNACONF_DATABASE_URL="postgresql://alex:alex@localhost:5432/sidorov-dev"
 
 install:
   - pip install pipenv --upgrade
