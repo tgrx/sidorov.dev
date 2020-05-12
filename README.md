@@ -7,4 +7,4 @@
 My personal website.
 Used for teaching aims.
 
-Feel free to visit it: [https://www.sidorov.dev](https://sidorov.dev).
+Feel free to visit it: [https://www.sidorov.dev](https://www.sidorov.dev/?utm_source=github&utm_medium=readme&utm_campaign=may).
