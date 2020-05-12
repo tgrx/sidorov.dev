@@ -8,7 +8,7 @@ from project.utils.xmail import send_email
 
 @app.task
 @safe
-def invite_single_user(email: str):  # pragma: no cover
+def invite_single_user(email: str):
     print(f"BEGIN | {invite_single_user.__name__} | {email=}")
 
     auth_profile_model = get_auth_profile_model()

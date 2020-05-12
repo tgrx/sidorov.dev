@@ -6,7 +6,7 @@ from periodic.utils.xmodels import get_auth_profile_model
 
 
 @app.task
-def invite_all_users():  # pragma: no cover
+def invite_all_users():
     print(f"BEGIN | {invite_all_users.__name__}")
 
     auth_profile_model = get_auth_profile_model()
