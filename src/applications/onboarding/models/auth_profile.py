@@ -43,13 +43,3 @@ class AuthProfile(models.Model):
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} #{self.pk} for {self.user.email!r}"
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True, related_name="profile"
-    )
-    name = models.TextField(null=True, blank=True)
-
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__} #{self.pk} for {self.user.email!r}"
