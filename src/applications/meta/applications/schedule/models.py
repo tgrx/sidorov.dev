@@ -33,8 +33,8 @@ class Calendar(m.Model):
         atm = datetime.utcnow().astimezone(pytz.UTC)
         next_sync_time = self.get_next_sync() if not force else atm
 
-        if (next_sync_time - atm).total_seconds() > 5:  # FIXME: magic
-            return
+        # if (next_sync_time - atm).total_seconds() > 5:  # FIXME: magic
+        #     return
 
         ical = self.download_ical()
         if not ical:

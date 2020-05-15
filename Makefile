@@ -39,7 +39,7 @@ beat:
 		--app periodic.app -B \
 		--config periodic.celeryconfig \
 		--workdir ${HERE}/src \
-		--loglevel=info
+		--loglevel=debug
 
 
 .PHONY: docker

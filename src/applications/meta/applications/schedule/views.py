@@ -83,8 +83,8 @@ class IndexView(TemplateView):  # pragma: no cover
     @staticmethod
     def get_calendars() -> Tuple[Calendar]:
         calendars = tuple(Calendar.objects.all())
-        for calendar in calendars:
-            calendar.sync()
+        # for calendar in calendars:
+        #     calendar.sync()
         return calendars
 
     @staticmethod
