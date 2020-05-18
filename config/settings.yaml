@@ -29,6 +29,18 @@ development:
   TIME_ZONE: "Europe/Minsk"
 
 
+docker:
+  CELERY_BEAT_INVITATION: 30
+  CELERY_BROKER_URL: "redis://sidorov-dev-broker"
+  DATABASE_URL: "postgresql://alex:alex@sidorov-dev-db:5432/sidorov-dev"
+  MODE_CACHING: 0
+  MODE_DEBUG: 0
+  MODE_PROFILING: 0
+  SECRET_KEY: "1"
+  SITE_ID: 1
+  TIME_ZONE: "Europe/Minsk"
+
+
 heroku:
   ALLOWED_HOSTS:
     - .sidorov-dev.herokuapp.com

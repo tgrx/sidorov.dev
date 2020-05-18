@@ -104,7 +104,7 @@ venv:
 
 .PHONY: clean
 clean:
-	${PY} coverage erase
+	${RUN} coverage erase
 	rm -rf htmlcov
 	find . -type d -name "__pycache__" | xargs rm -rf
 	rm -rf ./.static/
