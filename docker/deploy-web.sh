@@ -14,6 +14,6 @@ cd "${PROJECT_DIR}" || exit 1
 
 pipenv --three
 
-make venv
+make venv static
 
 echo "DONE: DEPLOYING WEB"
