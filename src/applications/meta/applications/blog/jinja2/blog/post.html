@@ -9,6 +9,9 @@
     <article>
         <h2>{{ object.title }}</h2>
         <p>{{ object.content }}</p>
+        {% for photo in object.photos.all() %}
+            <a href="{{ photo.original.url }}"><img src="{{ photo.original.url }}" alt="{{ photo.pk }}" style="max-width:200px; height: auto" ></a>
+        {%  endfor %}
     </article>
 
     <article>

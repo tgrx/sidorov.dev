@@ -16,12 +16,14 @@ line-profiler = "*"
 pudb = "*"
 
 [packages]
+boto3 = "*"
 celery = {extras = ["redis"],version = "*"}
 delorean = "*"
 dj-database-url = "*"
 django = {extras = ["bcrypt"],version = "*"}
 django-bmemcached = "*"
 django-ipware = "*"
+django-storages = "*"
 djangorestframework = "*"
 drf-yasg = {extras = ["validation"],version = "*"}
 dynaconf = {extras = ["yaml"],version = "*"}
@@ -33,6 +35,7 @@ psycopg2 = "*"
 python-binary-memcached = "*"
 requests = "*"
 sentry-sdk = "*"
+uuid = "*"
 uvicorn = "*"
 whitenoise = "*"
 
