@@ -19,7 +19,5 @@ def setup_periodic_tasks(sender, **_kwargs):
     )
 
     sender.add_periodic_task(
-        17,
-        tasks.sync_calendars.s(),
-        name=tasks.sync_calendars.__name__,
+        17, tasks.sync_calendars.s(), name=tasks.sync_calendars.__name__,
     )
