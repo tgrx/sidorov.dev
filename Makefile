@@ -112,8 +112,10 @@ clean:
 
 .PHONY: clean-docker
 clean-docker:
+	docker-compose stop || true
+	docker-compose down || true
 	docker-compose rm --force || true
-	docker system prune
+	docker system prune --force
 
 
 .PHONY: wipe
