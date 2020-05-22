@@ -79,3 +79,4 @@ travis:
   SECRET_KEY: "1"
   SITE_ID: 1
   TIME_ZONE: "UTC"
+
