@@ -41,4 +41,3 @@ RUN chmod +x ./docker/*
 RUN chmod +x ./run-gunicorn.sh
 
 ENTRYPOINT ["./run-gunicorn.sh"]
-
