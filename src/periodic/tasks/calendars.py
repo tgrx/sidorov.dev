@@ -4,6 +4,7 @@ from periodic.app import app
 from periodic.utils.xmodels import drop_events
 from periodic.utils.xmodels import get_all_calendars
 from periodic.utils.xmodels import get_single_calendar
+from project.utils.safeguards import safe
 
 logger = get_task_logger(__name__)
 
@@ -22,10 +23,13 @@ def sync_all_calendars():
         sync_single_calendar.delay(calendar.id)
         logger.info(f"calendar to sync: {calendar}")
 
+    logger.debug("done")
+
 
 @app.task
+@safe
 def sync_single_calendar(cal_id):
-    logger.debug(f"start syncing calendar, pk={cal_id}")
+    logger.debug(f"syncing calendar, pk={cal_id}")
 
     from applications.meta.applications.schedule.utils import create_events
     from applications.meta.applications.schedule.utils import sync_calendar

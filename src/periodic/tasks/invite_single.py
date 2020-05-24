@@ -13,32 +13,30 @@ logger = get_task_logger(__name__)
 @app.task
 @safe
 def invite_single_user(email: str):
-    logger.debug(f"BEGIN | {invite_single_user.__name__} | {email=}")
+    logger.debug(f"inviting {email}")
 
     auth_profile_model = get_auth_profile_model()
     auth_profile = auth_profile_model.objects.get(user__email=email)
+    logger.debug(f"auth profile for email {email} found: {auth_profile}")
 
-    logger.debug(f"IN | {invite_single_user.__name__} | {auth_profile=}")
     if not auth_profile.link:
-        logger.debug(
-            f"END |"
-            f" {invite_single_user.__name__} |"
-            f" skip {auth_profile=}, reason: no link"
-        )
+        logger.debug(f"skip {auth_profile}, reason: no link")
         return
 
     service = PROJECT_NAME.capitalize()
 
+    logger.debug(f"sending invitation email to {email}")
     send_email(
         context={"link": auth_profile.link, "service": service},
         email_to=email,
         mail_template_name="invitation",
         subject=f"Registration at {service}",
     )
+    logger.info(f"invitation has been sent to {email}")
 
-    auth_profile.notified_at = utcnow()
+    atm = utcnow()
+    auth_profile.notified_at = atm
     auth_profile.save()
+    logger.debug(f"auth profile has been updated with notified_at={atm}")
 
-    logger.debug(
-        f"END | {invite_single_user.__name__} | email for {auth_profile=} has been sent"
-    )
+    logger.debug(f"done")

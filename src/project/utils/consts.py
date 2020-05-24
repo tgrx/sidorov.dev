@@ -7,8 +7,7 @@ AGE_1MONTH = AGE_1DAY * 30
 
 MSQ = "Europe/Minsk"
 
-# DAYLIGHT = range(9, 21)
-DAYLIGHT = range(0, 25)
+DAYLIGHT = range(9, 21)
 
 LEN_AUTH_CODE = 16
 
