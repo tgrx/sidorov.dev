@@ -9,24 +9,22 @@
 {% block subheader %}Schedule{% endblock %}
 
 {% block main %}
-    <p>Schedule: {{ schedule.start.strftime("%A, %B %-d") }} ~ {{ schedule.end.strftime("%A, %B %-d") }}</p>
+    <p>Schedule: {{ days[0].date_s }} ~ {{ days[-1].date_s }}</p>
+    <p>Actual: &plusmn;{{ actual_window }} min</p>
 
     <div class="calendar-widget">
-        {% for day in schedule.days %}
-            <p class="header"
-               style="grid-row: 1; grid-column: {{ day.number }}">{{ day.date.strftime("%a %-d") }}</p>
-            {% for event in day.events %}
-                <p style="grid-row: {{ event.slot0 }} / {{ event.slot1 }}; grid-column: {{ day.number }}">
-                    {{ event.start.strftime("%H:%M") }}
-                    ~
-                    {{ event.end.strftime("%H:%M") }}
-                </p>
-            {% endfor %}
+        {% for day in days %}
+            <p class="header" style="grid-row: 1; grid-column: {{ day.number }}">
+                {{ day.date_s }}
+            </p>
+        {% endfor %}
+        {% for event in object_list %}
+            <p style="grid-row: {{ event.slots }}; grid-column: {{ event.day_number }}">
+                {{ localtime(event.start).strftime("%H:%M") }}
+                ~
+                {{ localtime(event.end).strftime("%H:%M") -}}
+            </p>
         {% endfor %}
     </div>
-
-    {% with lu = schedule.last_update %}
-        <p>Last update: {{ lu.strftime("%B %m at %H:%M") if lu else "not yet" }}</p>
-    {% endwith %}
 
 {% endblock %}

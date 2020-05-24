@@ -1,8 +1,6 @@
-from datetime import datetime
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
-from delorean import parse
 from django.contrib.sites.models import Site
 from django.test import TestCase
 from freezegun import freeze_time

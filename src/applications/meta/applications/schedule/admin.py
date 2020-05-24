@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.db import models
 
 from applications.meta.applications.schedule.models import Calendar
+from applications.meta.applications.schedule.models import Event
 from project.utils.xmodels import a
 
 
@@ -22,3 +23,8 @@ class CalendarModelAdminForm(forms.ModelForm):
 class CalendarModelAdmin(admin.ModelAdmin):
     form = CalendarModelAdminForm
     formfield_overrides = {models.TextField: {"widget": forms.TextInput}}
+
+
+@admin.register(Event)
+class EventModelAdmin(admin.ModelAdmin):
+    pass

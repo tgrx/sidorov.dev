@@ -8,7 +8,6 @@ from django.db import models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("blog", "0002_auto_20200501_2313"),
     ]

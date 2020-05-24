@@ -17,3 +17,9 @@ def setup_periodic_tasks(sender, **_kwargs):
         tasks.invite_all_users.s(),
         name=tasks.invite_all_users.__name__,
     )
+
+    sender.add_periodic_task(
+        settings.CELERY_BEAT_CALSYNC,
+        tasks.sync_all_calendars.s(),
+        name=tasks.sync_all_calendars.__name__,
+    )

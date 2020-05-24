@@ -1,65 +1,52 @@
-from datetime import datetime
-from datetime import timedelta
-from typing import Union
+from math import ceil
 
-import pytz
-import requests
+import delorean
+from django.conf import settings
 from django.db import models as m
 
-from project.utils.safeguards import safe
+from project.utils.xdatetime import utcnow
 
 
 class Calendar(m.Model):
     name = m.TextField(unique=True)
     description = m.TextField(null=True, blank=True)
     ical_url = m.URLField(null=True, blank=True, unique=True, verbose_name="iCal URL")
-    ical = m.TextField(null=True, blank=True, verbose_name="iCal")
-    synced_at = m.DateTimeField(null=True, blank=True)
-    synced = m.BooleanField(default=False)
+    ical = m.TextField(null=True, blank=True, verbose_name="iCal", editable=False)
+    synced_at = m.DateTimeField(null=True, blank=True, editable=False)
 
     def __str__(self):
-        return f"{self.__class__.__name__}: {(self.name or '-')!r}"
+        return f"{self.__class__.__name__} #{self.pk}: {self.name!r} @ {self.synced_at}"
 
     class Meta:
         verbose_name_plural = "Calendars"
         ordering = ("name",)
 
-    def sync(self, force: bool = False) -> None:
-        if not self.ical_url:
-            self.synced = False
-            self.save()
-            return
 
-        atm = datetime.utcnow().astimezone(pytz.UTC)
-        next_sync_time = self.get_next_sync() if not force else atm
+class Event(m.Model):
+    uid = m.TextField(null=True, blank=True, editable=False)
+    start = m.DateTimeField(editable=False)
+    end = m.DateTimeField(editable=False)
+    summary = m.TextField(editable=False)
+    calendar = m.TextField(editable=False)
 
-        if (next_sync_time - atm).total_seconds() > 5:  # FIXME: magic
-            return
+    def __str__(self):
+        return f"{self.calendar}: {self.summary} @ {self.start} ~ {self.end}"
 
-        ical = self.download_ical()
-        if not ical:
-            self.synced_at = atm
-            self.synced = False
-            self.save()
-            return
+    def __repr__(self):
+        return (
+            f"{self.__class__.__name__} #{self.pk}: {self.day_number} -- {self.slots}"
+        )
 
-        self.ical = ical
-        self.synced_at = atm
-        self.synced = True
-        self.save()
+    @property
+    def day_number(self) -> int:
+        return (self.start.date() - utcnow().date()).days
 
-    def get_next_sync(self) -> datetime:
-        if self.synced_at:
-            return self.synced_at + timedelta(minutes=5)  # FIXME: magic
-        return datetime.utcnow().astimezone(pytz.UTC)
+    @property
+    def slots(self) -> str:
+        morning_local = delorean.parse("09:00:00", timezone=settings.TIME_ZONE)
+        morning_utc = morning_local.shift("UTC").datetime.hour
+        grid_offset = 2
 
-    @safe
-    def download_ical(self) -> Union[str, None]:
-        if not self.ical_url:
-            return None
-
-        resp = requests.get(self.ical_url)
-        if resp.status_code != 200:
-            return None
-
-        return resp.content.decode()
+        slot0 = self.start.hour - morning_utc + grid_offset
+        slot1 = ceil(self.end.hour + self.end.minute / 60) - morning_utc + grid_offset
+        return f"{slot0} / {slot1}"

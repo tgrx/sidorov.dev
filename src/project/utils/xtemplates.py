@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import HttpRequest
 from django.templatetags.static import static
 from django.urls import reverse
+from django.utils.timezone import template_localtime
 from jinja2 import Environment
 
 from project.utils import consts
@@ -47,6 +48,7 @@ def build_jinja2_environment(**options) -> Environment:
     global_names = {
         "debug": settings.DEBUG,
         "Delorean": Delorean,
+        "localtime": template_localtime,
         "project_name": consts.PROJECT_NAME.lower(),
         "repr": repr,
         "static": static,

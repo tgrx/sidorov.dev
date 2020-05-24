@@ -1,6 +1,7 @@
 HERE := $(shell pwd)
 VENV := $(shell pipenv --venv)
-PYTHONPATH := ${HERE}/src
+SRC := ${HERE}/src
+PYTHONPATH := ${SRC}
 TEST_PARAMS := --verbosity 2 --pythonpath "${PYTHONPATH}"
 PSQL_PARAMS := --host=localhost --username=alex --password
 
@@ -11,7 +12,7 @@ endif
 
 ifeq ($(ENV_FOR_DYNACONF), travis)
 	RUN :=
-	TEST_PARAMS := --failfast --keepdb --verbosity 1 --pythonpath ${PYTHONPATH}
+	TEST_PARAMS := --failfast --keepdb --verbosity 1 --pythonpath "${PYTHONPATH}"
 	PSQL_PARAMS := --host=localhost --username=postgres --no-password
 else ifeq ($(ENV_FOR_DYNACONF), heroku)
 	RUN :=
@@ -23,8 +24,8 @@ MANAGE := ${RUN} python src/manage.py
 
 .PHONY: format
 format:
-	${RUN} isort --virtual-env ${VENV} --recursive --apply ${HERE}
-	${RUN} black ${HERE}
+	${RUN} isort --virtual-env "${VENV}" --recursive --apply "${HERE}"
+	${RUN} black "${HERE}"
 
 
 .PHONY: run
@@ -34,11 +35,13 @@ run: static
 
 .PHONY: beat
 beat:
-	PYTHONPATH=${PYTHONPATH} \
+	PYTHONPATH="${PYTHONPATH}" \
 	${RUN} celery worker \
-		--app periodic.app -B \
+		--app periodic.app \
+		 -B \
 		--config periodic.celeryconfig \
-		--workdir ${HERE}/src \
+		--scheduler redbeat.RedBeatScheduler \
+		--workdir "${SRC}" \
 		--loglevel=info
 
 
@@ -87,13 +90,13 @@ test:
 			project \
 
 	${RUN} coverage report
-	${RUN} isort --virtual-env ${VENV} --recursive --check-only ${HERE}
-	${RUN} black --check ${HERE}
+	${RUN} isort --virtual-env "${VENV}" --recursive --check-only "${HERE}"
+	${RUN} black --check "${HERE}"
 
 
 .PHONY: report
 report:
-	${RUN} coverage html --directory=${HERE}/htmlcov --fail-under=0
+	${RUN} coverage html --directory="${HERE}/htmlcov" --fail-under=0
 	open "${HERE}/htmlcov/index.html"
 
 
@@ -127,7 +130,7 @@ resetdb:
 	psql ${PSQL_PARAMS} \
 		--dbname=postgres \
 		--echo-all \
-		--file=${HERE}/ddl/reset_db.sql \
+		--file="${HERE}/ddl/reset_db.sql" \
 		--no-psqlrc \
 		--no-readline \
 
