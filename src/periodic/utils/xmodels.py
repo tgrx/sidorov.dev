@@ -19,7 +19,7 @@ def get_single_calendar(calendar_id):
     return Calendar.objects.get(pk=calendar_id)
 
 
-def clear_events():
+def drop_events():
     from applications.meta.applications.schedule.models import Event
 
     Event.objects.all().delete()

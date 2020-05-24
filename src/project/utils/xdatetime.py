@@ -83,3 +83,10 @@ class DateDelta(NamedTuple):
         years, days = divmod(delta.days, 365)
         months = days // 30
         return DateDelta(years=years, months=months)
+
+
+def utcoffset() -> int:
+    atm_tz = now()
+    atm_utc = utcnow()
+    d = (atm_tz - atm_utc).total_seconds() / 3600
+    return int(round(d, 0))

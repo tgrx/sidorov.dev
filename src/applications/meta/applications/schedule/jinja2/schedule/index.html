@@ -9,11 +9,8 @@
 {% block subheader %}Schedule{% endblock %}
 
 {% block main %}
-    <p>Schedule:
-        {{ days[0].date }}
-       ~
-        {{ days[-1].date }}
-    </p>
+    <p>Schedule: {{ days[0].date_s }} ~ {{ days[-1].date_s }}</p>
+    <p>Actual: &plusmn;{{ actual_window }} min</p>
 
     <div class="calendar-widget">
         {% for day in days %}
@@ -23,9 +20,9 @@
         {% endfor %}
         {% for event in object_list %}
             <p style="grid-row: {{ event.slots }}; grid-column: {{ event.day_number }}">
-                {{ event.start.strftime("%H:%M") }}
+                {{ localtime(event.start).strftime("%H:%M") }}
                 ~
-                {{ event.end.strftime("%H:%M") }}
+                {{ localtime(event.end).strftime("%H:%M") -}}
             </p>
         {% endfor %}
     </div>
