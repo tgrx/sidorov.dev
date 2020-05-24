@@ -38,6 +38,7 @@ sentry-sdk = "*"
 uuid = "*"
 uvicorn = "*"
 whitenoise = "*"
+celery-redbeat = "*"
 
 [requires]
 python_version = "3.8"

@@ -8,5 +8,6 @@ if settings.ENV_FOR_DYNACONF == "heroku":
 
 broker_url = _broker_url
 imports = ["periodic.tasks"]
+redbeat_redis_url = _broker_url
 result_backend = _broker_url
 result_persistent = False

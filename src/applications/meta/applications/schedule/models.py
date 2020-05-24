@@ -1,4 +1,8 @@
+from math import ceil
+
 from django.db import models as m
+
+from project.utils.xdatetime import utcnow
 
 
 class Calendar(m.Model):
@@ -16,9 +20,17 @@ class Calendar(m.Model):
         ordering = ("name",)
 
 
-class Busy(m.Model):
-    uid = m.IntegerField(unique=True)
+class Event(m.Model):
+    uid = m.UUIDField()
     start = m.DateTimeField()
     end = m.DateTimeField()
-    slot0 = m.PositiveSmallIntegerField()
-    slot1 = m.PositiveSmallIntegerField()
+
+    @property
+    def day_number(self) -> int:
+        return (self.start - utcnow()).days
+
+    @property
+    def slots(self) -> str:
+        slot0 = (self.start.hour - 9 + 2,)  # FIXME: magic
+        slot1 = (ceil(self.end.hour + self.end.minute / 60) - 9 + 2,)  # FIXME: magic
+        return f"{slot0} / {slot1}"

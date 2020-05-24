@@ -1,50 +1,26 @@
-from datetime import date
-from datetime import datetime
-from datetime import timedelta
-from math import ceil
-from typing import Collection
-from typing import NamedTuple
-from typing import Text
-from typing import Tuple
-
-from delorean import Delorean
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.generic import TemplateView
-from icalevents import icalevents
+from django.views.generic import ListView
 
-from applications.meta.applications.schedule.models import Calendar
-from project.utils.consts import AGE_1MINUTE
-from project.utils.consts import MSQ
+from applications.meta.applications.schedule.models import Event
+from applications.meta.applications.schedule.utils import get_days
 
 
-class DateRange(NamedTuple):
-    end: datetime
-    start: datetime
+@method_decorator(cache_page(settings.CELERY_BEAT_CALSYNC), name="get")
+class IndexView(ListView):
+    template_name = "schedule/index.html"
+    model = Event
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+
+        ctx["days"] = get_days()
+
+        return ctx
 
 
-class Event(NamedTuple):
-    calendar: Calendar
-    end: datetime
-    slot0: int
-    slot1: int
-    start: datetime
-    summary: Text
-
-
-class Day(NamedTuple):
-    date: date
-    number: int
-    events: Tuple[Event]
-
-
-class Schedule(NamedTuple):
-    days: Tuple[Day]
-    end: date
-    last_update: datetime
-    start: date
-
-
+"""
 @method_decorator(cache_page(AGE_1MINUTE * 15), name="get")
 class IndexView(TemplateView):  # pragma: no cover
     template_name = "schedule/index.html"
@@ -89,7 +65,7 @@ class IndexView(TemplateView):  # pragma: no cover
 
     @staticmethod
     def collect_events(
-        calendars: Collection[Calendar], dates: DateRange
+            calendars: Collection[Calendar], dates: DateRange
     ) -> Tuple[Event]:
         all_events = []
         populated_calendars = filter(lambda _c: _c.ical, calendars)
@@ -133,3 +109,4 @@ class IndexView(TemplateView):  # pragma: no cover
         )
 
         return days
+"""
