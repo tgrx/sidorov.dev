@@ -18,6 +18,7 @@ pudb = "*"
 [packages]
 boto3 = "*"
 celery = {extras = ["redis"],version = "*"}
+celery-redbeat = "*"
 delorean = "*"
 dj-database-url = "*"
 django = {extras = ["bcrypt"],version = "*"}
@@ -38,7 +39,6 @@ sentry-sdk = "*"
 uuid = "*"
 uvicorn = "*"
 whitenoise = "*"
-celery-redbeat = "*"
 
 [requires]
 python_version = "3.8"
