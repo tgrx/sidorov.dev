@@ -42,7 +42,7 @@ beat:
 		--config periodic.celeryconfig \
 		--scheduler redbeat.RedBeatScheduler \
 		--workdir "${SRC}" \
-		--loglevel=info
+		--loglevel=debug
 
 
 .PHONY: docker
