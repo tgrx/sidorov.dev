@@ -18,11 +18,11 @@
                 {{ day.date_s }}
             </p>
         {% endfor %}
-        {% for event in object_list %}
-            <p style="grid-row: {{ event.slots }}; grid-column: {{ event.day_number }}">
-                {{ localtime(event.start).strftime("%H:%M") }}
+        {% for slot in object_list %}
+            <p style="grid-row: {{ slot.slots }}; grid-column: {{ slot.day }}">
+                {{ slot.slot0 + 9 }}
                 ~
-                {{ localtime(event.end).strftime("%H:%M") -}}
+                {{ slot.slot1 + 9 -}}
             </p>
         {% endfor %}
     </div>

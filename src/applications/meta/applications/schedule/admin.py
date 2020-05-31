@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db import models
 
 from applications.meta.applications.schedule.models import Calendar
-from applications.meta.applications.schedule.models import Event
+from applications.meta.applications.schedule.models import Slot
 from project.utils.xmodels import a
 
 
@@ -25,6 +25,6 @@ class CalendarModelAdmin(admin.ModelAdmin):
     formfield_overrides = {models.TextField: {"widget": forms.TextInput}}
 
 
-@admin.register(Event)
-class EventModelAdmin(admin.ModelAdmin):
+@admin.register(Slot)
+class SlotModelAdmin(admin.ModelAdmin):
     pass

@@ -1,10 +1,7 @@
-from math import ceil
+from datetime import timedelta
 
-import delorean
-from django.conf import settings
+from delorean import Delorean
 from django.db import models as m
-
-from project.utils.xdatetime import utcnow
 
 
 class Calendar(m.Model):
@@ -18,35 +15,23 @@ class Calendar(m.Model):
         return f"{self.__class__.__name__} #{self.pk}: {self.name!r} @ {self.synced_at}"
 
     class Meta:
-        verbose_name_plural = "Calendars"
         ordering = ("name",)
 
 
-class Event(m.Model):
-    uid = m.TextField(null=True, blank=True, editable=False)
-    start = m.DateTimeField(editable=False)
-    end = m.DateTimeField(editable=False)
-    summary = m.TextField(editable=False)
-    calendar = m.TextField(editable=False)
-
-    def __str__(self):
-        return f"{self.calendar}: {self.summary} @ {self.start} ~ {self.end}"
-
-    def __repr__(self):
-        return (
-            f"{self.__class__.__name__} #{self.pk}: {self.day_number} -- {self.slots}"
-        )
-
-    @property
-    def day_number(self) -> int:
-        return (self.start.date() - utcnow().date()).days
+class Slot(m.Model):
+    day = m.PositiveSmallIntegerField()
+    slot0 = m.PositiveSmallIntegerField()
+    slot1 = m.PositiveSmallIntegerField()
 
     @property
     def slots(self) -> str:
-        morning_local = delorean.parse("09:00:00", timezone=settings.TIME_ZONE)
-        morning_utc = morning_local.shift("UTC").datetime.hour
-        grid_offset = 2
+        return f"{self.slot0 + 2}/{self.slot1 + 2}"
 
-        slot0 = self.start.hour - morning_utc + grid_offset
-        slot1 = ceil(self.end.hour + self.end.minute / 60) - morning_utc + grid_offset
-        return f"{slot0} / {slot1}"
+    def __str__(self):
+        d = Delorean().midnight.date() + timedelta(days=self.day - 1)
+        h0 = self.slot0 + 9
+        h1 = self.slot1 + 9
+        return f"{self.__class__.__name__}({self.day}, {self.slots}) - {d} {h0:02d}~{h1:02d}"
+
+    class Meta:
+        ordering = ("day", "slot0", "slot1")
