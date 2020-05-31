@@ -28,7 +28,9 @@
                 <p>from {{ project.started_at.strftime('%b %Y') }}
                    till {{ project.finished_at.strftime('%b %Y') if project.finished_at else 'now' }}
                    ({{ project.duration }})</p>
-                <p>At {{ project.organization.name }}</p>
+                {% if not project.is_organization_hidden and not project.organization.is_hidden %}
+                    <p>At {{ project.organization.name }}</p>
+                {% endif %}
                 <p>{{ project.summary }}</p>
             </section>
             {% if project.responsibilities %}
@@ -51,7 +53,7 @@
                     </ul>
                 </section>
             {% endif %}
-            {% if project.frameworks.count() %}
+            {% if not project.is_frameworks_hidden and project.frameworks.count() %}
                 <section>
                     <h4>Frameworks:</h4>
                     <ul>

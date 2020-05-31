@@ -12,7 +12,7 @@ class Framework(models.Model):
         return f"{self.name}{version}"
 
     class Meta:
-        ordering = ("name",)
+        ordering = ("name", "version")
         constraints = (
             models.UniqueConstraint(
                 fields=("name", "version"), name="unique_name_version_v01"

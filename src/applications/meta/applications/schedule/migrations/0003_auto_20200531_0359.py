@@ -5,7 +5,6 @@ from django.db import models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("schedule", "0002_auto_20200413_0015"),
     ]
