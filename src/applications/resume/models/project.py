@@ -9,7 +9,13 @@ from project.utils.xdatetime import utcnow
 
 class Project(models.Model):
     name = models.TextField()
-    is_hidden = models.BooleanField(null=False, default=False, verbose_name="Hidden?")
+    is_hidden = models.BooleanField(default=False, verbose_name="Hide whole project?")
+    is_organization_hidden = models.BooleanField(
+        default=False, verbose_name="Hide organization?"
+    )
+    is_frameworks_hidden = models.BooleanField(
+        default=False, verbose_name="Hide frameworks?"
+    )
     is_under_nda = models.BooleanField(
         null=False, default=False, verbose_name="Under NDA?"
     )
