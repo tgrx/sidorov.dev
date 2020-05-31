@@ -17,7 +17,7 @@ _port = int(_port)
 if settings.ENV_FOR_DYNACONF == "heroku":
     _reload = False
 
-    _workers = getenv("WEB_CONCURRENCY", "4")
+    _workers = getenv("WEB_CONCURRENCY", "2")
     assert _workers and _workers.isdecimal(), f"invalid workers nr: `{_port!r}`"
     _workers = int(_workers)
 
