@@ -1,5 +1,5 @@
 *$py.class
-**/.cache
+**/.cache/
 **/.DS_Store
 **/.serverless/
 **/node_modules/
