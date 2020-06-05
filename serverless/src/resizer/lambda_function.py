@@ -41,10 +41,13 @@ def get_files(event: dict):
 def resize(s3_file: S3File):
     size = (128, 128)
     original = download_image(s3_file)
+    image_format = s3_file.key.split(".")[-1].upper()
+    if image_format == "JPG":
+        image_format = "JPEG"
     image = Image.open(original)
     image.thumbnail(size, Image.ANTIALIAS)
     resized = BytesIO()
-    image.save(resized)
+    image.save(resized, image_format)
     resized.seek(0)
     new_key = f"{s3_file.key}.thumbnail"
     S3.upload_fileobj(resized, s3_file.bucket, new_key)
