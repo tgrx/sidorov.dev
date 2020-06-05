@@ -1,4 +1,8 @@
-**/*.swp
+**/.cache
+**/.DS_Store
+**/.serverless/
+**/node_modules/
+*.swp
 .cache/
 .coverage
 .coveragerc

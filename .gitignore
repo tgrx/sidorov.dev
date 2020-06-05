@@ -1,5 +1,8 @@
 *$py.class
+**/.cache
 **/.DS_Store
+**/.serverless/
+**/node_modules/
 *.cover
 *.egg
 *.egg-info/
@@ -13,8 +16,6 @@
 *.sage.py
 *.so
 *.spec
-.cache
-.cache
 .coverage
 .coverage.*
 .dmypy.json
@@ -32,7 +33,6 @@
 .ropeproject
 .scrapy
 .secrets.*
-.serverless/
 .spyderproject
 .spyproject
 .static/
