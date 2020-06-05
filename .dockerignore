@@ -6,11 +6,13 @@
 .gitignore
 .idea/
 .isort.cfg
+.serverless/
 .static/
 .travis.yml
+docker-compose.yml
+node_modules/
 Procfile
 README.md
-docker-compose.yml
 runtime.txt
+serverless/
 src/celerybeat-schedule
-

@@ -1,0 +1,22 @@
+service: sidorov-dev
+provider:
+  name: aws
+  runtime: python3.7
+  timeout: 60
+  versionFunctions: false
+  endpointType: REGIONAL
+functions:
+  resizer:
+    environment:
+      PYTHONPATH: src
+    handler: resizer.lambda_function.lambda_handler
+    events:
+      - s3:
+          bucket: sidorov.dev
+          event: s3:ObjectCreated:*
+          existing: true
+plugins:
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux

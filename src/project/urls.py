@@ -17,6 +17,7 @@ urlpatterns = [
     path("o/", include("applications.onboarding.urls")),
     path("portfolio/", include("applications.portfolio.urls")),
     path("resume/", include("applications.resume.urls")),
+    path("api/", include("applications.api.urls")),
 ]
 
 if settings.DEBUG and settings.PROFILING:  # pragma: no cover

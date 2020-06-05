@@ -32,6 +32,7 @@
 .ropeproject
 .scrapy
 .secrets.*
+.serverless/
 .spyderproject
 .spyproject
 .static/
