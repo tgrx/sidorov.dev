@@ -4,7 +4,7 @@ from typing import NamedTuple
 import boto3
 from PIL import Image
 
-S3 = boto3.client('s3')
+S3 = boto3.client("s3")
 
 
 class S3File(NamedTuple):
@@ -22,7 +22,7 @@ def lambda_handler(event, context):
 
 def get_files(event: dict):
     for record in event["Records"]:
-        s3 = record['s3']
+        s3 = record["s3"]
         bucket = s3["bucket"]["name"]
         key = s3["object"]["key"]
 
@@ -33,8 +33,7 @@ def get_files(event: dict):
             continue
 
         yield S3File(
-            bucket=bucket,
-            key=key,
+            bucket=bucket, key=key,
         )
 
 

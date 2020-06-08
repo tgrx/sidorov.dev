@@ -11,7 +11,7 @@ from applications.api.views import ObtainAuthToken
 # TODO: move to views
 schema_view = get_schema_view(
     openapi.Info(
-        title="Obliviscor API",
+        title="API",
         default_version="v1",
         description="The API is the API",
         terms_of_service="TBD",

@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.test import TestCase
 from rest_framework import status
 
@@ -15,6 +16,9 @@ class Test(TestCase, ApiTestMixin, UserTestMixin):
         self.auth_headers = {"HTTP_AUTHORIZATION": f"Token {self.token}"}
 
         self.blog_post = Post()
+        self.blog_post.save()
+        Photo.original.field.storage = FileSystemStorage()
+        Photo.thumbnail.field.storage = FileSystemStorage()
         self.photo = Photo(post=self.blog_post, original="xxx")
         self.photo.save()
 
@@ -29,9 +33,10 @@ class Test(TestCase, ApiTestMixin, UserTestMixin):
             headers=self.auth_headers,
             expected_response_payload=[
                 {
-                    "original": self.photo.original.url,
+                    "original": f"http://testserver/api/v1/photo/{self.photo.original.url}",
                     "post": self.blog_post.pk,
-                    "uuid": self.photo.pk,
+                    "thumbnail": None,
+                    "uuid": str(self.photo.pk),
                 },
             ],
         )
