@@ -35,7 +35,7 @@ class Test(TestCase, ApiTestMixin, UserTestMixin):
                 {
                     "original": f"http://testserver/api/v1/photo/{self.photo.original.url}",
                     "post": self.blog_post.pk,
-                    "thumbnail": None,
+                    "thumbnail": "",
                     "uuid": str(self.photo.pk),
                 },
             ],
