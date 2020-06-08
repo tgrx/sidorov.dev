@@ -16,6 +16,11 @@ provider:
         - 's3:PutObject'
       Resource:
         - 'arn:aws:s3:::sidorov.dev/*'
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObjectAcl'
+      Resource:
+        - 'arn:aws:s3:::sidorov.dev/*'
 functions:
   resizer:
     environment:

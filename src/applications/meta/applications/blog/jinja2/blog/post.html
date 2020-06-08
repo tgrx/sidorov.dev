@@ -11,9 +11,10 @@
         <p>{{ object.content }}</p>
         {% for photo in object.photos.all() %}
             <a href="{{ photo.original.url }}">
-                <img src="{{ photo.original.url }}"
+                <img src="{{ photo.thumbnail.url }}"
                      alt="{{ photo.pk }}"
-                     style="max-width:200px; height: auto">
+{#                     style="max-width:200px; height: auto"#}
+                >
             </a>
         {% endfor %}
     </article>

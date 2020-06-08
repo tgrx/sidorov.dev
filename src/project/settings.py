@@ -80,7 +80,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
-        "DIRS": [PROJECT_DIR / "jinja2", ],
+        "DIRS": [PROJECT_DIR / "jinja2",],
         "APP_DIRS": True,
         "OPTIONS": {
             "environment": "project.utils.xtemplates.build_jinja2_environment",
@@ -120,7 +120,7 @@ DATABASES = {
 
 if CACHING:
     CACHE_MIDDLEWARE_SECONDS = AGE_1DAY
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache", }}
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}}
 
     if not DEBUG:
         CACHES = {
@@ -138,9 +138,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 PASSWORD_HASHERS = [
@@ -210,4 +210,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Token": {"type": "apiKey", "name": "Authorization", "in": "header",}
+    },
 }

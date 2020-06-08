@@ -49,7 +49,13 @@ def resize(s3_file: S3File):
     image.save(resized, image_format)
     resized.seek(0)
     new_key = f"{s3_file.key}.thumbnail"
-    S3.upload_fileobj(resized, s3_file.bucket, new_key)
+    S3.upload_fileobj(
+        resized, s3_file.bucket, new_key, ExtraArgs={"ACL": "public-read"}
+    )
+    # S3.put_object_acl(
+    #     ACL="public-read",
+    #     Bucket=s3_file.bucket,
+    # )
     print(f"uploaded to: {s3_file.bucket}//{new_key}")
 
 
