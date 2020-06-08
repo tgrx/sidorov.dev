@@ -40,7 +40,11 @@ def get_files(event: dict):
 def resize(s3_file: S3File):
     size = (128, 128)
     original = download_image(s3_file)
-    image_format = s3_file.key.split(".")[-1].upper()
+    location, image_file = s3_file.key.split("/")
+    image_file_parts = image_file.split(".")
+    image_file_name = ".".join(image_file_parts[:-1])
+    image_file_ext = image_file_parts[-1]
+    image_format = image_file_ext.upper()
     if image_format == "JPG":
         image_format = "JPEG"
     image = Image.open(original)
@@ -48,14 +52,16 @@ def resize(s3_file: S3File):
     resized = BytesIO()
     image.save(resized, image_format)
     resized.seek(0)
-    new_key = f"{s3_file.key}.thumbnail"
+    new_key = f"{location}/{image_file_name}__thumbnail.{image_file_ext}"
     S3.upload_fileobj(
-        resized, s3_file.bucket, new_key, ExtraArgs={"ACL": "public-read"}
+        resized,
+        s3_file.bucket,
+        new_key,
+        ExtraArgs={
+            "ACL": "public-read",
+            "ContentType": f"image/{image_format.lower()}",
+        },
     )
-    # S3.put_object_acl(
-    #     ACL="public-read",
-    #     Bucket=s3_file.bucket,
-    # )
     print(f"uploaded to: {s3_file.bucket}//{new_key}")
 
 

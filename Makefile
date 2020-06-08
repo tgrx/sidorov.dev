@@ -50,6 +50,21 @@ docker: wipe
 	docker-compose build
 
 
+.PHONY: lambda
+lambda:
+	(cd serverless && sls deploy)
+
+
+.PHONY: lambda-clean
+lambda-clean:
+	rm -rf serverless/.serverless
+
+
+.PHONY: lambda-remove
+lambda-remove:
+	(cd serverless && sls remove)
+
+
 .PHONY: docker-run
 docker-run: docker
 	docker-compose up
@@ -122,7 +137,7 @@ clean-docker:
 
 
 .PHONY: wipe
-wipe: clean clean-docker
+wipe: clean clean-docker lambda-clean
 
 
 .PHONY: resetdb
