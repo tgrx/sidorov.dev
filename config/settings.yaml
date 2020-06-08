@@ -25,6 +25,8 @@ default:
 
 
 development:
+  ALLOWED_HOSTS: ["7a6fd0f76567.ngrok.io"]
+  TG: "1111789983:AAFeWwTo5RMXBEbCz_EYsryBb29TD65Azow"
   AWS_LOCATION: "development"
   AWS_S3_REGION_NAME: "us-east-1"
   CELERY_BEAT_CALSYNC: 30
