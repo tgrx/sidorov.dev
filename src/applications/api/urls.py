@@ -8,8 +8,6 @@ from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
 
 from applications.api.views import ObtainAuthToken
-
-# TODO: move to views
 from applications.api.views import TelegramView
 
 schema_view = get_schema_view(

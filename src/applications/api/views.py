@@ -14,7 +14,6 @@ class ObtainAuthToken(_DrfObtainAuthToken):
 class TelegramView(View):
     def post(self, *args, **kwargs):
         try:
-            breakpoint()
             payload = json.loads(self.request.body)
             message = payload["message"]
             text = message["text"]
