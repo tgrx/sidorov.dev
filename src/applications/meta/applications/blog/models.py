@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse_lazy
@@ -55,7 +56,27 @@ class Comment(models.Model):
         self.save()
 
 
+def upload_to(instance: "Photo", filename) -> str:
+    post = instance.post.pk
+    photo = instance.pk
+    key = f"{settings.AWS_S3_LOCATION}/blog/posts/{post}/photos/{photo}_{filename}"
+    return key
+
+
 class Photo(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="photos")
-    original = models.FileField(storage=S3Boto3Storage())
+    original = models.FileField(
+        max_length=2000, storage=S3Boto3Storage(), upload_to=upload_to
+    )
+    thumbnail = models.FileField(
+        blank=True,
+        max_length=2000,
+        null=True,
+        storage=S3Boto3Storage(),
+        upload_to=upload_to,
+    )
+
+    def __str__(self):
+        msg = f'Photo {self.pk} for Post {self.post.pk} - "{self.post.title}"'
+        return msg

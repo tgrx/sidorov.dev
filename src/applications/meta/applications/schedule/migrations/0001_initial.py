@@ -34,6 +34,8 @@ class Migration(migrations.Migration):
                 ("synced_at", models.DateTimeField(blank=True, null=True)),
                 ("synced", models.BooleanField(default=False)),
             ],
-            options={"verbose_name_plural": "Calendars",},
+            options={
+                "verbose_name_plural": "Calendars",
+            },
         ),
     ]

@@ -4,35 +4,36 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==19.10b0"
+black = "==20.8b1"
 codecov = "*"
 coverage = "*"
 django-silk = "*"
 freezegun = "*"
 httpie = "*"
 ipython = "*"
-isort = "*"
+isort = { extras = ["pipfile"], version = "*" }
 line-profiler = "*"
+pillow = "*"
 pudb = "*"
 
 [packages]
 boto3 = "*"
-celery = {extras = ["redis"],version = "*"}
+celery = { extras = ["redis"], version = "*" }
 celery-redbeat = "*"
 delorean = "*"
 dj-database-url = "*"
-django = {extras = ["bcrypt"],version = "*"}
+django = { extras = ["bcrypt"], version = "*" }
 django-bmemcached = "*"
 django-ipware = "*"
 django-storages = "*"
 djangorestframework = "*"
-drf-yasg = {extras = ["validation"],version = "*"}
-dynaconf = {extras = ["yaml"],version = "*"}
+drf-yasg = { extras = ["validation"], version = "*" }
+dynaconf = { extras = ["yaml"], version = "*" }
 gunicorn = "*"
 icalevents = "*"
 jinja2 = "*"
 markdown = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 python-binary-memcached = "*"
 requests = "*"
 sentry-sdk = "*"

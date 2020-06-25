@@ -6,32 +6,32 @@
 
 {% block main_allowed %}
 
-    <article>
+  <article>
 
-        <h2>It's you!</h2>
+    <h2>It's you!</h2>
 
-        {% if newbie_alert %}
-            <p><strong>{{ newbie_alert }}</strong></p>
-        {% endif %}
+    {% if newbie_alert %}
+      <p><strong>{{ newbie_alert }}</strong></p>
+    {% endif %}
 
-        <div class="grid">
-            <p class="header">Login name:</p>
-            <p>{{ user.username }}</p>
+    <div class="grid">
+      <p class="header">Login name:</p>
+      <p>{{ user.username }}</p>
 
-            <p class="header">E-mail:</p>
-            <p>{{ user.email }}</p>
+      <p class="header">E-mail:</p>
+      <p>{{ user.email }}</p>
 
-            <p class="header">Display name:</p>
-            <p>{{ profile.name }}</p>
+      <p class="header">Display name:</p>
+      <p>{{ profile.name }}</p>
 
-        </div>
+    </div>
 
-        <p>
-            <a href="{{ url('onboarding:me_edit') }}">
-                <button class="button">Edit profile</button>
-            </a>
-        </p>
+    <p>
+      <a href="{{ url('onboarding:me_edit') }}">
+        <button class="button">Edit profile</button>
+      </a>
+    </p>
 
-    </article>
+  </article>
 
 {% endblock %}

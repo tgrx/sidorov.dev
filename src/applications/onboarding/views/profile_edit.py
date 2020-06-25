@@ -44,6 +44,9 @@ class ProfileEditView(FormView):
                 profile = None
 
             initial.update(
-                {"username": user.username, "name": profile.name if profile else "",}
+                {
+                    "username": user.username,
+                    "name": profile.name if profile else "",
+                }
             )
         return initial

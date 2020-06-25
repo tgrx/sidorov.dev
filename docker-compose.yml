@@ -6,7 +6,7 @@ services:
     depends_on:
       - sidorov-dev-db
       - sidorov-dev-beat
-    entrypoint: ["docker/run-web.sh"]
+    entrypoint: [ "docker/run-web.sh" ]
     environment:
       PORT: 80
     image: sidorov-dev-web
@@ -17,7 +17,7 @@ services:
     depends_on:
       - sidorov-dev-broker
       - sidorov-dev-db
-    entrypoint: ["docker/run-beat.sh"]
+    entrypoint: [ "docker/run-beat.sh" ]
     image: sidorov-dev-web
   sidorov-dev-broker:
     container_name: sidorov-dev-redis

@@ -47,7 +47,9 @@ class UserTestMixin:
     @staticmethod
     def create_auth_profile(user: User) -> AuthProfile:
         auth = AuthProfile(
-            user=user, verification_code=user.username, verified_at=utcnow(),
+            user=user,
+            verification_code=user.username,
+            verified_at=utcnow(),
         )
         auth.save()
 
@@ -116,7 +118,9 @@ class TemplateResponseTestMixin:
 
         if expected_status_code in good_resolver_codes:
             self.assertEqual(
-                expected_view_name, resp.resolver_match.view_name, f"bad view name",
+                expected_view_name,
+                resp.resolver_match.view_name,
+                f"bad view name",
             )
             self.assertEqual(
                 expected_view.as_view().__name__,
@@ -126,7 +130,9 @@ class TemplateResponseTestMixin:
 
             if expected_template is not None:
                 self.assertIn(
-                    expected_template, resp.template_name, f"bad template",
+                    expected_template,
+                    resp.template_name,
+                    f"bad template",
                 )
 
         for content_filter in content_filters or []:
@@ -161,4 +167,18 @@ class ApiTestMixin:  # pragma: no cover
 
         if expected_response_payload is not None:
             payload = resp.json()
-            self.assertEqual(expected_response_payload, payload)
+            self.assertEqualRecursive(expected_response_payload, payload)
+
+    def assertEqualRecursive(self, expected, got):
+        if isinstance(expected, dict):
+            return self.assertDictEqual(expected, got)
+
+        if isinstance(expected, list):
+            self.assertIsInstance(got, list)
+            self.assertEqual(len(expected), len(got))
+
+            for expected_obj, got_obj in zip(expected, got):
+                self.assertEqualRecursive(expected_obj, got_obj)
+            return
+
+        return self.assertEqual(expected, got)

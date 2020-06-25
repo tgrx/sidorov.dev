@@ -26,7 +26,8 @@ class Test(TestCase):
     def test_deactivate_user(self):
         placeholder = urandom(4).hex()
         user = User.objects.create_user(
-            email=f"email_{placeholder}", username=f"username_{placeholder}",
+            email=f"email_{placeholder}",
+            username=f"username_{placeholder}",
         )
         self.assertTrue(user.is_active)
 
@@ -40,7 +41,8 @@ class Test(TestCase):
         placeholder = urandom(4).hex()
 
         user = User.objects.create_user(
-            email=f"email_{placeholder}", username=f"username_{placeholder}",
+            email=f"email_{placeholder}",
+            username=f"username_{placeholder}",
         )
         self.assertTrue(user.is_active)
         self.assertFalse(AuthProfile.objects.filter(user=user).all())

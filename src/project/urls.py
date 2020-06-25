@@ -13,6 +13,7 @@ urlpatterns = [
     path("favicon.ico", view_favicon, name="favicon"),
     # --- applications ---
     path("", include("applications.target.urls")),
+    path("api/", include("applications.api.urls")),
     path("meta/", include("applications.meta.urls")),
     path("o/", include("applications.onboarding.urls")),
     path("portfolio/", include("applications.portfolio.urls")),

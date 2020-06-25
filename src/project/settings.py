@@ -1,3 +1,4 @@
+from itertools import chain
 from os import getenv
 from pathlib import Path
 
@@ -18,11 +19,25 @@ DEBUG = _settings.MODE_DEBUG
 CACHING = _settings.MODE_CACHING
 PROFILING = _settings.MODE_PROFILING
 
-ALLOWED_HOSTS = _settings.ALLOWED_HOSTS + ["localhost", "127.0.0.1"]
+if not DEBUG:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=_settings.SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+    )
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+INTERNAL_HOSTS = [
+    "localhost",
+]
+
+ALLOWED_HOSTS = list(chain(_settings.ALLOWED_HOSTS or [], INTERNAL_IPS, INTERNAL_HOSTS))
 
 INSTALLED_APPS_ORDERED = {
     0: "django.contrib.admin",
@@ -32,6 +47,10 @@ INSTALLED_APPS_ORDERED = {
     40: "django.contrib.messages",
     50: "django.contrib.staticfiles",
     60: "django.contrib.sites",
+    # --- 3dp applications ---
+    100: "rest_framework",
+    101: "rest_framework.authtoken",
+    200: "drf_yasg",
     # --- my applications ---
     1000: "applications.onboarding.apps.OnboardingConfig",
     2000: "applications.meta.apps.MetaConfig",
@@ -40,6 +59,7 @@ INSTALLED_APPS_ORDERED = {
     5000: "applications.resume.apps.ResumeConfig",
     6000: "applications.target.apps.TargetConfig",
     7000: "applications.meta.applications.blog.apps.BlogConfig",
+    8000: "applications.api.apps.ApiConfig",
 }
 
 if PROFILING:
@@ -75,7 +95,9 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
-        "DIRS": [PROJECT_DIR / "jinja2",],
+        "DIRS": [
+            PROJECT_DIR / "jinja2",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "environment": "project.utils.xtemplates.build_jinja2_environment",
@@ -115,13 +137,17 @@ DATABASES = {
 
 if CACHING:
     CACHE_MIDDLEWARE_SECONDS = AGE_1DAY
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}}
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
 
     if not DEBUG:
         CACHES = {
             "default": {
                 "BACKEND": "django_bmemcached.memcached.BMemcached",
-                "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS").split(","),
+                "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS", "").split(","),
                 "OPTIONS": {
                     "username": getenv("MEMCACHEDCLOUD_USERNAME"),
                     "password": getenv("MEMCACHEDCLOUD_PASSWORD"),
@@ -133,9 +159,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 PASSWORD_HASHERS = [
@@ -166,16 +198,6 @@ STATIC_ROOT = REPO_DIR / ".static"
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-if not DEBUG:
-    import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
-
-    sentry_sdk.init(
-        dsn=_settings.SENTRY_DSN,
-        integrations=[DjangoIntegration()],
-        send_default_pii=True,
-    )
-
 LOGIN_URL = reverse_lazy("onboarding:sign_in")
 LOGIN_REDIRECT_URL = reverse_lazy("onboarding:me")
 
@@ -191,12 +213,28 @@ EMAIL_USE_TLS = _settings.EMAIL_USE_TLS
 EMAIL_FROM = _settings.EMAIL_FROM
 
 AWS_ACCESS_KEY_ID = _settings.AWS_ACCESS_KEY_ID
-AWS_DEFAULT_ACL = "public-read"
-AWS_LOCATION = _settings.AWS_LOCATION
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_ADDRESSING_STYLE = "path"
-AWS_S3_REGION_NAME = _settings.AWS_S3_REGION_NAME
+AWS_S3_LOCATION = _settings.AWS_S3_LOCATION
+AWS_S3_OBJECT_PARAMETERS = {"ACL": "public-read"}
+AWS_S3_REGION_NAME = _settings.AWS_S3_REGION
 AWS_SECRET_ACCESS_KEY = _settings.AWS_SECRET_ACCESS_KEY
-AWS_STORAGE_BUCKET_NAME = "sidorov.dev"
+AWS_STORAGE_BUCKET_NAME = _settings.AWS_STORAGE_BUCKET
 
 CELERY_BEAT_CALSYNC = _settings.CELERY_BEAT_CALSYNC
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Token": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        }
+    },
+}

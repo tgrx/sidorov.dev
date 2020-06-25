@@ -1,12 +1,20 @@
 [run]
-
 branch = True
 omit =
+    .cache/*
+    .circleci/*
+    .static/*
+    .venv/*
+    db_env_to_psql.py
+    serverless/*
     src/manage.py
+    src/periodic/celeryconfig.py
+    src/project/asgi.py
     src/project/settings.py
-source = .
+    src/project/wsgi.py
+source = src
+
 
 [report]
-
 fail_under = 96
 skip_covered = True

@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="project", name="nda_organization_name",),
+        migrations.RemoveField(
+            model_name="project",
+            name="nda_organization_name",
+        ),
         migrations.AlterField(
             model_name="project",
             name="frameworks",

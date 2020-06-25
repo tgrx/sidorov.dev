@@ -1,7 +1,7 @@
 {% extends "meta/_meta.html" %}
 
 {% block custom_styles %}
-    <link href="{{ static('schedule/style.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ static('schedule/style.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}Schedule of Alexander Sidorov{% endblock %}
@@ -9,22 +9,22 @@
 {% block subheader %}Schedule{% endblock %}
 
 {% block main %}
-    <p>Schedule: {{ days[0].date_s }} ~ {{ days[-1].date_s }}</p>
-    <p>Actual: &plusmn;{{ actual_window }} min</p>
+  <p>Schedule: {{ days[0].date_s }} ~ {{ days[-1].date_s }}</p>
+  <p>Actual: &plusmn;{{ actual_window }} min</p>
 
-    <div class="calendar-widget">
-        {% for day in days %}
-            <p class="header" style="grid-row: 1; grid-column: {{ day.number }}">
-                {{ day.date_s }}
-            </p>
-        {% endfor %}
-        {% for slot in object_list %}
-            <p style="grid-row: {{ slot.slots }}; grid-column: {{ slot.day }}">
-                {{ slot.slot0 + 9 }}
-                ~
-                {{ slot.slot1 + 9 -}}
-            </p>
-        {% endfor %}
-    </div>
+  <div class="calendar-widget">
+    {% for day in days %}
+      <p class="header" style="grid-row: 1; grid-column: {{ day.number }}">
+        {{ day.date_s }}
+      </p>
+    {% endfor %}
+    {% for slot in object_list %}
+      <p style="grid-row: {{ slot.slots }}; grid-column: {{ slot.day }}">
+        {{ slot.slot0 + 9 }}
+        ~
+        {{ slot.slot1 + 9 -}}
+      </p>
+    {% endfor %}
+  </div>
 
 {% endblock %}

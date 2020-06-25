@@ -31,7 +31,9 @@ class Migration(migrations.Migration):
                 ("link", models.TextField(blank=True, null=True)),
                 ("description", models.TextField(blank=True, null=True)),
             ],
-            options={"ordering": ("name",),},
+            options={
+                "ordering": ("name",),
+            },
         ),
         migrations.CreateModel(
             name="Organization",
@@ -49,7 +51,9 @@ class Migration(migrations.Migration):
                 ("link", models.TextField(blank=True, null=True)),
                 ("description", models.TextField(blank=True, null=True)),
             ],
-            options={"ordering": ("name",),},
+            options={
+                "ordering": ("name",),
+            },
         ),
         migrations.CreateModel(
             name="Project",

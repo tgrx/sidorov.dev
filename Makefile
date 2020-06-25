@@ -24,13 +24,13 @@ MANAGE := ${RUN} python src/manage.py
 
 .PHONY: format
 format:
-	${RUN} isort --virtual-env "${VENV}" --recursive --apply "${HERE}"
+	${RUN} isort --virtual-env "${VENV}" "${HERE}"
 	${RUN} black "${HERE}"
 
 
 .PHONY: run
 run: static
-	${MANAGE} runserver 0.0.0.0:8000
+	${MANAGE} runserver 127.0.0.1:8000
 
 
 .PHONY: beat
@@ -48,6 +48,21 @@ beat:
 .PHONY: docker
 docker: wipe
 	docker-compose build
+
+
+.PHONY: lambda
+lambda:
+	(cd serverless && sls deploy)
+
+
+.PHONY: lambda-clean
+lambda-clean:
+	rm -rf serverless/.serverless
+
+
+.PHONY: lambda-remove
+lambda-remove:
+	(cd serverless && sls remove)
 
 
 .PHONY: docker-run
@@ -90,7 +105,7 @@ test:
 			project \
 
 	${RUN} coverage report
-	${RUN} isort --virtual-env "${VENV}" --recursive --check-only "${HERE}"
+	${RUN} isort --virtual-env "${VENV}" --check-only "${HERE}"
 	${RUN} black --check "${HERE}"
 
 
@@ -122,7 +137,7 @@ clean-docker:
 
 
 .PHONY: wipe
-wipe: clean clean-docker
+wipe: clean clean-docker lambda-clean
 
 
 .PHONY: resetdb
