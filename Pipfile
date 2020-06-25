@@ -11,7 +11,7 @@ django-silk = "*"
 freezegun = "*"
 httpie = "*"
 ipython = "*"
-isort = "*"
+isort = {extras = ["pipfile"], version = "*"}
 line-profiler = "*"
 pillow = "*"
 pudb = "*"
