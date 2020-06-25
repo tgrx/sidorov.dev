@@ -32,6 +32,10 @@ INSTALLED_APPS_ORDERED = {
     40: "django.contrib.messages",
     50: "django.contrib.staticfiles",
     60: "django.contrib.sites",
+    # --- 3dp applications ---
+    100: "rest_framework",
+    101: "rest_framework.authtoken",
+    200: "drf_yasg",
     # --- my applications ---
     1000: "applications.onboarding.apps.OnboardingConfig",
     2000: "applications.meta.apps.MetaConfig",
@@ -40,6 +44,7 @@ INSTALLED_APPS_ORDERED = {
     5000: "applications.resume.apps.ResumeConfig",
     6000: "applications.target.apps.TargetConfig",
     7000: "applications.meta.applications.blog.apps.BlogConfig",
+    8000: "applications.api.apps.ApiConfig",
 }
 
 if PROFILING:
@@ -200,3 +205,15 @@ AWS_SECRET_ACCESS_KEY = _settings.AWS_SECRET_ACCESS_KEY
 AWS_STORAGE_BUCKET_NAME = "sidorov.dev"
 
 CELERY_BEAT_CALSYNC = _settings.CELERY_BEAT_CALSYNC
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Token": {"type": "apiKey", "name": "Authorization", "in": "header",}
+    },
+}
