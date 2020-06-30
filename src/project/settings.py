@@ -126,7 +126,7 @@ if CACHING:
         CACHES = {
             "default": {
                 "BACKEND": "django_bmemcached.memcached.BMemcached",
-                "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS").split(","),
+                "LOCATION": getenv("MEMCACHEDCLOUD_SERVERS", "").split(","),
                 "OPTIONS": {
                     "username": getenv("MEMCACHEDCLOUD_USERNAME"),
                     "password": getenv("MEMCACHEDCLOUD_PASSWORD"),
