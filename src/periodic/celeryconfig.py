@@ -10,6 +10,8 @@ if settings.ENV_FOR_DYNACONF == "heroku":
     _workers = int(getenv("WEB_CONCURRENCY", "2"))
     _broker_url = getenv("REDIS_URL")
 
+_workers = 1
+
 broker_url = _broker_url
 imports = ["periodic.tasks"]
 redbeat_redis_url = _broker_url
