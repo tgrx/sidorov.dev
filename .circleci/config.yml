@@ -6,11 +6,12 @@ jobs:
       - image: circleci/python:3.8.5-browsers
       - image: circleci/postgres:9.6.9-alpine
         environment:
-          POSTGRES_USER: ci
           POSTGRES_DB: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_USER: ci
 
     environment:
-      DYNACONF_DATABASE_URL: "postgres://ci@localhost:5432/ci?sslmode=disable"
+      DYNACONF_DATABASE_URL: "postgres://ci:ci@localhost:5432/ci?sslmode=disable"
       ENV_FOR_DYNACONF: ci
       PIPENV_VENV_IN_PROJECT: 1
 
