@@ -2,9 +2,12 @@
 
 branch = True
 omit =
+    .cache/
     .circleci/
+    .static/
     .venv/
     db_env_to_psql.py
+    serverless/
     src/manage.py
     src/project/settings.py
 source = .
