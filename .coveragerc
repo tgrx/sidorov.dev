@@ -2,6 +2,8 @@
 
 branch = True
 omit =
+    .circleci/
+    .venv/
     db_env_to_psql.py
     src/manage.py
     src/project/settings.py
