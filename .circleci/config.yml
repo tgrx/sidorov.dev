@@ -1,5 +1,6 @@
 version: 2.1
-
+#orbs:
+#  codecov: codecov/codecov@1.0.2
 jobs:
   build-and-test:
     docker:
@@ -9,20 +10,16 @@ jobs:
           POSTGRES_DB: ci
           POSTGRES_PASSWORD: ci
           POSTGRES_USER: ci
-
     environment:
       DYNACONF_DATABASE_URL: "postgres://ci:ci@localhost:5432/ci?sslmode=disable"
       ENV_FOR_DYNACONF: ci
       PIPENV_VENV_IN_PROJECT: 1
-
     steps:
       - checkout
-
       - run:
           name: (Waiting for Postgres to be ready)
           command: |
             ./.circleci/wait_for_postgresql.sh || exit 1
-
       - restore_cache:
           keys:
             - cc-venv-{{ checksum "Pipfile.lock" }}
@@ -35,22 +32,18 @@ jobs:
           key: cc-venv-{{ checksum "Pipfile.lock" }}
           paths:
             - ./.venv/
-
       - run:
           name: Collecting staticfiles
           command: |
             make static
-
       - run:
           name: Performing Tests
           command: |
             make test
-
       - run:
           name: Collecting Coverage
           command: |
-            codecov
-
+            pipenv run codecov
 workflows:
   main:
     jobs:
