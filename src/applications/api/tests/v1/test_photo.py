@@ -24,7 +24,8 @@ class Test(TestCase, ApiTestMixin, UserTestMixin):
 
     def test_user_anon(self):
         self.validate_response(
-            self.endpoint, expected_status_code=status.HTTP_401_UNAUTHORIZED,
+            self.endpoint,
+            expected_status_code=status.HTTP_401_UNAUTHORIZED,
         )
 
     def test_user_normal(self):

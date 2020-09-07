@@ -1,9 +1,10 @@
 default:
   ALLOWED_HOSTS: []
   AWS_ACCESS_KEY_ID: ""
-  AWS_LOCATION: ""
-  AWS_S3_REGION_NAME: ""
+  AWS_S3_LOCATION_BLOG_PHOTOS: ""
+  AWS_S3_REGION: ""
   AWS_SECRET_ACCESS_KEY: ""
+  AWS_STORAGE_BUCKET: ""
   CELERY_BEAT_CALSYNC: -1
   CELERY_BEAT_INVITATION: -1
   CELERY_BROKER_URL: ""
@@ -25,8 +26,8 @@ default:
 
 
 development:
-  AWS_LOCATION: "development"
-  AWS_S3_REGION_NAME: "us-east-1"
+  AWS_S3_LOCATION_BLOG_PHOTOS: "blog-photos-dev"
+  AWS_S3_REGION: "us-east-1"
   CELERY_BEAT_CALSYNC: 30
   CELERY_BEAT_INVITATION: 30
   MODE_CACHING: 0
@@ -38,7 +39,7 @@ development:
 
 
 docker:
-  AWS_LOCATION: "docker"
+  AWS_S3_LOCATION_BLOG_PHOTOS: "blog-photos-docker"
   AWS_S3_REGION_NAME: "us-east-1"
   CELERY_BEAT_CALSYNC: 30
   CELERY_BEAT_INVITATION: 30
@@ -56,7 +57,7 @@ heroku:
   ALLOWED_HOSTS:
     - .sidorov-dev.herokuapp.com
     - .sidorov.dev
-  AWS_LOCATION: "heroku"
+  AWS_S3_LOCATION_BLOG_PHOTOS: "blog-photos-heroku"
   AWS_S3_REGION_NAME: "us-east-1"
   CELERY_BEAT_CALSYNC: 1800
   CELERY_BEAT_INVITATION: 1800
@@ -66,6 +67,7 @@ heroku:
 
 
 test:
+  AWS_S3_LOCATION_BLOG_PHOTOS: "blog-photos-test"
   EMAIL_FROM: "test@test.name"
   MODE_CACHING: 1
   MODE_DEBUG: 1
@@ -75,7 +77,8 @@ test:
   TIME_ZONE: "UTC"
 
 
-travis:
+ci:
+  AWS_S3_LOCATION_BLOG_PHOTOS: "blog-photos-ci"
   EMAIL_FROM: "test@test.name"
   MODE_CACHING: 1
   MODE_DEBUG: 1

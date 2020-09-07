@@ -40,7 +40,10 @@ def build_jinja2_environment(**options) -> Environment:
 
     opts = options.copy()
     opts.update(
-        {"auto_reload": True, "undefined": undefined_cls,}
+        {
+            "auto_reload": True,
+            "undefined": undefined_cls,
+        }
     )
 
     env = Environment(**opts)

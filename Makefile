@@ -24,13 +24,13 @@ MANAGE := ${RUN} python src/manage.py
 
 .PHONY: format
 format:
-	${RUN} isort --virtual-env "${VENV}" --recursive --apply "${HERE}"
+	${RUN} isort --virtual-env "${VENV}" "${HERE}"
 	${RUN} black "${HERE}"
 
 
 .PHONY: run
 run: static
-	${MANAGE} runserver 0.0.0.0:8000
+	${MANAGE} runserver 127.0.0.1:8000
 
 
 .PHONY: beat

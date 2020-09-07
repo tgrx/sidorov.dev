@@ -11,7 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="framework", options={"ordering": ("name", "version")},
+            name="framework",
+            options={"ordering": ("name", "version")},
         ),
         migrations.AddField(
             model_name="organization",

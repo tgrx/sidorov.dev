@@ -26,10 +26,18 @@ class Migration(migrations.Migration):
                 ("slot0", models.PositiveSmallIntegerField()),
                 ("slot1", models.PositiveSmallIntegerField()),
             ],
-            options={"ordering": ("day", "slot0", "slot1"),},
+            options={
+                "ordering": ("day", "slot0", "slot1"),
+            },
         ),
-        migrations.AlterModelOptions(name="calendar", options={"ordering": ("name",)},),
-        migrations.RemoveField(model_name="calendar", name="synced",),
+        migrations.AlterModelOptions(
+            name="calendar",
+            options={"ordering": ("name",)},
+        ),
+        migrations.RemoveField(
+            model_name="calendar",
+            name="synced",
+        ),
         migrations.AlterField(
             model_name="calendar",
             name="ical",
