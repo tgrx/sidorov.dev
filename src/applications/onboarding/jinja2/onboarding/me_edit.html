@@ -6,26 +6,26 @@
 
 {% block main %}
 
-    <article>
+  <article>
 
-        {% if user.is_anonymous %}
+    {% if user.is_anonymous %}
 
-            <h2>You are not authorized to use this</h2>
+      <h2>You are not authorized to use this</h2>
 
-        {% else %}
+    {% else %}
 
-            <h2>Your new data</h2>
+      <h2>Your new data</h2>
 
-            <form method="post">
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <div class="grid">
-                    {{ form.as_p() }}
-                </div>
-                <button class="button" type="submit">Update</button>
-            </form>
+      <form method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <div class="grid">
+          {{ form.as_p() }}
+        </div>
+        <button class="button" type="submit">Update</button>
+      </form>
 
-        {% endif %}
+    {% endif %}
 
-    </article>
+  </article>
 
 {% endblock %}

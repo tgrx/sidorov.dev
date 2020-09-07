@@ -11,24 +11,24 @@ django-silk = "*"
 freezegun = "*"
 httpie = "*"
 ipython = "*"
-isort = {extras = ["pipfile"], version = "*"}
+isort = { extras = ["pipfile"], version = "*" }
 line-profiler = "*"
 pillow = "*"
 pudb = "*"
 
 [packages]
 boto3 = "*"
-celery = {extras = ["redis"],version = "*"}
+celery = { extras = ["redis"], version = "*" }
 celery-redbeat = "*"
 delorean = "*"
 dj-database-url = "*"
-django = {extras = ["bcrypt"],version = "*"}
+django = { extras = ["bcrypt"], version = "*" }
 django-bmemcached = "*"
 django-ipware = "*"
 django-storages = "*"
 djangorestframework = "*"
-drf-yasg = {extras = ["validation"],version = "*"}
-dynaconf = {extras = ["yaml"],version = "*"}
+drf-yasg = { extras = ["validation"], version = "*" }
+dynaconf = { extras = ["yaml"], version = "*" }
 gunicorn = "*"
 icalevents = "*"
 jinja2 = "*"

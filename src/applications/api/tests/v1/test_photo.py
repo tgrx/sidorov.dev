@@ -17,8 +17,8 @@ class Test(TestCase, ApiTestMixin, UserTestMixin):
 
         self.blog_post = Post()
         self.blog_post.save()
-        Photo.original.field.storage = FileSystemStorage()
-        Photo.thumbnail.field.storage = FileSystemStorage()
+        Photo.original.field.storage = FileSystemStorage("x", "z")
+        Photo.thumbnail.field.storage = FileSystemStorage("x", "z")
         self.photo = Photo(post=self.blog_post, original="xxx")
         self.photo.save()
 

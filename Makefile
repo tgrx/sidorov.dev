@@ -105,7 +105,7 @@ test:
 			project \
 
 	${RUN} coverage report
-	${RUN} isort --virtual-env "${VENV}" --recursive --check-only "${HERE}"
+	${RUN} isort --virtual-env "${VENV}" --check-only "${HERE}"
 	${RUN} black --check "${HERE}"
 
 

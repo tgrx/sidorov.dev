@@ -1,28 +1,28 @@
 .calendar-widget {
-    border: 1px solid hsl(var(--hue), 100%, var(--brightness));
-    display: grid;
-    grid-column-gap: 1px;
-    grid-row-gap: 1px;
-    grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(15, 1fr);
-    margin-right: 20px;
+  border: 1px solid hsl(var(--hue), 100%, var(--brightness));
+  display: grid;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+  margin-right: 20px;
 }
 
 .calendar-widget > p {
-    background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 1.7));
-    border: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
-    color: hsl(var(--hue), 5%, calc(var(--brightness) / 2));
-    font-size: calc(var(--font-size) * 0.6);
-    font-style: oblique;
-    margin: 1px;
-    min-height: 30px;
-    min-width: 10px;
-    padding-left: 4px;
+  background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 1.7));
+  border: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
+  color: hsl(var(--hue), 5%, calc(var(--brightness) / 2));
+  font-size: calc(var(--font-size) * 0.6);
+  font-style: oblique;
+  margin: 1px;
+  min-height: 30px;
+  min-width: 10px;
+  padding-left: 4px;
 }
 
 .calendar-widget > p.header {
-    background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 2));
-    border-bottom: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
-    font-style: normal;
-    text-align: center;
+  background-color: hsl(var(--hue), var(--saturation), calc(var(--brightness) * 2));
+  border-bottom: 1px solid hsl(var(--hue), var(--saturation), var(--brightness));
+  font-style: normal;
+  text-align: center;
 }

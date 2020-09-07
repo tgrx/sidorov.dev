@@ -36,17 +36,10 @@ jobs:
           paths:
             - ./.venv/
 
-      - restore_cache:
-          keys:
-            - cc-static-{{ checksum "./.static/" }}
       - run:
           name: Collecting staticfiles
           command: |
             make static
-      - save_cache:
-          key: cc-static-{{ checksum "./.static/" }}
-          paths:
-            - ./.static/
 
       - run:
           name: Performing Tests

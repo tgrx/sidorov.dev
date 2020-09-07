@@ -167,4 +167,18 @@ class ApiTestMixin:  # pragma: no cover
 
         if expected_response_payload is not None:
             payload = resp.json()
-            self.assertEqual(expected_response_payload, payload)
+            self.assertEqualRecursive(expected_response_payload, payload)
+
+    def assertEqualRecursive(self, expected, got):
+        if isinstance(expected, dict):
+            return self.assertDictEqual(expected, got)
+
+        if isinstance(expected, list):
+            self.assertIsInstance(got, list)
+            self.assertEqual(len(expected), len(got))
+
+            for expected_obj, got_obj in zip(expected, got):
+                self.assertEqualRecursive(expected_obj, got_obj)
+            return
+
+        return self.assertEqual(expected, got)

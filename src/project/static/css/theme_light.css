@@ -1,57 +1,57 @@
 :root {
-    --brightness: 50%;
-    --hue: 10;
-    --saturation: 100%;
-    --bg-color: white;
-    --font-color: black;
+  --brightness: 50%;
+  --hue: 10;
+  --saturation: 100%;
+  --bg-color: white;
+  --font-color: black;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--font-color);
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 header {
-    border-bottom-color: var(--font-color);
+  border-bottom-color: var(--font-color);
 }
 
 nav * a:hover {
-    text-decoration-color: red;
+  text-decoration-color: red;
 }
 
 a {
-    color: darkred;
+  color: darkred;
 }
 
 a:visited {
-    color: brown;
+  color: brown;
 }
 
 a:hover {
-    color: red;
+  color: red;
 }
 
 article {
-    -moz-box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
-    box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    border-left: 12px solid red;
-    padding-left: 10px;
+  border-left: 12px solid red;
+  padding-left: 10px;
 }
 
 h2 {
-    border-left: 6px solid red;
-    padding-left: 10px;
+  border-left: 6px solid red;
+  padding-left: 10px;
 }
 
 h3 {
-    border-left: 3px solid red;
-    padding-left: 10px;
+  border-left: 3px solid red;
+  padding-left: 10px;
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
