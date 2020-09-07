@@ -1,0 +1,36 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/python:3.8.5-browsers
+
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
+      ENV_FOR_DYNACONF: ci
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - cc-venv-{{ checksum "Pipfile.lock" }}
+      - run:
+          name: Setting up virtualenv
+          command: |
+            sudo pip install pipenv
+            pipenv install --dev
+      - save_cache:
+          key: cc-venv-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ./.venv/
+
+      - run:
+          name: Performing Tests
+          command: |
+            make test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
