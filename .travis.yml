@@ -6,7 +6,7 @@ services:
 
 env:
   global:
-    - ENV_FOR_DYNACONF=travis
+    - ENV_FOR_DYNACONF=ci
     - DYNACONF_DATABASE_URL="postgresql://postgres@localhost:5432/sidorov-dev"
 
 install:

@@ -4,13 +4,23 @@ jobs:
   build-and-test:
     docker:
       - image: circleci/python:3.8.5-browsers
+      - image: circleci/postgres:9.6.9-alpine
+        environment:
+          POSTGRES_USER: ci
+          POSTGRES_DB: ci
 
     environment:
-      PIPENV_VENV_IN_PROJECT: 1
+      DYNACONF_DATABASE_URL: "postgres://ci@localhost:5432/ci?sslmode=disable"
       ENV_FOR_DYNACONF: ci
+      PIPENV_VENV_IN_PROJECT: 1
 
     steps:
       - checkout
+
+      - run:
+          name: (Waiting for Postgres to be ready)
+          command: |
+            ./.circleci/wait_for_postgresql.sh || exit 1
 
       - restore_cache:
           keys:
@@ -19,16 +29,33 @@ jobs:
           name: Setting up virtualenv
           command: |
             sudo pip install pipenv
-            pipenv install --dev
+            make venv
       - save_cache:
           key: cc-venv-{{ checksum "Pipfile.lock" }}
           paths:
             - ./.venv/
 
+      - restore_cache:
+          keys:
+            - cc-static-{{ checksum "./.static/" }}
+      - run:
+          name: Collecting staticfiles
+          command: |
+            make static
+      - save_cache:
+          key: cc-static-{{ checksum "./.static/" }}
+          paths:
+            - ./.static/
+
       - run:
           name: Performing Tests
           command: |
             make test
+
+      - run:
+          name: Collecting Coverage
+          command: |
+            codecov
 
 workflows:
   main:
