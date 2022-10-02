@@ -3,7 +3,9 @@ from typing import Text
 
 import django
 from django.db.models.base import ModelBase
-from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
+from django.db.models.fields.related_descriptors import (
+    ForwardManyToOneDescriptor,
+)
 from django.db.models.fields.related_descriptors import ManyToManyDescriptor
 from django.db.models.query_utils import DeferredAttribute
 

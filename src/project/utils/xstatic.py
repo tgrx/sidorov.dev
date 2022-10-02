@@ -1,10 +1,9 @@
 from pathlib import Path
 
-from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponse
 
-STATIC_DIR = settings.PROJECT_DIR / "static"
+from project.utils import dirs
 
 
 def render_static(file_path: Path, content_type: str) -> HttpResponse:
@@ -20,4 +19,4 @@ def render_static(file_path: Path, content_type: str) -> HttpResponse:
 
 
 def get_favicon() -> Path:
-    return STATIC_DIR / "favicon.png"
+    return dirs.DIR_STATIC / "favicon2.png"

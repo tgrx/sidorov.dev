@@ -20,6 +20,7 @@
 .coverage.*
 .dmypy.json
 .eggs/
+.env
 .hypothesis/
 .idea/
 .installed.cfg
@@ -29,7 +30,6 @@
 .pyre/
 .pytest_cache/
 .Python
-.python-version
 .ropeproject
 .scrapy
 .secrets.*

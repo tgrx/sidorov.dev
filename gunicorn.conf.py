@@ -8,7 +8,7 @@ _here = Path(__file__).parent.resolve()
 assert _here.is_dir(), f"invalid here dir: `{_here!r}`"
 
 _reload = True
-_workers = multiprocessing.cpu_count() * 2 + 1  # XXX hahaha classic
+_workers = int(getenv("WEB_CONCURRENCY", 0)) or multiprocessing.cpu_count() * 2 + 1  # XXX hahaha classic
 
 _port = getenv("PORT")
 assert _port and _port.isdecimal(), f"invalid port: `{_port!r}`"

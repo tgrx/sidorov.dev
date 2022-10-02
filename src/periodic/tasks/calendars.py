@@ -47,7 +47,9 @@ def sync_single_calendar(cal_id):  # pragma: no cover
 def sync_slots(*_args, **_kwargs):  # pragma: no cover
     logger.debug(f"syncing slots")
 
-    from applications.meta.applications.schedule.utils import build_merged_slots_map
+    from applications.meta.applications.schedule.utils import (
+        build_merged_slots_map,
+    )
     from applications.meta.applications.schedule.utils import build_slots_map
     from applications.meta.applications.schedule.utils import extract_events
     from applications.meta.applications.schedule.utils import get_days

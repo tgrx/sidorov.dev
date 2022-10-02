@@ -2,11 +2,8 @@
 branch = True
 omit =
     .cache/*
-    .circleci/*
     .static/*
-    .venv/*
     db_env_to_psql.py
-    serverless/*
     src/manage.py
     src/periodic/celeryconfig.py
     src/project/asgi.py
