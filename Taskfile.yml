@@ -1,0 +1,36 @@
+version: '3'
+
+output: 'prefixed'
+
+tasks:
+  code-format:
+    aliases:
+      - f
+    cmds:
+      - npx prettier --write .
+    desc: format code with prettier
+    dir: '{{.ROOT_DIR}}'
+
+  code-lint:
+    aliases:
+      - l
+    cmds:
+      - npm run lint
+    desc: run Eslint
+    dir: '{{.ROOT_DIR}}'
+    interactive: true
+
+  run-server-dev:
+    cmds:
+      - npm run dev
+    desc: run Svelte Dev Server on http://localhost:5173
+    dir: '{{.ROOT_DIR}}'
+    interactive: true
+    run: once
+
+  setup-toolchain:
+    cmds:
+      - npm install
+    desc: "setup developer's toolchain"
+    interactive: true
+    dir: '{{.ROOT_DIR}}'
