@@ -1,6 +1,6 @@
 {
 	"name": "sidorov.dev",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -33,7 +33,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@popperjs/core": "^2.11.8",
 		"prismjs": "^1.29.0"
 	}
 }
