@@ -16,11 +16,11 @@
 	});
 </script>
 
-<div class="row">
-	<div class="col-3">
+<div class="container x">
+	<div class="x" style:grid-row="1/2" style:grid-column="1/2">
 		<img height="300" alt="Me" src={me} />
 	</div>
-	<div class="col">
+	<div class="x" style:grid-row="1/2" style:grid-column="2/3">
 		<h1>Alexander Sidorov</h1>
 		<p>Forthcoming personal page, development in progress.</p>
 		<p><a href="https://sidorov.dev">About</a></p>
@@ -29,18 +29,17 @@
 		for good people. Apple fanboy. Father of two kids. Sailor, boxer, driver - however currently in the
 		end of a long-term "vacation". In the meantime, backgammon player.
 	</div>
-	<div class="col-2">
+	<div class="x" style:grid-row="1/2" style:grid-column="3/4">
 		<p><a href="https://github.com/tgrx">GitHub</a></p>
 		<p><a href="https://www.linkedin.com/in/alexnsidorov/">LinkedIn</a></p>
 		<p><a href="https://t.me/jesuisalexandre">Telegram</a></p>
 	</div>
-</div>
 
-<div class="row">
-	<div class="col">
+
+	<div class="x" style:grid-row="2/3" style:grid-column="1/2">
 		<pre>{$codeSnippet}</pre>
 	</div>
-	<div class="col-5">
+	<div class="x" style:grid-row="2/3" style:grid-column="2/3">
 		<p>Feel free to connect if you're interesting in these:</p>
 		<p>
 			{#each data.technologies as tech}
@@ -48,4 +47,21 @@
 			{/each}
 		</p>
 	</div>
+
 </div>
+
+
+<style>
+	.container {
+		--auto-grid-min-size: 20rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+		grid-gap: 1rem;
+	}
+
+	.x {
+		border-color:fuchsia;
+		border-width: 1px;
+		border-style: solid;
+	}
+</style>

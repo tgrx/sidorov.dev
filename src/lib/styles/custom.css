@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+body {
+	background-color: #28343e;
+	color: #d9d9d6;
+	font-family: 'Playfair Display';
+}
+
+a {
+	color: #ff6a14;
+}
+
+a:hover {
+	background-color: rgb(7, 69, 69);
+	text-decoration: none;
+	padding: 8px;
+	margin: -8px;
+	color: #ffc414;
+}
+
+.badge {
+	font-family: 'Fira Code';
+	font-size: small;
+	background-color: rgb(46, 141, 109);
+	margin-right: 4px;
+	display: inline-block;
+	padding: 4px;
+	border-radius: 4px;
+	margin-top: 4px;
+}
+
+.badge:last-child {
+	margin-right: 0;
+}
