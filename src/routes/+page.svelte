@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { readable } from 'svelte/store';
 	import me from '$lib/static/me.webp';
-	import Prism from 'prismjs';
+	import Prism from '@magidoc/plugin-svelte-prismjs';
+
 	import 'prismjs/components/prism-python.js';
 	import 'prismjs/components/prism-sql.js';
+	import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js';
 
 	export let data;
 
@@ -64,7 +66,7 @@
 		<section>
 			<pre>
 				<code class="code-snippet">
-					{@html Prism.highlight($snippet.code, Prism.languages[$snippet.lang])}
+					<Prism language={$snippet.lang} source={$snippet.code} />
 				</code>
 			</pre>
 		</section>
@@ -80,11 +82,11 @@
 
 	.face {
 		height: 300px;
-		max-width: 225;
+		max-width: 225px;
 	}
 
 	.hero {
-		align-items: center;
+		align-items: stretch;
 		background-repeat: no-repeat;
 		display: grid;
 		grid-gap: 1rem;
@@ -92,7 +94,7 @@
 	}
 
 	.ads {
-		align-items: center;
+		align-items: stretch;
 		background-repeat: no-repeat;
 		display: grid;
 		grid-gap: 1rem;
@@ -104,6 +106,7 @@
 		grid-gap: 0.1rem;
 		grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 		justify-items: center;
+		align-items: stretch;
 	}
 
 	.code-snippet {
