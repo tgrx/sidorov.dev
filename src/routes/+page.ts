@@ -30,7 +30,11 @@ const codeSql = `
     SELECT * FROM ranked JOIN some_table ON random() < 0.5;
 `;
 
-const codeSnippets = [codeJs, codeSql, codePy];
+const codeSnippets = [
+	{ code: codeJs, lang: 'javascript' },
+	{ code: codePy, lang: 'python' },
+	{ code: codeSql, lang: 'sql' }
+];
 
 const technologies = [
 	'API dvelopment',
