@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@popperjs/core": "^2.11.8"
+		"@popperjs/core": "^2.11.8",
+		"prismjs": "^1.29.0"
 	}
 }

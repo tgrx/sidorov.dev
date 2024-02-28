@@ -1,10 +1,13 @@
 <script lang="ts">
-	import me from '$lib/static/me.webp';
 	import { readable } from 'svelte/store';
+	import me from '$lib/static/me.webp';
+	import Prism from 'prismjs';
+	import 'prismjs/components/prism-python.js';
+	import 'prismjs/components/prism-sql.js';
 
 	export let data;
 
-	const codeSnippet = readable(data.codeSnippet, (set) => {
+	const snippet = readable(data.codeSnippet, (set) => {
 		const iid = setInterval(() => {
 			const idx = Math.floor(Math.random() * data.codeSnippets.length);
 			set(data.codeSnippets[idx]);
@@ -16,52 +19,95 @@
 	});
 </script>
 
-<div class="container x">
-	<div class="x" style:grid-row="1/2" style:grid-column="1/2">
-		<img height="300" alt="Me" src={me} />
-	</div>
-	<div class="x" style:grid-row="1/2" style:grid-column="2/3">
-		<h1>Alexander Sidorov</h1>
-		<p>Forthcoming personal page, development in progress.</p>
-		<p><a href="https://sidorov.dev">About</a></p>
-		I am software engineer with 12+ years of experience. Customer experience, user experience, quality
-		and reliability are the areas I'm focusing. Clean Architecture apologist. Full-stack wannabe. Mentor
-		for good people. Apple fanboy. Father of two kids. Sailor, boxer, driver - however currently in the
-		end of a long-term "vacation". In the meantime, backgammon player.
-	</div>
-	<div class="x" style:grid-row="1/2" style:grid-column="3/4">
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-okaidia.min.css"
+	/>
+</svelte:head>
+
+<div class="container">
+	<h1>Alexander Sidorov</h1>
+
+	<article class="links">
 		<p><a href="https://github.com/tgrx">GitHub</a></p>
-		<p><a href="https://www.linkedin.com/in/alexnsidorov/">LinkedIn</a></p>
 		<p><a href="https://t.me/jesuisalexandre">Telegram</a></p>
-	</div>
+		<p><a href="https://www.linkedin.com/in/alexnsidorov/">LinkedIn</a></p>
+		<p><a href="https://sidorov.dev">About</a></p>
+	</article>
 
+	<article class="hero">
+		<img src={me} alt="Me" class="face" />
+		<section>
+			<p>I am software engineer with 12+ years of experience.</p>
+			<p>
+				Customer experience, user experience, quality and reliability are the areas I'm focusing.
+			</p>
+			<p>
+				Clean Architecture apologist. Full-stack wannabe. Mentor for good people. Apple fanboy.
+				Father of two kids. Sailor, boxer, driver - however currently in the end of a long-term
+				"vacation".
+			</p>
+			<p>In the meantime, backgammon player.</p>
+		</section>
+	</article>
 
-	<div class="x" style:grid-row="2/3" style:grid-column="1/2">
-		<pre>{$codeSnippet}</pre>
-	</div>
-	<div class="x" style:grid-row="2/3" style:grid-column="2/3">
-		<p>Feel free to connect if you're interesting in these:</p>
-		<p>
-			{#each data.technologies as tech}
-				<span class="badge text-bg-success my-1 mx-1">{tech}</span>
-			{/each}
-		</p>
-	</div>
-
+	<article class="ads">
+		<section>
+			<p>Feel free to connect if you're interesting in these:</p>
+			<p>
+				{#each data.technologies as tech}
+					<span class="badge text-bg-success my-1 mx-1">{tech}</span>
+				{/each}
+			</p>
+		</section>
+		<section>
+			<pre>
+				<code class="code-snippet">
+					{@html Prism.highlight($snippet.code, Prism.languages[$snippet.lang])}
+				</code>
+			</pre>
+		</section>
+	</article>
 </div>
-
 
 <style>
 	.container {
-		--auto-grid-min-size: 20rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-		grid-gap: 1rem;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 10px;
 	}
 
-	.x {
-		border-color:fuchsia;
-		border-width: 1px;
-		border-style: solid;
+	.face {
+		height: 300px;
+		max-width: 225;
+	}
+
+	.hero {
+		align-items: center;
+		background-repeat: no-repeat;
+		display: grid;
+		grid-gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	}
+
+	.ads {
+		align-items: center;
+		background-repeat: no-repeat;
+		display: grid;
+		grid-gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	}
+
+	.links {
+		display: grid;
+		grid-gap: 0.1rem;
+		grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+		justify-items: center;
+	}
+
+	.code-snippet {
+		font-family: 'Fira Code';
+		font-size: 13px;
 	}
 </style>
