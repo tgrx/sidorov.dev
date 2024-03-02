@@ -1,0 +1,208 @@
+version: '3'
+
+output: 'prefixed'
+
+tasks:
+
+  clean:
+    aliases:
+      - c
+    cmds:
+      - find . -name "__pycache__" | xargs rm -rf
+      - rm -rf "{{.DIR_LOCAL}}/coverage"
+      - rm -rf "{{.DIR_LOCAL}}/docker"
+      - rm -rf "{{.DIR_LOCAL}}/docs/build/*"
+      - rm -rf "{{.DIR_LOCAL}}/mypy"
+      - rm -rf "{{.DIR_LOCAL}}/ok.*"
+      - rm -rf "{{.DIR_LOCAL}}/pytest"
+    desc: clean environment
+    dir: "{{.ROOT_DIR}}"
+    interactive: true
+
+  code-format:
+    aliases:
+      - f
+    cmds:
+      - >
+        poetry run autoflake
+        --exclude '*.local*'
+        --expand-star-imports
+        --in-place
+        --recursive
+        --remove-all-unused-imports
+        --remove-duplicate-keys
+        --remove-unused-variables
+        --verbose
+        .
+      - poetry run black .
+      - poetry run isort --virtual-env="{{.DIR_VENV}}" .
+      - task: code-lint-black
+      - task: code-lint-isort
+    desc: format code with black & isort
+    dir: "{{.ROOT_DIR}}"
+
+  code-lint:
+    aliases:
+      - l
+    cmds:
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-black"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-flake8"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-isort"
+      - test -f "{{.DIR_LOCAL}}/ok.code-lint-mypy"
+      - echo 'all linters passed'
+    deps:
+      - code-lint-black
+      - code-lint-isort
+      - code-lint-mypy
+      - code-lint-flake8
+    desc: validate code using linters
+    dir: "{{.ROOT_DIR}}"
+    silent: true
+
+  code-lint-black:
+    cmds:
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run black --check .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+    dir: "{{.ROOT_DIR}}"
+    ignore_error: true
+    internal: true
+  code-lint-isort:
+    cmds:
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run isort --check-only --virtual-env="{{.DIR_VENV}}" .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+    dir: "{{.ROOT_DIR}}"
+    ignore_error: true
+    internal: true
+  code-lint-mypy:
+    cmds:
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run mypy --config-file="{{.ROOT_DIR}}/pyproject.toml"
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+    dir: "{{.ROOT_DIR}}"
+    ignore_error: true
+    internal: true
+  code-lint-flake8:
+    cmds:
+      - >
+        rm -f "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+        && poetry run flake8 --config="{{.ROOT_DIR}}/.flake8" .
+        && touch "{{.DIR_LOCAL}}/ok.{{.TASK}}"
+    dir: "{{.ROOT_DIR}}"
+    ignore_error: true
+    internal: true
+
+  run-server-dev:
+    cmds:
+      - >
+        poetry run
+        uvicorn app.main:api
+        --access-log
+        --forwarded-allow-ips '*'
+        --host 0.0.0.0
+        --http httptools
+        --interface asgi3
+        --lifespan off
+        --log-level info
+        --loop asyncio
+        --port 8000
+        --proxy-headers
+        --reload
+        --workers 1
+        --ws none
+    desc: run dev Uvicorn on http://localhost:8000 (all interfaces)
+    dir: "{{.ROOT_DIR}}"
+    interactive: true
+    run: once
+
+  run-server-prod:
+    cmds:
+      - >
+        poetry run
+        uvicorn app.main:api
+        --forwarded-allow-ips '*'
+        --host 0.0.0.0
+        --http httptools
+        --interface asgi3
+        --lifespan off
+        --log-level info
+        --loop asyncio
+        --no-access-log
+        --no-server-header
+        --no-use-colors
+        --port 80
+        --proxy-headers
+        --workers 4
+        --ws none
+    desc: run prod Uvicorn on http://localhost:80 (all interfaces)
+    dir: "{{.ROOT_DIR}}"
+    interactive: true
+    run: once
+
+  run-tests:
+    aliases:
+      - t
+    cmds:
+      - poetry run pytest --cov-fail-under=0 {{.CLI_ARGS}} .
+    desc: run tests
+    dir: "{{.ROOT_DIR}}"
+    interactive: true
+    preconditions:
+      - docker info
+    run: once
+
+  run-tests-coverage:
+    cmds:
+      - poetry run coverage html
+    deps:
+      - run-tests
+    desc: calculate tests coverage
+    dir: "{{.ROOT_DIR}}"
+    generates:
+      - "{{.DIR_LOCAL}}/coverage/html/**/*"
+    run: once
+
+  setup-toolchain:
+    cmds:
+      - pyenv install --skip-existing "{{.PYTHON_VERSION}}"
+      - pip install "pip=={{.PIP_VERSION}}"
+      - pip install --ignore-installed "poetry=={{.POETRY_VERSION}}"
+      - poetry env use "{{.PYTHON_VERSION}}"
+      - poetry install --no-root --sync --with dev
+      - task: show-environment
+    desc: "setup developer's toolchain: Pyenv, Python, Poetry, venv"
+    dir: "{{.ROOT_DIR}}"
+
+  show-environment:
+    cmds:
+      - echo "ROOT_DIR={{.ROOT_DIR}}"
+      - echo "TASKFILE_DIR={{.TASKFILE_DIR}}"
+      - echo "DIR_LOCAL={{.DIR_LOCAL}}"
+      - echo "DIR_VENV={{.DIR_VENV}}"
+      - echo "PYTHON_VERSION={{.PYTHON_VERSION}}"
+      - echo "PIP_VERSION={{.PIP_VERSION}}"
+      - echo "POETRY_VERSION={{.POETRY_VERSION}}"
+    desc: "show environment info"
+    dir: "{{.ROOT_DIR}}"
+
+vars:
+  DIR_SOLUTION:
+    sh: (cd "{{.ROOT_DIR}}"/../../ && pwd)
+  DIR_LOCAL:
+    sh: (cd "{{.ROOT_DIR}}"/.local && pwd)
+  DIR_VENV:
+    sh: (cd "$(poetry env info --path)" && pwd) || echo '.venv'
+  PIP_VERSION:
+    sh: cat "{{.DIR_SOLUTION}}/.env" | grep BUILD_PIP_VERSION | sed -e 's/^.*=//g'
+  POETRY_VERSION:
+    sh: cat "{{.DIR_SOLUTION}}/.env" | grep BUILD_POETRY_VERSION | sed -e 's/^.*=//g'
+  PYTHON_VERSION:
+    sh: cat "{{.DIR_SOLUTION}}/.env" | grep BUILD_PYTHON_VERSION | sed -e 's/^.*=//g'
+
+
+env:
+  PYTHONPATH: "{{.ROOT_DIR}}"
