@@ -22,22 +22,26 @@ jobs:
 
       - name: Install Node.js
         uses: actions/setup-node@v4
+        working-directory: ./services/frontend/
         with:
           node-version: '21.6.2'
           cache: npm
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./services/frontend/
 
       - name: build
         run: |
           npm run build
+        working-directory: ./services/frontend/
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           # this should match the `pages` option in your adapter-static options
           path: 'build/'
+        working-directory: ./services/frontend/
 
   deploy-site:
     needs: build-site
@@ -55,3 +59,4 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        working-directory: ./services/frontend/
