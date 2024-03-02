@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "sidorov.dev",
+			"path": "."
+		},
+		{
+			"name": "🟨 API",
+			"path": "services/api"
+		},
+		{
+			"name": "🟩 Front-end",
+			"path": "services/frontend"
+		}
+	],
+	"settings": {}
+}
