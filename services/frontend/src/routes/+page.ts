@@ -36,42 +36,38 @@ const codeSnippets = [
 	{ code: codeSql, lang: 'sql' }
 ];
 
-const technologies = [
-	'API dvelopment',
-	'Chat bots',
-	'Clean Architecture',
-	'Django',
-	'Docker and Compose',
-	'FastAPI',
-	'Fully-automated E2E tests',
-	'Gentoo Linux',
-	'Github Actions',
-	'Good unit-testing howto',
-	'JSON in RDBMS',
-	'Linux',
-	'Mac OS X',
-	'Mentoring',
-	'MongoDB',
-	'PostgreSQL',
-	'Project planning',
-	'Python',
-	'Redis',
-	'Software architecture',
-	'SRP',
-	'Svelte',
-	'SvelteKit',
-	'Telegram bots'
-].sort(() => {
-	return Math.sign(0.5 - Math.random());
-});
+async function _loadGithubRaw(url: string) {
+	try {
+		const resp = await fetch(url, { method: 'get' });
+		if (resp.status !== 200) throw Error(`response status, expected 200, got ${resp.status}`);
+		const data = await resp.json();
+		return data;
+	} catch (e) {
+		console.warn(`Unable to download "${url}": "${e}"`);
+		return [];
+	}
+}
 
-export function load() {
+async function loadProjects() {
+	const projectsUrl =
+		'https://raw.githubusercontent.com/tgrx/sidorov.dev/master/services/api/db/projects.json';
+	return await _loadGithubRaw(projectsUrl);
+}
+
+async function loadTechStack() {
+	const techstackUrl =
+		'https://raw.githubusercontent.com/tgrx/sidorov.dev/master/services/api/db/techstack.json';
+	return await _loadGithubRaw(techstackUrl);
+}
+
+export async function load() {
 	const idx = Math.floor(Math.random() * codeSnippets.length);
 	const codeSnippet = codeSnippets[idx];
 
 	return {
 		codeSnippet,
 		codeSnippets,
-		technologies
+		projects: await loadProjects(),
+		techStack: await loadTechStack()
 	};
 }

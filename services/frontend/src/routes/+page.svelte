@@ -2,6 +2,8 @@
 	import { readable } from 'svelte/store';
 	import me from '$lib/static/me.webp';
 	import Prism from '@magidoc/plugin-svelte-prismjs';
+	import ProjectsList from '$lib/ProjectsList.svelte';
+	import TechStackCloud from '$lib/TechStackCloud.svelte';
 
 	import 'prismjs/components/prism-python.js';
 	import 'prismjs/components/prism-sql.js';
@@ -52,17 +54,11 @@
 			</p>
 			<p>In the meantime, backgammon player.</p>
 		</section>
+		<ProjectsList projects={data.projects} />
+		<TechStackCloud techStack={data.techStack} />
 	</article>
 
 	<article class="ads">
-		<section>
-			<p>Feel free to connect if you're interesting in these:</p>
-			<p>
-				{#each data.technologies as tech}
-					<span class="badge text-bg-success my-1 mx-1">{tech}</span>
-				{/each}
-			</p>
-		</section>
 		<section>
 			<pre>
 				<code class="code-snippet">
@@ -90,7 +86,7 @@
 		background-repeat: no-repeat;
 		display: grid;
 		grid-gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
 	}
 
 	.ads {
