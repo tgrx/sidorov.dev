@@ -1,16 +1,16 @@
 name: Deploy to GitHub Pages
 
 on:
+  page_build:
   push:
     branches:
       - master
-  page_build:
   workflow_dispatch:
 
 
 defaults:
   run:
-    working-directory: ./services/frontend
+    working-directory: ./services/frontend/
 
 
 jobs:
@@ -22,10 +22,10 @@ jobs:
 
       - name: Install Node.js
         uses: actions/setup-node@v4
-        working-directory: ./services/frontend/
         with:
-          node-version: '21.6.2'
+          cache-dependency-path: ./services/frontend/
           cache: npm
+          node-version: '21.6.2'
 
       - name: Install dependencies
         run: npm install
@@ -40,8 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # this should match the `pages` option in your adapter-static options
-          path: 'build/'
-        working-directory: ./services/frontend/
+          path: './services/frontend/build/'
 
   deploy-site:
     needs: build-site
@@ -59,4 +58,3 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-        working-directory: ./services/frontend/

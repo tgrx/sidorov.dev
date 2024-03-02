@@ -29,7 +29,7 @@
 </svelte:head>
 
 <div class="container">
-	<h1>Alexander Sidorov</h1>
+	<h1>🔥 Alexander Sidorov 🔥</h1>
 
 	<article class="links">
 		<p><a href="https://github.com/tgrx">GitHub</a></p>
